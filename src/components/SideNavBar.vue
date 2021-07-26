@@ -1,5 +1,5 @@
 <template>
-  <div class="container nav-container">
+  <div class="nav-container">
     <ul class="nav-list">
       <template v-if="!isAuthenticated">
         <li class="nav-item">
@@ -11,7 +11,7 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/">
+          <router-link to="/register">
             <span class="icon">
               <ion-icon name="key-outline"></ion-icon>
             </span>
@@ -84,7 +84,6 @@ export default {
   position: relative;
   background: #a9b6cc;
   border-radius: 10px;
-  max-width: 250px;
 
   padding-top: 60px;
   padding-right: 0;

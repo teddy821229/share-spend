@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="content">
       <div class="row">
         <div class="col-3 nav-container">
           <SideNavBar />
         </div>
-        <div class="col-9 content-container">
+        <div class="col-9 container content-container">
           <router-view />
         </div>
       </div>
@@ -29,7 +29,7 @@ export default {
 <style>
 
 #app,
-.container,
+.content,
 .nav-container,
 .row,
 .content-container {
@@ -37,9 +37,14 @@ export default {
   background: #fff;
 }
 
-.container {
+.nav-container {
+  max-width: 300px;
+}
+
+.content {
   padding: 0;
   margin: 0 20px;
 }
 </style>
+
 
