@@ -4,6 +4,8 @@
       <template v-if="!isAuthenticated">
         <li class="nav-item">
           <router-link to="/login">
+            <div class="corner"></div>
+            <div class="corner"></div>
             <span class="icon">
               <ion-icon name="log-in-outline"></ion-icon>
             </span>
@@ -11,7 +13,10 @@
           </router-link>
         </li>
         <li class="nav-item">
+          
           <router-link to="/register">
+          <div class="corner"></div>
+          <div class="corner"></div>
             <span class="icon">
               <ion-icon name="key-outline"></ion-icon>
             </span>
@@ -22,7 +27,10 @@
 
       <template v-else>
         <li class="nav-item">
+
           <router-link to="/home">
+          <div class="corner"></div>
+          <div class="corner"></div>
             <span class="icon">
               <ion-icon name="home-outline"></ion-icon>
             </span>
@@ -30,7 +38,10 @@
           </router-link>
         </li>
         <li class="nav-item">
+
           <router-link to="/payment">
+          <div class="corner"></div>
+          <div class="corner"></div>
             <span class="icon">
               <ion-icon name="wallet-outline"></ion-icon>
             </span>
@@ -38,7 +49,10 @@
           </router-link>
         </li>
         <li class="nav-item">
+
           <router-link to="/group">
+          <div class="corner"></div>
+          <div class="corner"></div>
             <span class="icon">
               <ion-icon name="people-outline"></ion-icon>
             </span>
@@ -46,7 +60,10 @@
           </router-link>
         </li>
         <li class="nav-item">
+
           <router-link to="/setting">
+          <div class="corner"></div>
+          <div class="corner"></div>
             <span class="icon">
               <ion-icon name="settings-outline"></ion-icon>
             </span>
@@ -54,9 +71,10 @@
           </router-link>
         </li>
         <li class="nav-item logout">
-          <button
-            type="button"
-          >
+          <div class="corner"></div>
+          <div class="corner"></div>
+
+          <button type="button">
             <span class="icon">
               <ion-icon name="log-out-outline"></ion-icon>
             </span>
@@ -73,7 +91,7 @@ export default {
   name: "SideNavBar",
   data() {
     return {
-      isAuthenticated: false,
+      isAuthenticated: true,
     };
   },
 };
@@ -88,14 +106,14 @@ export default {
   padding-top: 60px;
   padding-right: 0;
   padding-left: 20px;
-  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .nav-item {
   height: 60px;
 }
 
-a, button {
+a,
+button {
   padding-left: 20px;
   height: 100%;
   display: flex;
@@ -103,13 +121,65 @@ a, button {
 }
 
 .nav-item {
+  position: relative;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.nav-item:hover a, .nav-item:hover button {
+.corner {
+  display: none;
+}
+
+.corner:first-child {
+  position: absolute;
+  height: 10px;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  background: #fff;
+}
+
+.corner:first-child::before {
+  content: "";
+  position: absolute;
+  height: 10px;
+  top: -0;
+  width: 100%;
+  background: #a9b6cc;
+  border-radius: 0 0 20px 0;
+}
+
+.corner:nth-child(2) {
+  position: absolute;
+  height: 10px;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  background: #fff;
+}
+
+.corner:nth-child(2):before {
+  content: "";
+  position: absolute;
+  height: 10px;
+  top: -0;
+  width: 100%;
+  background: #a9b6cc;
+  border-radius: 0 20px 0 0;
+}
+
+.nav-item:hover a,
+.nav-item:hover button {
   background: #fff;
   border-radius: 10px 0 0 10px;
+}
+
+.nav-item:hover .corner {
+  display: block;
+}
+
+.active .corner {
+  display: block;
 }
 
 .nav-item .active {

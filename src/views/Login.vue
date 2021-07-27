@@ -90,16 +90,16 @@ export default {
   height: 100%;
 }
 .login-form {
-  transform: translateY(-50%);
+  transform: translateY(-20%);
 }
 
 .login-title {
   text-align: center;
   margin-bottom: 30px;
+  padding-left: 20px;
   font-size: 20px;
   font-weight: 700;
   color: #6784b4;
-  transform: translateX(20px);
 }
 
 .row {
@@ -128,9 +128,10 @@ input:hover {
 }
 
 .submit-button {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
-  transform: translateX(20px);
+  padding-top: 20px;
+  padding-left: 20px;
 }
 
 .submit-button button {
