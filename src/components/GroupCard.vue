@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <router-link 
-      :to="{ name: 'group', params: { id: group.id}}"
+      :to="{ name: 'group', params: { id: group.id }}"
     >
       <div class="img-container">
         <img :src="group.image | defaultImage" alt="" />
