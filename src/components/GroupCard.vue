@@ -1,22 +1,24 @@
 <template>
   <div class="card">
-    <router-link to="/">
-      <div class="img-container"></div>
-      <div class="name-container">Teddy地獄組</div>
+    <router-link 
+      :to="{ name: 'group', params: { id: group.id}}"
+    >
+      <div class="img-container">
+        <img :src="group.image | defaultImage" alt="" />
+      </div>
+      <div class="name-container">{{group.name}}</div>
       <div class="group-detail">
         <div class="member-container">
           <ion-icon name="person-outline"></ion-icon>
-          <div class="member-count sub-title">5 位成員</div>
+          <div class="member-count sub-title">{{group.memberCount}} 位成員</div>
         </div>
         <div class="consume-container">
           <ion-icon name="receipt-outline"></ion-icon>
-          <div class="consume-count sub-title">30 筆消費</div>
+          <div class="consume-count sub-title">{{group.consumeCount}} 筆消費</div>
         </div>
         <div class="owed-container">
           <ion-icon name="wallet-outline"></ion-icon>
-          <div class="owed sub-title">
-            + $3,667
-          </div>
+          <div class="owed sub-title">$ {{group.userOwed}} </div>
         </div>
       </div>
     </router-link>
@@ -26,6 +28,19 @@
 <script>
 export default {
   name: "ConsumeCard",
+  props: {
+    group: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+  filters: {
+    defaultImage(image) {
+      return image || require("./../assets/image/avatarExample.jpeg");
+    },
+  },
 };
 </script>
 
@@ -35,10 +50,14 @@ export default {
   width: 90%;
   max-width: 500px;
 
-  margin: 20px 0;
+  margin: 20px auto;
 
   border: 2px solid #a9b6cc;
   border-radius: 15px;
+}
+
+.card:hover {
+  background: #f2f6ff;
 }
 
 .card a {
@@ -59,9 +78,14 @@ export default {
   grid-column: 1/2;
   grid-row: 1/2;
   justify-self: center;
-  width: 108px;
-  height: 108px;
-  border: 4px solid #a9b6cc;
+}
+
+.img-container img {
+  object-fit: cover;
+  object-position: center center;
+  width: 112px;
+  height: 112px;
+  border: 6px solid #a9b6cc;
   border-radius: 50%;
 }
 
@@ -85,7 +109,9 @@ export default {
   color: #6784b4;
 }
 
-.member-container, .consume-container, .owed-container  {
+.member-container,
+.consume-container,
+.owed-container {
   display: flex;
   align-items: center;
 }
@@ -99,14 +125,10 @@ ion-icon {
 }
 
 .owed-container {
-  justify-content: flex-end
+  justify-content: flex-end;
 }
-
-
 
 .sub-title {
   padding-left: 10px;
 }
-
-
 </style>

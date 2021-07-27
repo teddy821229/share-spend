@@ -29,7 +29,9 @@ export default {
       const table = {
         'food': '食物',
         'entertainment': '娛樂',
-        'life': '生活'
+        'transport': '交通',
+        'life': '生活',
+        'other': '其他'
       }
       return table[category]
     }
@@ -43,10 +45,14 @@ export default {
   width: 90%;
   max-width: 400px;
 
-  margin: 20px 0;
+  margin: 20px auto;
 
   border: 1px solid #a9b6cc;
   border-radius: 15px;
+}
+
+.card:hover {
+  background: #f2f6ff;
 }
 
 .card a {
