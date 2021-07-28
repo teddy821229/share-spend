@@ -5,7 +5,9 @@
       <div class="col-7">
         <div class="title">消費總額</div>
         <ConsumeTimeNavPills />
-        <!-- TODO: TotalCal -->
+        <TotalConsumeCard 
+          :consumes="consumes"
+        />
         <!-- TODO: AddButton -->
       </div>
       <div class="col-5">
@@ -28,6 +30,7 @@ import TopNavBar from "./../components/TopNavBar.vue";
 import ConsumeCard from "../components/ConsumeCard.vue";
 import ConsumeCategoryNavPills from '../components/ConsumeCategoryNavPills.vue'
 import ConsumeTimeNavPills from './../components/ConsumeTimeNavPills.vue'
+import TotalConsumeCard from './../components/TotalConsumeCard.vue'
 
 const dummyConsumes = [
   {
@@ -101,7 +104,8 @@ export default {
     TopNavBar,
     ConsumeCard,
     ConsumeCategoryNavPills,
-    ConsumeTimeNavPills
+    ConsumeTimeNavPills,
+    TotalConsumeCard
   },
   created() {
     this.fetchConsume();
