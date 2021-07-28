@@ -50,7 +50,7 @@
         </li>
         <li class="nav-item">
 
-          <router-link to="/group">
+          <router-link to="/groups">
           <div class="corner"></div>
           <div class="corner"></div>
             <span class="icon">

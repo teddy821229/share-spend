@@ -1,24 +1,26 @@
 <template>
-  <div class="card">
-    <router-link 
-      :to="{ name: 'group', params: { id: group.id }}"
-    >
+  <div class="group">
+    <router-link :to="{ name: 'group', params: { id: group.id } }">
       <div class="img-container">
         <img :src="group.image | defaultImage" alt="" />
       </div>
-      <div class="name-container">{{group.name}}</div>
+      <div class="name-container">{{ group.name }}</div>
       <div class="group-detail">
         <div class="member-container">
           <ion-icon name="person-outline"></ion-icon>
-          <div class="member-count sub-title">{{group.memberCount}} 位成員</div>
+          <div class="member-count sub-title">
+            {{ group.memberCount }} 位成員
+          </div>
         </div>
         <div class="consume-container">
           <ion-icon name="receipt-outline"></ion-icon>
-          <div class="consume-count sub-title">{{group.consumeCount}} 筆消費</div>
+          <div class="consume-count sub-title">
+            {{ group.consumeCount }} 筆消費
+          </div>
         </div>
         <div class="owed-container">
           <ion-icon name="wallet-outline"></ion-icon>
-          <div class="owed sub-title">$ {{group.userOwed}} </div>
+          <div class="owed sub-title">$ {{ group.userOwed }}</div>
         </div>
       </div>
     </router-link>
@@ -45,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.group {
   height: 200px;
   width: 90%;
   max-width: 500px;
@@ -56,15 +58,14 @@ export default {
   border-radius: 15px;
 }
 
-.card:hover {
+.group:hover {
   background: #f2f6ff;
 }
 
-.card a {
+.group a {
   width: 90%;
   height: 90%;
-
-  margin: auto auto 5px auto;
+  margin: 10px auto;
 
   display: grid;
   grid-template-columns: 4fr 6fr;

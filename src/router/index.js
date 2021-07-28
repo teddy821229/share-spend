@@ -30,6 +30,11 @@ const routes = [
     path: '/payment',
     name: 'payment',
     component: () => import('./../views/Payment.vue')
+  },
+  {
+    path: '/groups',
+    name: 'groups',
+    component: () => import('./../views/Groups.vue')
   }
 ]
 
