@@ -35,6 +35,7 @@ const routes = [
 
 const router = new VueRouter({
   linkExactActiveClass: 'active',
+  linkActiveClass: 'part-active',
   routes
 })
 

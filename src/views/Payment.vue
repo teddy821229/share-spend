@@ -4,13 +4,13 @@
     <div class="row">
       <div class="col-7">
         <div class="title">消費總額</div>
-        <!-- TODO: NavPills -->
+        <ConsumeTimeNavPills />
         <!-- TODO: TotalCal -->
         <!-- TODO: AddButton -->
       </div>
       <div class="col-5">
         <div class="title">消費列表</div>
-        <ConsumeNavPills />
+        <ConsumeCategoryNavPills />
         <div class="card-container">
           <ConsumeCard
             v-for="consume in consumes"
@@ -26,7 +26,8 @@
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
 import ConsumeCard from "../components/ConsumeCard.vue";
-import ConsumeNavPills from './../components/ConsumeNavPills.vue'
+import ConsumeCategoryNavPills from '../components/ConsumeCategoryNavPills.vue'
+import ConsumeTimeNavPills from './../components/ConsumeTimeNavPills.vue'
 
 const dummyConsumes = [
   {
@@ -99,7 +100,8 @@ export default {
   components: {
     TopNavBar,
     ConsumeCard,
-    ConsumeNavPills
+    ConsumeCategoryNavPills,
+    ConsumeTimeNavPills
   },
   created() {
     this.fetchConsume();

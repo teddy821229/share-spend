@@ -178,11 +178,11 @@ button {
   display: block;
 }
 
-.active .corner {
+.active .corner, .part-active .corner {
   display: block;
 }
 
-.nav-item .active {
+.nav-item .active , .nav-item .part-active {
   background: #fff;
   border-radius: 10px 0 0 10px;
 }
@@ -205,7 +205,7 @@ button {
   color: #a9b6cc;
 }
 
-.nav-item .active span {
+.nav-item .active span, .nav-item .part-active span {
   color: #a9b6cc;
 }
 
