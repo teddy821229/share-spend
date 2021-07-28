@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-5">
         <div class="title">最新消費</div>
-        <div class="add-consume">新增消費</div>
+        <CreateConsume />
         <div class="card-container">
           <ConsumeCard
             v-for="consume in consumes"
@@ -36,6 +36,7 @@
 
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
+import CreateConsume from './../components/CreateConsume.vue'
 import ConsumeCard from "../components/ConsumeCard.vue";
 import GroupCard from './../components/GroupCard.vue'
 
@@ -153,8 +154,9 @@ export default {
   name: "Home",
   components: {
     TopNavBar,
+    CreateConsume,
     ConsumeCard,
-    GroupCard
+    GroupCard,
   },
   created() {
     this.fetchConsume();

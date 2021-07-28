@@ -147,8 +147,8 @@ export default {
 <style scoped>
 .amount-container {
   width: 95%;
-  margin: 20px auto 0;
-  padding: 20px;
+  margin: 20px auto 40px;
+  padding: 20px ;
 
   color: #6784b4;
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
