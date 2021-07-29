@@ -106,7 +106,7 @@ const dummyConsumes = [
   },
 ];
 
-const dummyGroup = [
+const dummyGroups = [
   {
     id: 1,
     name: '地獄小組',
@@ -173,7 +173,7 @@ export default {
       this.consumes = dummyConsumes;
     },
     fetchGroup() {
-      this.groups = dummyGroup
+      this.groups = dummyGroups
     }
   },
 };

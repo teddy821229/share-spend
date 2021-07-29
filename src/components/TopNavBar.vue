@@ -4,6 +4,7 @@
       <button 
         class="btn back-btn"
         v-show="show"
+        @click="$router.back()"
       >
         <ion-icon name="arrow-back-outline"></ion-icon>
       </button>

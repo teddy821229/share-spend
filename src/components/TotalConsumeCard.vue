@@ -147,6 +147,7 @@ export default {
 <style scoped>
 .amount-container {
   width: 95%;
+  max-width: 650px;
   margin: 20px auto 40px;
   padding: 20px ;
 
