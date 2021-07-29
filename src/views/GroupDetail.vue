@@ -11,7 +11,7 @@
           <GroupMemberCard
             v-for="member in group.Members"
             :key="member.id"
-            :member="member"
+            :initial-member="member"
           />
         </div>
       </div>
@@ -53,8 +53,8 @@ const dummyGroup = {
     },
     {
       id: 26,
-      name: "找不到工作又單身",
-      account: "lohanka",
+      name: "找不到房間的蟑螂",
+      account: "whereiscockroach",
       avatar: "",
       isFriend: false,
       debtInGroup: 2230,
@@ -69,8 +69,8 @@ const dummyGroup = {
     },
     {
       id: 1,
-      name: "Teddy",
-      account: "teddy1993",
+      name: "找不到工作又單身",
+      account: "lohanka",
       avatar: "",
       isFriend: false,
       debtInGroup: -4005,

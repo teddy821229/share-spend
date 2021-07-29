@@ -1,47 +1,65 @@
 <template>
   <div
     class="member-card"
-    :class="member.debtInGroup > 0 ? 'positive' : 'negative'"
-    @click.prevent.stop="showFriendButton"
+    :class="member.debtInGroup >= 0 ? 'positive' : 'negative'"
   >
-    <div 
-      class="follow-container"
-      :class="{show: showFriend}"
-    >{{ member.isFriend ? '已是好友' : '加為好友'}}</div>
-    <div class="avatar-container">
-      <img :src="member.avatar | defaultImage" alt="" />
+    <div class="follow-container" :class="{ show: showFriend }">
+      <button 
+        class="btn" 
+        type="button"
+        @click.prevent.stop="addFriend"
+        :disabled="member.isFriend"
+      >
+        {{ member.isFriend ? "已是好友" : "加為好友" }}
+      </button>
     </div>
-    <div class="name-container">{{ member.name }}</div>
-    <div class="owed-container">{{ member.debtInGroup | moneyFilter }}</div>
+    <div class="member-card-container" @click.prevent.stop="showFriendButton">
+      <div class="avatar-container">
+        <img :src="member.avatar | defaultImage" alt="" />
+      </div>
+      <div class="name-container">{{ member.name }}</div>
+      <div class="owed-container">{{ member.debtInGroup | moneyFilter }}</div>
+    </div>
   </div>
 </template>
 
 <script>
-import { moneyFilter } from './../utils/mixins'
+import { moneyFilter } from "./../utils/mixins";
 
 export default {
   name: "GroupMemberCard",
   mixins: [moneyFilter],
   props: {
-    member: {
+    initialMember: {
       type: Object,
       required: true,
     },
   },
+  created() {
+    this.getMember()
+  },
   data() {
     return {
-      showFriend: false
-    }
+      showFriend: false,
+      member: {}
+    };
   },
   methods: {
+    getMember() {
+      this.member = this.initialMember
+    },
     showFriendButton() {
-      this.showFriend = !this.showFriend
+      this.showFriend = !this.showFriend;
+    },
+    addFriend() {
+      //  TODO: API 串接friend ship
+      this.member.isFriend = true
     }
   },
   filters: {
     defaultImage(image) {
       return image || require("./../assets/image/avatarExample.jpeg");
-    }
+    },
   },
 };
 </script>
@@ -54,22 +72,18 @@ export default {
   width: 100%;
   max-width: 500px;
 
-  display: flex;
-  align-items: center;
-
   padding: 10px 20px;
   margin: 30px auto;
 
   border-radius: 20px;
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
-  
+
   cursor: pointer;
 }
 
 .member-card:hover {
   transform: translateY(-5px);
 }
-
 
 .positive {
   background-color: #ebf8df;
@@ -79,6 +93,11 @@ export default {
 .negative {
   background-color: #ffeae7;
   color: #d41900;
+}
+
+.member-card-container {
+  display: flex;
+  align-items: center;
 }
 
 .follow-container {
@@ -93,13 +112,17 @@ export default {
   background: #eff0f1;
   display: none;
 
-  color: #a9b6cc;
-  font-weight: 700; 
+  font-weight: 700;
   text-align: center;
   line-height: 50px;
 
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
 }
+
+.follow-container button {
+  color: #a9b6cc;
+}
+
 
 .show {
   display: block;
