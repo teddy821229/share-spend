@@ -6,15 +6,18 @@
 
     <div class="group-detail">
       <div class="name-container">{{ group.name }}</div>
-      <div class="owed-container">$ {{ group.userOwed }}</div>
+      <div class="owed-container">{{ group.userOwed | moneyFilter}}</div>
       <div class="updated-container">最後更新: {{group.updatedDate}}</div>
     </div>
   </div>
 </template>
 
 <script>
+import { moneyFilter } from './../utils/mixins'
+
 export default {
   name: "ConsumeCard",
+  mixins: [moneyFilter],
   props: {
     group: {
       type: Object,
@@ -33,7 +36,7 @@ export default {
 
 <style scoped>
 .group-card {
-  width: 80%;
+  width: 90%;
   max-width: 500px;
 
   margin: 20px auto;

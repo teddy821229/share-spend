@@ -1,9 +1,9 @@
 <template>
-  <div class="card" :class="consume.category">
+  <div class="card" :class="consume.Category.code">
     <router-link :to="{ name: 'consume', params: { id: consume.id } }">
       <div class="consume-category">
         <ion-icon name="cash-outline"></ion-icon>
-        <div class="category-name">{{ consume.category | categoryToChinese}}</div>
+        <div class="category-name">{{ consume.Category.name }}</div>
       </div>
       <div class="consume-title">{{ consume.name }}</div>
       <div class="consume-detail">
@@ -22,19 +22,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-
-  filters: {
-    categoryToChinese(category) {
-      const table = {
-        'food': '食物',
-        'entertainment': '娛樂',
-        'transport': '交通',
-        'life': '生活',
-        'other': '其他'
-      }
-      return table[category]
-    }
   }
 };
 </script>
@@ -43,7 +30,7 @@ export default {
 .card {
   height: 80px;
   width: 90%;
-  max-width: 400px;
+  max-width: 450px;
 
   margin: 20px auto;
 

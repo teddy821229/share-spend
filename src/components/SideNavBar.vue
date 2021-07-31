@@ -59,6 +59,19 @@
             <span class="title">分帳群組</span>
           </router-link>
         </li>
+
+        <li class="nav-item">
+
+          <router-link to="/friendship">
+          <div class="corner"></div>
+          <div class="corner"></div>
+            <span class="icon">
+              <ion-icon name="person-add"></ion-icon>
+            </span>
+            <span class="title">好友設定</span>
+          </router-link>
+        </li>
+
         <li class="nav-item">
 
           <router-link to="/setting">

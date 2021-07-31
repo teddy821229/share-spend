@@ -5,10 +5,10 @@
       <div class="col-7">
         <div class="title">消費總額</div>
         <ConsumeTimeNavPills />
-        <TotalConsumeCard 
-          :consumes="consumes"
-        />
-        <CreateConsume />
+        <div class="left-content-container">
+          <TotalConsumeCard :consumes="consumes" />
+          <CreateConsume />
+        </div>
       </div>
       <div class="col-5">
         <div class="title">消費列表</div>
@@ -28,71 +28,107 @@
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
 import ConsumeCard from "../components/ConsumeCard.vue";
-import ConsumeCategoryNavPills from '../components/ConsumeCategoryNavPills.vue'
-import ConsumeTimeNavPills from './../components/ConsumeTimeNavPills.vue'
-import TotalConsumeCard from './../components/TotalConsumeCard.vue'
-import CreateConsume from './../components/CreateConsume.vue'
+import ConsumeCategoryNavPills from "../components/ConsumeCategoryNavPills.vue";
+import ConsumeTimeNavPills from "./../components/ConsumeTimeNavPills.vue";
+import TotalConsumeCard from "./../components/TotalConsumeCard.vue";
+import CreateConsume from "./../components/CreateConsume.vue";
 
 const dummyConsumes = [
   {
     id: 1,
-    category: "food",
+    Category: {
+      id: 1,
+      code: "food",
+      name: "食物",
+    },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
     amount: 500,
     date: "2021/07/07",
   },
   {
     id: 2,
-    category: "entertainment",
+    Category: {
+      id: 2,
+      code: "entertainment",
+      name: "娛樂",
+    },
     name: "盲盒",
     amount: 700,
     date: "2021/07/03",
   },
   {
     id: 3,
-    category: "life",
+    Category: {
+      id: 4,
+      code: "life",
+      name: "生活",
+    },
     name: "洗髮水",
     amount: 120,
     date: "2021/07/01",
   },
   {
     id: 4,
-    category: "food",
+    Category: {
+      id: 1,
+      code: "food",
+      name: "食物",
+    },
     name: "午餐",
     amount: 261,
     date: "2021/07/02",
   },
   {
     id: 5,
-    category: "life",
+    Category: {
+      id: 4,
+      code: "life",
+      name: "生活",
+    },
     name: "洗面乳",
     amount: 120,
     date: "2021/06/28",
   },
   {
     id: 6,
-    category: "entertainment",
+    Category: {
+      id: 2,
+      code: "entertainment",
+      name: "娛樂",
+    },
     name: "電影",
     amount: 200,
     date: "2021/06/23",
   },
   {
     id: 7,
-    category: "transport",
+    Category: {
+      id: 3,
+      code: "transport",
+      name: "交通",
+    },
     name: "高鐵",
     amount: 1300,
     date: "2021/06/01",
   },
   {
     id: 8,
-    category: "other",
+    Category: {
+      id: 5,
+      code: "other",
+      name: "其他",
+    },
     name: "捐款",
     amount: 200,
     date: "2021/06/23",
   },
   {
     id: 9,
-    category: "transport",
+    Category: {
+      id: 3,
+      code: "transport",
+      name: "交通",
+    },
     name: "高鐵",
     amount: 1300,
     date: "2021/06/01",
@@ -107,7 +143,7 @@ export default {
     ConsumeCategoryNavPills,
     ConsumeTimeNavPills,
     TotalConsumeCard,
-    CreateConsume
+    CreateConsume,
   },
   created() {
     this.fetchConsume();
@@ -120,7 +156,7 @@ export default {
   methods: {
     fetchConsume() {
       this.consumes = dummyConsumes;
-    }
+    },
   },
 };
 </script>
@@ -139,7 +175,7 @@ export default {
 }
 
 .col-7 {
-  height: calc(100% - 54px);
+  height: calc(100% - 54px - 50px);
 }
 
 .title {
@@ -166,7 +202,7 @@ export default {
   background: #a9b6cc;
 }
 
-.card-container {
+.card-container, .left-content-container {
   height: 100%;
   overflow: scroll;
 }

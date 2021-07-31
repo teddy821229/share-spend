@@ -11,23 +11,15 @@
             :key="consume.id"
             :consume="consume"
           />
-          <router-link
-            to="/payment"
-          >
-            <div class="more-consume">
-              其他消費
-            </div>
+          <router-link to="/payment">
+            <div class="more-consume">其他消費</div>
           </router-link>
         </div>
       </div>
       <div class="col-7">
         <div class="title">我的群組</div>
         <div class="group-container">
-          <GroupCard 
-            v-for="group in groups"
-            :key="group.id"
-            :group="group"
-          />
+          <GroupCard v-for="group in groups" :key="group.id" :group="group" />
         </div>
       </div>
     </div>
@@ -36,70 +28,106 @@
 
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
-import CreateConsume from './../components/CreateConsume.vue'
+import CreateConsume from "./../components/CreateConsume.vue";
 import ConsumeCard from "../components/ConsumeCard.vue";
-import GroupCard from './../components/GroupCard.vue'
+import GroupCard from "./../components/GroupCard.vue";
 
 const dummyConsumes = [
   {
     id: 1,
-    category: "food",
+    Category: {
+      id: 1,
+      code: "food",
+      name: "食物",
+    },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
     amount: 500,
     date: "2021/07/07",
   },
   {
     id: 2,
-    category: "entertainment",
+    Category: {
+      id: 2,
+      code: "entertainment",
+      name: "娛樂",
+    },
     name: "盲盒",
     amount: 700,
     date: "2021/07/03",
   },
   {
     id: 3,
-    category: "life",
+    Category: {
+      id: 4,
+      code: "life",
+      name: "生活",
+    },
     name: "洗髮水",
     amount: 120,
     date: "2021/07/01",
   },
   {
     id: 4,
-    category: "food",
+    Category: {
+      id: 1,
+      code: "food",
+      name: "食物",
+    },
     name: "午餐",
     amount: 261,
     date: "2021/07/02",
   },
   {
     id: 5,
-    category: "life",
+    Category: {
+      id: 4,
+      code: "life",
+      name: "生活",
+    },
     name: "洗面乳",
     amount: 120,
     date: "2021/06/28",
   },
   {
     id: 6,
-    category: "entertainment",
+    Category: {
+      id: 2,
+      code: "entertainment",
+      name: "娛樂",
+    },
     name: "電影",
     amount: 200,
     date: "2021/06/23",
   },
   {
     id: 7,
-    category: "transport",
+    Category: {
+      id: 3,
+      code: "transport",
+      name: "交通",
+    },
     name: "高鐵",
     amount: 1300,
     date: "2021/06/01",
   },
   {
     id: 8,
-    category: "other",
+    Category: {
+      id: 5,
+      code: "other",
+      name: "其他",
+    },
     name: "捐款",
     amount: 200,
     date: "2021/06/23",
   },
   {
     id: 9,
-    category: "transport",
+    Category: {
+      id: 3,
+      code: "transport",
+      name: "交通",
+    },
     name: "高鐵",
     amount: 1300,
     date: "2021/06/01",
@@ -109,46 +137,46 @@ const dummyConsumes = [
 const dummyGroups = [
   {
     id: 1,
-    name: '地獄小組',
-    image: '',
+    name: "地獄小組",
+    image: "",
     memberCount: 5,
     consumeCount: 21,
-    userOwed: "+ 3,667"
+    userOwed: "+ 3,667",
     // updatedDate: 作為排序依據
   },
   {
     id: 2,
-    name: '智障小組',
-    image: '',
+    name: "智障小組",
+    image: "",
     memberCount: 3,
     consumeCount: 11,
-    userOwed: "+ 163"
+    userOwed: "+ 163",
   },
   {
     id: 3,
-    name: '翻車小組',
-    image: '',
+    name: "翻車小組",
+    image: "",
     memberCount: 8,
     consumeCount: 44,
-    userOwed: "- 2,597"
+    userOwed: "- 2,597",
   },
   {
     id: 4,
-    name: '後援會',
-    image: '',
+    name: "後援會",
+    image: "",
     memberCount: 11,
     consumeCount: 56,
-    userOwed: "- 4,611"
+    userOwed: "- 4,611",
   },
   {
     id: 5,
-    name: '全民趴體',
-    image: '',
+    name: "全民趴體",
+    image: "",
     memberCount: 3,
     consumeCount: 9,
-    userOwed: "+ 503"
+    userOwed: "+ 503",
   },
-]
+];
 
 export default {
   name: "Home",
@@ -160,12 +188,12 @@ export default {
   },
   created() {
     this.fetchConsume();
-    this.fetchGroup()
+    this.fetchGroup();
   },
   data() {
     return {
       consumes: [],
-      groups: []
+      groups: [],
     };
   },
   methods: {
@@ -173,8 +201,8 @@ export default {
       this.consumes = dummyConsumes;
     },
     fetchGroup() {
-      this.groups = dummyGroups
-    }
+      this.groups = dummyGroups;
+    },
   },
 };
 </script>
@@ -189,11 +217,11 @@ export default {
 .row {
   height: calc(100% - 100px);
 }
-.col-5{
+.col-5 {
   height: calc(100% - 54px - 100px);
 }
 
-.col-7  {
+.col-7 {
   height: calc(100% - 54px);
 }
 
@@ -221,12 +249,13 @@ export default {
   background: #a9b6cc;
 }
 
-.add-consume, .more-consume {
+.add-consume,
+.more-consume {
   height: 80px;
   width: 90%;
   max-width: 400px;
 
-  margin: 20px auto 0 ;
+  margin: 20px auto 0;
 
   background-color: #a9b6cc;
   color: #fff;
@@ -238,17 +267,18 @@ export default {
   cursor: pointer;
 }
 
-.more-consume  {
+.more-consume {
   margin-bottom: 20px;
 }
 
-.add-consume:hover, .more-consume:hover {
+.add-consume:hover,
+.more-consume:hover {
   background: #6784b4;
 }
 
-.card-container, .group-container {
+.card-container,
+.group-container {
   height: 100%;
   overflow: scroll;
 }
-
 </style>

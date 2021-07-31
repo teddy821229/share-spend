@@ -25,10 +25,11 @@
 
 <script>
 import { moneyFilter } from "./../utils/mixins";
-
+import { imgFilter } from './../utils/mixins'
+ 
 export default {
   name: "GroupMemberCard",
-  mixins: [moneyFilter],
+  mixins: [moneyFilter, imgFilter],
   props: {
     initialMember: {
       type: Object,
@@ -56,11 +57,6 @@ export default {
       this.member.isFriend = true
     }
   },
-  filters: {
-    defaultImage(image) {
-      return image || require("./../assets/image/avatarExample.jpeg");
-    },
-  },
 };
 </script>
 
@@ -69,7 +65,7 @@ export default {
   position: relative;
 
   height: 100px;
-  width: 100%;
+  width: 90%;
   max-width: 500px;
 
   padding: 10px 20px;
@@ -82,7 +78,7 @@ export default {
 }
 
 .member-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
 }
 
 .positive {

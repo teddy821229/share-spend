@@ -100,7 +100,7 @@ export default {
     calculateTotal() {
       this.consumes.forEach((consume) => {
         this.categories.map((category) => {
-          if (consume.category === category.code) {
+          if (consume.Category.code === category.code) {
             category.total += consume.amount;
           }
         });
@@ -155,7 +155,7 @@ export default {
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
 }
-
+/* TODO: setting height */
 .total-title {
   font-size: 20px;
   font-weight: 700;
