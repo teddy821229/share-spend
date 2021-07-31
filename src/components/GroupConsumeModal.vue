@@ -16,53 +16,131 @@
         </div>
         <div class="modal-body">
           <!-- TODO: Modal Content -->
-          <div class="content-line consume-title">
-            消費名稱： <span class="ms-auto"> {{ content.name }}</span>
-          </div>
-          <div class="content-line category d-flex">
-            類別：<span class="ms-auto">{{ content.Category.name }}</span>
-          </div>
-          <div class="content-line total-amount d-flex">
-            總金額： <span class="ms-auto">{{ content.amount }}</span>
-          </div>
-          <div class="content-line description">備註：</div>
-          <div class="content-line pay-container">
-            <div class="title pay-title">付款：</div>
-            <ul class="pay-list">
-              <li
-                class="payment"
-                v-for="participate in paylist"
-                :key="participate.id"
-              >
-                <div class="img-container">
-                  <img :src="participate.avatar | defaultImage" alt="" />
-                </div>
-                <div class="payment-detail ">
-                  {{ participate.name }} : <span class="ms-auto"> {{ participate.pay }}</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="content-line share-container">
-            <div class="title share-title">消費：</div>
-            <ul class="share-list">
-              <li
-                class="share"
-                v-for="participate in sharelist"
-                :key="participate.id"
-              >
-                <div class="img-container">
-                  <img :src="participate.avatar | defaultImage" alt="" />
-                </div>
-                <div class="share-detail">
-                  {{ participate.name }} : <span class="ms-auto"> {{ participate.share }}</span>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <form class="consume-form">
+            <div
+              class="content-line form-row d-flex"
+              :class="{ edit: isEditing }"
+            >
+              <div class="row-title">消費名稱：</div>
+              <label for="name">{{ content.name }}</label>
+              <input type="text" name="name" id="name" v-model="content.name" />
+            </div>
+
+            <div
+              class="content-line form-row d-flex"
+              :class="{ edit: isEditing }"
+            >
+              <div class="row-title">類別：</div>
+              <label for="category">{{ content.Category.name }}</label>
+              <select name="category" id="category">
+                <option
+                  v-for="category in categoryList"
+                  :key="category.id"
+                  :value="category.code"
+                  :selected="category.id === content.Category.id"
+                >
+                  {{ category.name }}
+                </option>
+              </select>
+            </div>
+
+            <div
+              class="content-line form-row d-flex"
+              :class="{ edit: isEditing }"
+            >
+              <div class="row-title">總金額：</div>
+              <label for="amount">{{ content.amount }}</label>
+              <input
+                type="text"
+                name="amount"
+                id="amount"
+                v-model="content.amount"
+              />
+            </div>
+
+            <div
+              class="content-line form-row d-flex"
+              :class="{ edit: isEditing }"
+            >
+              <div class="row-title">備註：</div>
+              <label for="amount">{{ content.description }}</label>
+              <input
+                type="text"
+                name="description"
+                id="description"
+                v-model="content.description"
+              />
+            </div>
+
+            <div class="content-line pay-container">
+              <div class="title pay-title">付款：</div>
+              <ul class="pay-list">
+                <li
+                  class="payment"
+                  v-for="participate in paylist"
+                  :key="participate.id"
+                >
+                  <div class="img-container">
+                    <img :src="participate.avatar | defaultImage" alt="" />
+                  </div>
+                  <div class="payment-detail">
+                    {{ participate.name }} :
+                    <span class="ms-auto"> {{ participate.pay }}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="content-line share-container">
+              <div class="title share-title">消費：</div>
+              <ul class="share-list">
+                <li
+                  class="share"
+                  v-for="participate in sharelist"
+                  :key="participate.id"
+                >
+                  <div class="img-container">
+                    <img :src="participate.avatar | defaultImage" alt="" />
+                  </div>
+                  <div class="share-detail">
+                    {{ participate.name }} :
+                    <span class="ms-auto"> {{ participate.share }}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">編輯</button>
+          <template
+            v-if="isEditing === true"
+          >
+           <button
+            type="button"
+            class="btn btn-danger"
+            @click.prevent.stop="changeEditState"
+          >
+            取消
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click.prevent.stop="saveChange"
+          >
+            完成編輯
+          </button>
+          </template>
+          <template
+            v-else
+          >
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click.prevent.stop="changeEditState"
+          >
+            編輯
+          </button>
+          </template>
           <button
             type="button"
             class="btn btn-secondary"
@@ -116,7 +194,78 @@ export default {
         participates: [],
         date: "",
       },
+      isEditing: false,
+      contentCached: {
+        id: -1,
+        Category: {
+          id: -1,
+          code: "",
+          name: "",
+        },
+        name: "",
+        amount: 0,
+        userOwed: 0,
+        participates: [],
+        date: "",
+      },
+      categoryList: [
+        {
+          id: 1,
+          code: "food",
+          name: "食物",
+        },
+        {
+          id: 2,
+          code: "entertainment",
+          name: "娛樂",
+        },
+        {
+          id: 3,
+          code: "transport",
+          name: "交通",
+        },
+        {
+          id: 4,
+          code: "life",
+          name: "生活",
+        },
+        {
+          id: 5,
+          code: "other",
+          name: "其他",
+        },
+      ],
     };
+  },
+  methods: {
+    changeEditState() {
+      this.isEditing = !this.isEditing
+      if(this.isEditing) {
+        this.createCached()
+        return
+      }
+      if(!this.isEditing) {
+        this.cancelEdit()
+        return
+      }
+
+    },
+    createCached() {
+      this.contentCached = {
+        ...this.contentCached,
+        ...this.content
+      }
+    },
+    cancelEdit() {
+      this.content = {
+        ...this.content,
+        ...this.contentCached
+      }
+    },
+    saveChange() {
+      // TODO: API change consume file
+      this.isEditing = false
+    }
   },
   computed: {
     paylist() {
@@ -153,9 +302,54 @@ export default {
   padding: 0;
 }
 
+.row-title {
+  white-space: nowrap;
+  height: 35px;
+  line-height: 35px;
+}
+
+.editting {
+  display: block;
+}
+
+input,
+select {
+  width: 100%;
+  color: #6784b4;
+  border: 1px solid #a9b6cc;
+  border-radius: 10px;
+  height: 35px;
+  line-height: 35px;
+  padding-left: 4px;
+}
+
+.content-line input,
+.content-line select {
+  flex-grow: 1;
+  display: none;
+}
+
+.content-line label {
+  flex-grow: 1;
+  height: 35px;
+  line-height: 35px;
+  display: block;
+
+  padding-left: 5px;
+}
+
+.edit input,
+.edit select {
+  display: block;
+}
+
+.edit label {
+  display: none;
+}
+
 .content-line {
   position: relative;
-  padding: 20px;
+  padding: 15px;
 
   border-bottom: 1px solid #ebebeb;
 
@@ -170,7 +364,8 @@ export default {
   border: none;
 }
 
-.pay-container, .share-container {
+.pay-container,
+.share-container {
   display: block;
 }
 
@@ -196,11 +391,11 @@ export default {
   border-radius: 50%;
 }
 
-.share-detail, .payment-detail {
+.share-detail,
+.payment-detail {
   flex-grow: 1;
   display: flex;
 
   font-weight: 700;
-  
 }
 </style>
