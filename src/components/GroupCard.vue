@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "ConsumeCard",
+  name: "GroupCard",
   props: {
     group: {
       type: Object,

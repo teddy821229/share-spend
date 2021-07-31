@@ -2,24 +2,19 @@
   <!-- Modal -->
   <div
     class="modal fade consume-modal"
-    id="groupConsumeModal"
+    id="consumeModal"
     tabindex="-1"
-    aria-labelledby="groupConsumeModal"
+    aria-labelledby="consumeModal"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header d-block">
-          <h5 class="modal-title text-center" id="groupConsumeModal">
-            消費明細
-          </h5>
+          <h5 class="modal-title text-center" id="consumeModal">消費明細</h5>
         </div>
         <div class="modal-body">
           <!-- TODO: Modal Content -->
-          <form 
-            class="consume-form"
-            @submit.prevent.stop="saveChange"
-          >
+          <form class="consume-form">
             <div
               class="content-line form-row d-flex"
               :class="{ edit: isEditing }"
@@ -74,44 +69,6 @@
                 v-model="content.description"
               />
             </div>
-
-            <div class="content-line pay-container">
-              <div class="title pay-title">誰付的：</div>
-              <ul class="pay-list">
-                <li
-                  class="payment"
-                  v-for="participate in paylist"
-                  :key="participate.id"
-                >
-                  <div class="img-container">
-                    <img :src="participate.avatar | defaultImage" alt="" />
-                  </div>
-                  <div class="payment-detail">
-                    {{ participate.name }} :
-                    <span class="ms-auto"> {{ participate.pay }}</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="content-line share-container">
-              <div class="title share-title">幫誰付：</div>
-              <ul class="share-list">
-                <li
-                  class="share"
-                  v-for="participate in sharelist"
-                  :key="participate.id"
-                >
-                  <div class="img-container">
-                    <img :src="participate.avatar | defaultImage" alt="" />
-                  </div>
-                  <div class="share-detail">
-                    {{ participate.name }} :
-                    <span class="ms-auto"> {{ participate.share }}</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
             <div class="modal-footer">
               <template v-if="isEditing === true">
                 <button
@@ -122,8 +79,9 @@
                   取消
                 </button>
                 <button
-                  type="submit"
+                  type="button"
                   class="btn btn-primary"
+                  @click.prevent.stop="saveChange"
                   :disabled="sameCheck"
                 >
                   完成編輯
@@ -190,8 +148,6 @@ export default {
         },
         name: "",
         amount: 0,
-        userOwed: 0,
-        participates: [],
         date: "",
       },
       isEditing: false,
@@ -204,8 +160,6 @@ export default {
         },
         name: "",
         amount: 0,
-        userOwed: 0,
-        participates: [],
         date: "",
       },
       categoryList: [
@@ -267,16 +221,6 @@ export default {
     },
   },
   computed: {
-    paylist() {
-      return this.content.participates.filter(
-        (participate) => participate.pay !== 0
-      );
-    },
-    sharelist() {
-      return this.content.participates.filter(
-        (participate) => participate.share !== 0
-      );
-    },
     sameCheck() {
       if (
         this.content.name !== this.contentCached.name ||
@@ -367,6 +311,10 @@ select {
   /* box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2); */
 
   margin-bottom: 10px;
+}
+
+.content-line:last-child {
+  border: none;
 }
 
 .pay-container,

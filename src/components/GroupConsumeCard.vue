@@ -10,16 +10,14 @@
       <div class="consume-category">
         <ion-icon name="cash-outline"></ion-icon>
         <div class="category-name">{{ consume.Category.name }}</div>
+        <div class="time">{{ consume.date }}</div>
       </div>
       <div class="middle-container">
         <div class="consume-title-container">
           <div class="consume-title">{{ consume.name }}</div>
         </div>
 
-        <div class="amount">
-          {{ consume.amount | moneyFilter }} / {{
-            consume.userOwed | moneyFilter
-          }}
+        <div class="amount"> MyDebt: {{consume.userOwed | moneyFilter}}
         </div>
       </div>
 
@@ -28,7 +26,7 @@
           <ion-icon name="person"></ion-icon>
           <span>{{ consume.participates.length }}</span>
         </div>
-        <div class="time">{{ consume.date }}</div>
+        <div class="amount">{{consume.amount | moneyFilter}}</div>
       </div>
     </button>
   </div>
@@ -111,10 +109,18 @@ export default {
   color: #6784b4;
 }
 
+.time {
+  font-size: 12px;
+  padding-top: 5px ;
+  color: #a9b6cc;
+}
+
+/* 中間內容 */
+
 .middle-container {
   position: relative;
   height: 100%;
-  width: 65%;
+  width: 60%;
 
   display: flex;
   flex-direction: column;
@@ -150,10 +156,11 @@ export default {
 .amount {
   font-size: 16px;
   text-align: left;
+  color: #6784b4;
 }
 
 .consume-detail {
-  width: 15%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -162,13 +169,8 @@ export default {
   padding-right: 10px;
 }
 
-.consume-detail .time {
-  padding-top: 10px;
-  font-size: 12px;
-  color: #a9b6cc;
-}
-
 .participate-container {
+  height: 70%;
   padding-top: 5px;
 
   display: flex;
@@ -214,7 +216,7 @@ export default {
 }
 
 .food .time {
-  color: rgb(126, 147, 190);
+  color: #5e4cac;
 }
 
 /* 娛樂 */

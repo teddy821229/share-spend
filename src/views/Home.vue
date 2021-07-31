@@ -10,6 +10,7 @@
             v-for="consume in consumes"
             :key="consume.id"
             :consume="consume"
+            @after-click-button="afterClickButton"
           />
           <router-link to="/payment">
             <div class="more-consume">其他消費</div>
@@ -23,6 +24,9 @@
         </div>
       </div>
     </div>
+    <ConsumeModal 
+     :modal-content="modalContent"
+    />
   </div>
 </template>
 
@@ -31,6 +35,7 @@ import TopNavBar from "./../components/TopNavBar.vue";
 import CreateConsume from "./../components/CreateConsume.vue";
 import ConsumeCard from "../components/ConsumeCard.vue";
 import GroupCard from "./../components/GroupCard.vue";
+import ConsumeModal from './../components/ConsumeModal.vue'
 
 const dummyConsumes = [
   {
@@ -185,6 +190,7 @@ export default {
     CreateConsume,
     ConsumeCard,
     GroupCard,
+    ConsumeModal
   },
   created() {
     this.fetchConsume();
@@ -194,6 +200,7 @@ export default {
     return {
       consumes: [],
       groups: [],
+      modalContent: {}
     };
   },
   methods: {
@@ -203,6 +210,12 @@ export default {
     fetchGroup() {
       this.groups = dummyGroups;
     },
+    afterClickButton(data) {
+      this.modalContent = {
+        ...this.modalContent,
+        ...data
+      }
+    }
   },
 };
 </script>

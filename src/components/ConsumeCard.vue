@@ -1,6 +1,12 @@
 <template>
-  <div class="card" :class="consume.Category.code">
-    <router-link :to="{ name: 'consume', params: { id: consume.id } }">
+  <div class="personal-consume-card" :class="consume.Category.code">
+    <button
+      class="btn"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#consumeModal"
+      @click.prevent.stop="createModalContent"
+    >
       <div class="consume-category">
         <ion-icon name="cash-outline"></ion-icon>
         <div class="category-name">{{ consume.Category.name }}</div>
@@ -10,7 +16,7 @@
         <div class="amount">${{ consume.amount }}</div>
         <div class="time">{{ consume.date }}</div>
       </div>
-    </router-link>
+    </button>
   </div>
 </template>
 
@@ -22,12 +28,17 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    createModalContent() {
+      this.$emit('after-click-button', this.consume)
+    }
   }
 };
 </script>
 
 <style scoped>
-.card {
+.personal-consume-card {
   height: 80px;
   width: 90%;
   max-width: 450px;
@@ -38,20 +49,25 @@ export default {
   border-radius: 15px;
 }
 
-.card:hover {
+.personal-consume-card:hover {
   background: #f2f6ff;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
   transform: translateY(-5px);
 }
 
-.card a {
+.personal-consume-card button {
   width: 100%;
   height: 100%;
 
+  padding: 0 ;
+
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   cursor: pointer;
+  box-shadow: none;
+  border: none;
 }
 /* 類別 */
 .consume-category {
@@ -77,17 +93,18 @@ export default {
   color: #6784b4;
 }
 
-
 .consume-title {
   position: relative;
   display: flex;
   align-items: center;
 
   width: 50%;
+  height: 100%;
   padding-left: 10px;
 
   font-size: 18px;
   font-weight: 700;
+  text-align: left;
   letter-spacing: 0.05rem;
   color: #6784b4;
 }
@@ -124,108 +141,114 @@ export default {
 /* 食物 */
 
 .food {
-  border-color: #BB2020;
+  border-color: #2d2552;
 }
 
 .food:hover {
-  background-color: #fddddd;
+  background-color: #eaf1ff;
 }
 
 .food ion-icon {
-  color: #BB2020;
+  color: #2d2552;
 }
 
-.food .category-name, .food .consume-title, .food .amount {
-  color: #BB2020;
+.food .category-name,
+.food .consume-title,
+.food .amount {
+  color: #2d2552;
 }
 
 .food .consume-title::before {
-  background:#BB2020;
+  background: #2d2552;
 }
 
 .food .time {
-  color: #f37474;
+  color: #5e4cac;
 }
 
 /* 娛樂 */
 
 .entertainment {
-  border-color: #D9AA1E;
+  border-color: #3787a0;
 }
 
 .entertainment:hover {
-  background-color: #fff8e4;
+  background-color: #ddf3fa;
 }
 
 .entertainment ion-icon {
-  color: #D9AA1E;
+  color: #3787a0;
 }
 
-.entertainment .category-name, .entertainment .consume-title, .entertainment .amount {
-  color: #D9AA1E;
+.entertainment .category-name,
+.entertainment .consume-title,
+.entertainment .amount {
+  color: #3787a0;
 }
 
 .entertainment .consume-title::before {
-  background:#D9AA1E;
+  background: #3787a0;
 }
 
 .entertainment .time {
-  color: #e7d291;
+  color: #4ab8da;
 }
-
 
 /* 交通 */
 
 .transport {
-  border-color: #3EB595;
+  border-color: #186c6c;
 }
 
 .transport:hover {
-  background-color: #effffa;
+  background-color: #e2ffff;
 }
 
 .transport ion-icon {
-  color: #3EB595;
+  color: #186c6c;
 }
 
-.transport .category-name, .transport .consume-title, .transport .amount {
-  color: #3EB595;
+.transport .category-name,
+.transport .consume-title,
+.transport .amount {
+  color: #186c6c;
 }
 
 .transport .consume-title::before {
-  background:#3EB595;
+  background: #186c6c;
 }
 
 .transport .time {
-  color: #7abdab;
+  color: #25a3a3;
 }
 
 /* 生活 */
 
 .life {
-  border-color: #ED7A4D;
+  border-color: #581047;
 }
 
 .life:hover {
-  background-color: #fde8df;
+  background-color: #ffe4f9;
 }
 
 .life ion-icon {
-  color: #ED7A4D;
+  color: #581047;
 }
 
-.life .category-name, .life .consume-title, .life .amount {
-  color: #ED7A4D;
+.life .category-name,
+.life .consume-title,
+.life .amount {
+  color: #581047;
 }
 
 .life .consume-title::before {
-  background:#ED7A4D;
+  background: #581047;
 }
 
 .life .time {
-  color: #f09a78;
+  color: #961c79;
 }
-
 
 /* 其他用原本色調 */
 </style>

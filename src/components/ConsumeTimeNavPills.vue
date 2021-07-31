@@ -1,15 +1,15 @@
 <template>
   <div>
     <ul class="list">
-      <router-link
+      <button
         v-for="time in times"
         :key="time.id"
-        :to="{ name: 'payment', query: { timeSection: time.id } }"
+        type="button"
       >
         <li class="time">
           {{ time.section }}
         </li>
-      </router-link>
+      </button>
     </ul>
   </div>
 </template>
@@ -74,7 +74,7 @@ export default {
 .time {
   display: inline-block;
   height: 40px;
-  padding: 0 20px;
+  padding: 0 15px;
 
   margin: 0 5px;
 
@@ -84,7 +84,7 @@ export default {
   text-align: center;
 }
 
-a {
+button {
   color: #6784b4;
 }
 
@@ -93,7 +93,7 @@ a {
 }
 
 
-.time::-webkit-scrollbar {
+.list::-webkit-scrollbar {
   display: none;
 }
 </style>

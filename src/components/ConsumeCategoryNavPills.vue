@@ -1,24 +1,22 @@
 <template>
   <div>
     <ul class="list">
-      <router-link :to="{ name: 'payment' }">
-        <li class="category">全部</li>
-      </router-link>
-      <router-link
-        v-for="category in categories"
-        :key="category.id"
-        :to="{ name: 'payment', query: { categoryId: category.id } }"
-      >
-        <li class="category">
+      <li class="category" v-for="category in categories" :key="category.id" :class="{active: select === category.id}">
+        <button type="button" @click.prevent.stop="filterCategory(category.id)">
           {{ category.name }}
-        </li>
-      </router-link>
+        </button>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 const dummyCategories = [
+  {
+    id: 0,
+    code: "all",
+    name: "全部",
+  },
   {
     id: 1,
     code: "food",
@@ -51,6 +49,7 @@ export default {
   data() {
     return {
       categories: [],
+      select: 0
     };
   },
   created() {
@@ -59,6 +58,10 @@ export default {
   methods: {
     fetchCategory() {
       this.categories = dummyCategories;
+    },
+    filterCategory(categoryId) {
+      this.select = categoryId
+      this.$emit("change-category", categoryId);
     },
   },
 };
@@ -89,7 +92,7 @@ export default {
 .category {
   display: inline-block;
   height: 40px;
-  padding: 0 20px;
+  padding: 0 10px;
 
   margin: 0 5px;
 
@@ -99,11 +102,12 @@ export default {
   text-align: center;
 }
 
- a {
+button {
   color: #6784b4;
 }
 
-.category:hover, .active .category {
+.category:hover,
+.active  {
   background: #f2f6ff;
 }
 

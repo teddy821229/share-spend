@@ -12,16 +12,22 @@
       </div>
       <div class="col-5">
         <div class="title">消費列表</div>
-        <ConsumeCategoryNavPills />
+        <ConsumeCategoryNavPills 
+          @change-category="changeCategory"
+        />
         <div class="card-container">
           <ConsumeCard
-            v-for="consume in consumes"
+            v-for="consume in filteredConsume"
             :key="consume.id"
             :consume="consume"
+            @after-click-button="afterClickButton"
           />
         </div>
       </div>
     </div>
+    <ConsumeModal 
+      :modal-content="modalContent"
+    />
   </div>
 </template>
 
@@ -32,6 +38,7 @@ import ConsumeCategoryNavPills from "../components/ConsumeCategoryNavPills.vue";
 import ConsumeTimeNavPills from "./../components/ConsumeTimeNavPills.vue";
 import TotalConsumeCard from "./../components/TotalConsumeCard.vue";
 import CreateConsume from "./../components/CreateConsume.vue";
+import ConsumeModal from './../components/ConsumeModal.vue'
 
 const dummyConsumes = [
   {
@@ -144,6 +151,7 @@ export default {
     ConsumeTimeNavPills,
     TotalConsumeCard,
     CreateConsume,
+    ConsumeModal
   },
   created() {
     this.fetchConsume();
@@ -151,13 +159,34 @@ export default {
   data() {
     return {
       consumes: [],
+      modalContent: {},
+      categoryFilter: 0
+      
     };
   },
   methods: {
     fetchConsume() {
       this.consumes = dummyConsumes;
     },
+    afterClickButton(data) {
+      this.modalContent = {
+        ...this.modalContent,
+        ...data
+      }
+    },
+    changeCategory(categoryId) {
+      this.categoryFilter = categoryId
+    }
   },
+  computed: {
+    filteredConsume() {
+      if(this.categoryFilter === 0) {
+        return this.consumes
+      }
+
+      return this.consumes.filter(consume => consume.Category.id === this.categoryFilter)
+    }
+  }
 };
 </script>
 

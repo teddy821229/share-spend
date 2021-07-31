@@ -165,7 +165,7 @@ const dummyGroup = {
     {
       id: 3,
       Category: {
-        id: 4,
+        id: 1,
         code: "food",
         name: "食物",
       },
@@ -197,8 +197,8 @@ const dummyGroup = {
           account: "nomoney",
           avatar: "",
           share: 336,
-          pay: 1800,
-          debt: 1464,
+          pay: 1680,
+          debt: 1344,
         },
         {
           id: 24,
