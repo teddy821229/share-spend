@@ -294,4 +294,8 @@ export default {
   height: 100%;
   overflow: scroll;
 }
+
+.group {
+  margin: 30px auto;
+}
 </style>

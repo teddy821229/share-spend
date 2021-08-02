@@ -143,7 +143,7 @@ export default {
   overflow-y: scroll;
 
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 220px 220px 220px;
   grid-gap: 20px;
   grid-auto-flow: column;
 

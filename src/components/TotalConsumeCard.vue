@@ -56,7 +56,6 @@ export default {
   },
   data() {
     return {
-      ratio: "15%",
       categories: [
         {
           id: 1,
@@ -98,6 +97,7 @@ export default {
   },
   methods: {
     calculateTotal() {
+      this.cleanTotal()
       this.consumes.forEach((consume) => {
         this.categories.map((category) => {
           if (consume.Category.code === category.code) {
@@ -108,14 +108,13 @@ export default {
       this.calculateRatio();
     },
     calculateRatio() {
-      // let total = 0
-      // this.categories.forEach(category => {
-      //   total += category.total
-      // })
       this.categories.forEach((category) => {
         category.ratio = (category.total / this.totalAmount) * 100 + "%";
       });
     },
+    cleanTotal() {
+      this.categories.forEach(category => category.total = 0)
+    }
   },
   computed: {
     totalAmount() {

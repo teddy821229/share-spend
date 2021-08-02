@@ -52,7 +52,7 @@ export default {
   width: 90%;
   max-width: 500px;
 
-  margin: 20px auto;
+  margin: 10px auto;
 
   border: 2px solid #a9b6cc;
   border-radius: 15px;

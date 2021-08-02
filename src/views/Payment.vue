@@ -4,9 +4,11 @@
     <div class="row">
       <div class="col-7">
         <div class="title">消費總額</div>
-        <ConsumeTimeNavPills />
+        <ConsumeTimeNavPills 
+          @change-time="changeTime"
+        />
         <div class="left-content-container">
-          <TotalConsumeCard :consumes="consumes" />
+          <TotalConsumeCard :consumes="filteredConsume" />
           <CreateConsume />
         </div>
       </div>
@@ -160,8 +162,8 @@ export default {
     return {
       consumes: [],
       modalContent: {},
-      categoryFilter: 0
-      
+      categoryFilter: 0,
+      timeFilter: 1,
     };
   },
   methods: {
@@ -176,6 +178,9 @@ export default {
     },
     changeCategory(categoryId) {
       this.categoryFilter = categoryId
+    },
+    changeTime(timeId) {
+      this.timeFilter = timeId
     }
   },
   computed: {

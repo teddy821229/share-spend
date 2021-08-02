@@ -5,9 +5,16 @@
         v-for="time in times"
         :key="time.id"
         type="button"
+        @click.prevent.stop="filterTime(time.id)"
+        :class="{active: select === time.id}"
       >
         <li class="time">
           {{ time.section }}
+        </li>
+      </button>
+      <button type="button">
+        <li class="time">
+          其他區間
         </li>
       </button>
     </ul>
@@ -35,17 +42,14 @@ const dummyTimes = [
   {
     id: 5,
     section: "上個月",
-  },
-  {
-    id: 6,
-    section: "其他區間",
-  },
+  }
 ];
 
 export default {
   name: "ConsumeTimeNavPills",
   data() {
     return {
+      select: 1,
       times: [],
     };
   },
@@ -55,6 +59,10 @@ export default {
   methods: {
     fetchTimes() {
       this.times = dummyTimes;
+    },
+    filterTime(timeId) {
+      this.select = timeId
+      this.$emit("change-time", timeId);
     },
   },
 };
