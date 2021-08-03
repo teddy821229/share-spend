@@ -14,15 +14,18 @@
       <div class="consume-title">{{ consume.name }}</div>
       <div class="consume-detail">
         <div class="amount">${{ consume.amount }}</div>
-        <div class="time">{{ consume.date }}</div>
+        <div class="time">{{ consume.date | exactTime }}</div>
       </div>
     </button>
   </div>
 </template>
 
 <script>
+import { timeFilter } from './../utils/mixins'
+
 export default {
   name: "ConsumeCard",
+  mixins: [timeFilter],
   props: {
     consume: {
       type: Object,

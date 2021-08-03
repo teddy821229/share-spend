@@ -47,7 +47,7 @@ const dummyConsumes = [
     },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
     amount: 500,
-    date: "2021/07/07",
+    date: new Date(2021, 7, 2),
   },
   {
     id: 2,
@@ -58,7 +58,7 @@ const dummyConsumes = [
     },
     name: "盲盒",
     amount: 700,
-    date: "2021/07/03",
+    date: new Date(2021, 6, 28),
   },
   {
     id: 3,
@@ -69,7 +69,7 @@ const dummyConsumes = [
     },
     name: "洗髮水",
     amount: 120,
-    date: "2021/07/01",
+    date: new Date(2021, 6, 1),
   },
   {
     id: 4,
@@ -80,7 +80,7 @@ const dummyConsumes = [
     },
     name: "午餐",
     amount: 261,
-    date: "2021/07/02",
+    date: new Date(2021, 6, 2),
   },
   {
     id: 5,
@@ -91,7 +91,7 @@ const dummyConsumes = [
     },
     name: "洗面乳",
     amount: 120,
-    date: "2021/06/28",
+    date: new Date(2021, 5, 28),
   },
   {
     id: 6,
@@ -102,7 +102,7 @@ const dummyConsumes = [
     },
     name: "電影",
     amount: 200,
-    date: "2021/06/23",
+    date: new Date(2021, 6, 5),
   },
   {
     id: 7,
@@ -113,7 +113,7 @@ const dummyConsumes = [
     },
     name: "高鐵",
     amount: 1300,
-    date: "2021/06/01",
+    date: new Date(2021, 5, 4),
   },
   {
     id: 8,
@@ -124,7 +124,7 @@ const dummyConsumes = [
     },
     name: "捐款",
     amount: 200,
-    date: "2021/06/23",
+    date: new Date(2021, 5, 23),
   },
   {
     id: 9,
@@ -135,7 +135,7 @@ const dummyConsumes = [
     },
     name: "高鐵",
     amount: 1300,
-    date: "2021/06/01",
+    date: new Date(2021, 5, 1),
   },
 ];
 
@@ -206,6 +206,9 @@ export default {
   methods: {
     fetchConsume() {
       this.consumes = dummyConsumes;
+      this.consumes.sort((a, b) => {
+        return b.date.getTime() - a.date.getTime()
+      })
     },
     fetchGroup() {
       this.groups = dummyGroups;

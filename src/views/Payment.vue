@@ -4,9 +4,7 @@
     <div class="row">
       <div class="col-7">
         <div class="title">消費總額</div>
-        <ConsumeTimeNavPills 
-          @change-time="changeTime"
-        />
+        <ConsumeTimeNavPills @change-time="changeTime" />
         <div class="left-content-container">
           <TotalConsumeCard :consumes="filteredConsume" />
           <CreateConsume />
@@ -14,9 +12,7 @@
       </div>
       <div class="col-5">
         <div class="title">消費列表</div>
-        <ConsumeCategoryNavPills 
-          @change-category="changeCategory"
-        />
+        <ConsumeCategoryNavPills @change-category="changeCategory" />
         <div class="card-container">
           <ConsumeCard
             v-for="consume in filteredConsume"
@@ -28,7 +24,8 @@
       </div>
     </div>
     <ConsumeModal 
-      :modal-content="modalContent"
+      :modal-content="modalContent" 
+      @after-save-change="afterSaveChange"
     />
   </div>
 </template>
@@ -40,7 +37,7 @@ import ConsumeCategoryNavPills from "../components/ConsumeCategoryNavPills.vue";
 import ConsumeTimeNavPills from "./../components/ConsumeTimeNavPills.vue";
 import TotalConsumeCard from "./../components/TotalConsumeCard.vue";
 import CreateConsume from "./../components/CreateConsume.vue";
-import ConsumeModal from './../components/ConsumeModal.vue'
+import ConsumeModal from "./../components/ConsumeModal.vue";
 
 const dummyConsumes = [
   {
@@ -52,7 +49,7 @@ const dummyConsumes = [
     },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
     amount: 500,
-    date: "2021/07/07",
+    date: new Date(2021, 7, 2),
   },
   {
     id: 2,
@@ -63,7 +60,7 @@ const dummyConsumes = [
     },
     name: "盲盒",
     amount: 700,
-    date: "2021/07/03",
+    date: new Date(2021, 6, 28),
   },
   {
     id: 3,
@@ -74,7 +71,7 @@ const dummyConsumes = [
     },
     name: "洗髮水",
     amount: 120,
-    date: "2021/07/01",
+    date: new Date(2021, 6, 1),
   },
   {
     id: 4,
@@ -85,7 +82,7 @@ const dummyConsumes = [
     },
     name: "午餐",
     amount: 261,
-    date: "2021/07/02",
+    date: new Date(2021, 6, 2),
   },
   {
     id: 5,
@@ -96,7 +93,7 @@ const dummyConsumes = [
     },
     name: "洗面乳",
     amount: 120,
-    date: "2021/06/28",
+    date: new Date(2021, 5, 28),
   },
   {
     id: 6,
@@ -107,7 +104,7 @@ const dummyConsumes = [
     },
     name: "電影",
     amount: 200,
-    date: "2021/06/23",
+    date: new Date(2021, 6, 5),
   },
   {
     id: 7,
@@ -118,7 +115,7 @@ const dummyConsumes = [
     },
     name: "高鐵",
     amount: 1300,
-    date: "2021/06/01",
+    date: new Date(2021, 5, 4),
   },
   {
     id: 8,
@@ -129,7 +126,7 @@ const dummyConsumes = [
     },
     name: "捐款",
     amount: 200,
-    date: "2021/06/23",
+    date: new Date(2021, 5, 23),
   },
   {
     id: 9,
@@ -140,7 +137,7 @@ const dummyConsumes = [
     },
     name: "高鐵",
     amount: 1300,
-    date: "2021/06/01",
+    date: new Date(2021, 5, 1),
   },
 ];
 
@@ -153,7 +150,7 @@ export default {
     ConsumeTimeNavPills,
     TotalConsumeCard,
     CreateConsume,
-    ConsumeModal
+    ConsumeModal,
   },
   created() {
     this.fetchConsume();
@@ -169,29 +166,72 @@ export default {
   methods: {
     fetchConsume() {
       this.consumes = dummyConsumes;
+      this.consumes.sort((a, b) => {
+        return b.date.getTime() - a.date.getTime();
+      });
     },
     afterClickButton(data) {
       this.modalContent = {
         ...this.modalContent,
-        ...data
-      }
+        ...data,
+      };
     },
     changeCategory(categoryId) {
-      this.categoryFilter = categoryId
+      this.categoryFilter = categoryId;
     },
     changeTime(timeId) {
-      this.timeFilter = timeId
+      this.timeFilter = timeId;
+    },
+    afterSaveChange(data) {
+      console.log('data',data);
+      this.consumes = this.consumes.map(consume => {
+        if(consume.id === data.id) {
+          console.log('consume',consume);
+          return {
+            ...consume,
+            ...data
+          }
+        } else {
+          return consume
+        }
+
+      })
     }
   },
   computed: {
     filteredConsume() {
-      if(this.categoryFilter === 0) {
-        return this.consumes
+      if (this.categoryFilter === 0) {
+        return this.filteredTime;
+      }
+      return this.filteredTime.filter(
+        (consume) => consume.Category.id === this.categoryFilter
+      );
+    },
+    filteredTime() {
+      const now = new Date();
+      const day = 86400000;
+      const week = day * 7;
+      const twoWeek = day * 14
+      const month = day * 30
+      const season = month * 3
+
+      const list = {
+        1: day,
+        2: week,
+        3: twoWeek,
+        4: month,
+        5: season
+
       }
 
-      return this.consumes.filter(consume => consume.Category.id === this.categoryFilter)
-    }
-  }
+      // Today filter
+      
+        return this.consumes.filter((consume) => {
+          return now.getTime() - consume.date.getTime() <= list[this.timeFilter];
+        });
+
+    },
+  },
 };
 </script>
 
@@ -236,7 +276,8 @@ export default {
   background: #a9b6cc;
 }
 
-.card-container, .left-content-container {
+.card-container,
+.left-content-container {
   height: 100%;
   overflow: scroll;
 }

@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const moneyFilter = {
   filters: {
     moneyFilter(amount) {
@@ -43,5 +45,17 @@ export const imgFilter = {
     defaultImage(image) {
       return image || require("./../assets/image/avatarExample.jpeg");
     },
+  }
+}
+
+export const timeFilter = {
+  filters: {
+    exactTime(time) {
+      if(!time) {
+        return '-'
+      }
+      
+      return moment(time).format('MM-DD-YYYY')
+    }
   }
 }

@@ -29,19 +29,19 @@ const dummyTimes = [
   },
   {
     id: 2,
-    section: "本週",
+    section: "七天內",
   },
   {
     id: 3,
-    section: "上週",
+    section: "十四天內",
   },
   {
     id: 4,
-    section: "本月",
+    section: "一個月內",
   },
   {
     id: 5,
-    section: "上個月",
+    section: "本季內",
   }
 ];
 

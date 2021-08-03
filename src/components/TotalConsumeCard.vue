@@ -109,7 +109,10 @@ export default {
     },
     calculateRatio() {
       this.categories.forEach((category) => {
-        category.ratio = (category.total / this.totalAmount) * 100 + "%";
+        if(category.total === 0) {
+          return category.ratio = '0%'
+        }
+        return category.ratio = (category.total / this.totalAmount) * 100 + "%";
       });
     },
     cleanTotal() {

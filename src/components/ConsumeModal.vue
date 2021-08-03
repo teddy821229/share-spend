@@ -14,7 +14,7 @@
         </div>
         <div class="modal-body">
           <!-- TODO: Modal Content -->
-          <form class="consume-form">
+          <form class="consume-form" @submit.prevent.stop="saveChange">
             <div
               class="content-line form-row d-flex"
               :class="{ edit: isEditing }"
@@ -79,9 +79,8 @@
                   取消
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-primary"
-                  @click.prevent.stop="saveChange"
                   :disabled="sameCheck"
                 >
                   完成編輯
@@ -218,6 +217,10 @@ export default {
     saveChange() {
       // TODO: API change consume file
       this.isEditing = false;
+      this.$emit("after-save-change", {
+        ...this.content,
+        amount: Number(this.content.amount)
+      });
     },
   },
   computed: {
