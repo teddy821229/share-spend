@@ -10,7 +10,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header d-block">
-          <h5 class="modal-title text-center" id="consumeModal">消費明細</h5>
+          <h5 class="modal-title text-center">消費明細</h5>
         </div>
         <div class="modal-body">
           <!-- TODO: Modal Content -->
@@ -112,6 +112,7 @@
 
 <script>
 import { imgFilter } from "./../utils/mixins";
+
 
 export default {
   name: "GroupConsumeModal",

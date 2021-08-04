@@ -2,31 +2,31 @@
   <div class="main-content">
     <TopNavBar msg="首頁" />
     <div class="row">
-      <div class="col-5">
-        <div class="title">最新消費</div>
-        <CreateConsume />
-        <div class="card-container">
-          <ConsumeCard
-            v-for="consume in consumes"
-            :key="consume.id"
-            :consume="consume"
-            @after-click-button="afterClickButton"
-          />
-          <router-link to="/payment">
-            <div class="more-consume">其他消費</div>
-          </router-link>
+      <div class="col-12 col-md-6">
+        <div class="title">最新 10 筆消費</div>
+        <div class="left-container">
+          <CreateConsume @after-create-new-consume="afterCreateNewConsume" />
+          <div class="card-container">
+            <ConsumeCard
+              v-for="consume in consumes"
+              :key="consume.id"
+              :consume="consume"
+              @after-click-button="afterClickButton"
+            />
+            <router-link to="/payment">
+              <div class="more-consume">其他消費</div>
+            </router-link>
+          </div>
         </div>
       </div>
-      <div class="col-7">
+      <div class="col-12 col-md-6">
         <div class="title">我的群組</div>
         <div class="group-container">
           <GroupCard v-for="group in groups" :key="group.id" :group="group" />
         </div>
       </div>
     </div>
-    <ConsumeModal 
-     :modal-content="modalContent"
-    />
+    <ConsumeModal :modal-content="modalContent" />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ import TopNavBar from "./../components/TopNavBar.vue";
 import CreateConsume from "./../components/CreateConsume.vue";
 import ConsumeCard from "../components/ConsumeCard.vue";
 import GroupCard from "./../components/GroupCard.vue";
-import ConsumeModal from './../components/ConsumeModal.vue'
+import ConsumeModal from "./../components/ConsumeModal.vue";
 
 const dummyConsumes = [
   {
@@ -137,6 +137,17 @@ const dummyConsumes = [
     amount: 1300,
     date: new Date(2021, 5, 1),
   },
+  {
+    id: 10,
+    Category: {
+      id: 3,
+      code: "entertainment",
+      name: "娛樂",
+    },
+    name: "線上抽盒機",
+    amount: 1300,
+    date: new Date(2021, 6, 13),
+  },
 ];
 
 const dummyGroups = [
@@ -190,7 +201,7 @@ export default {
     CreateConsume,
     ConsumeCard,
     GroupCard,
-    ConsumeModal
+    ConsumeModal,
   },
   created() {
     this.fetchConsume();
@@ -200,15 +211,15 @@ export default {
     return {
       consumes: [],
       groups: [],
-      modalContent: {}
+      modalContent: {},
     };
   },
   methods: {
     fetchConsume() {
       this.consumes = dummyConsumes;
       this.consumes.sort((a, b) => {
-        return b.date.getTime() - a.date.getTime()
-      })
+        return b.date.getTime() - a.date.getTime();
+      });
     },
     fetchGroup() {
       this.groups = dummyGroups;
@@ -216,9 +227,27 @@ export default {
     afterClickButton(data) {
       this.modalContent = {
         ...this.modalContent,
-        ...data
-      }
-    }
+        ...data,
+      };
+    },
+    afterSaveChange(data) {
+      console.log("data", data);
+      this.consumes = this.consumes.map((consume) => {
+        if (consume.id === data.id) {
+          console.log("consume", consume);
+          return {
+            ...consume,
+            ...data,
+          };
+        } else {
+          return consume;
+        }
+      });
+    },
+    afterCreateNewConsume(data) {
+      this.consumes.unshift(data);
+      this.consumes.pop()
+    },
   },
 };
 </script>
@@ -232,13 +261,18 @@ export default {
 
 .row {
   height: calc(100% - 100px);
+  overflow: scroll;
 }
-.col-5 {
-  height: calc(100% - 54px - 100px);
+.col-md-6 {
+  height: 100%;
 }
 
-.col-7 {
-  height: calc(100% - 54px);
+.col-12 {
+  height: 100%;
+}
+
+.left-container {
+  height: calc(100% - 54px - 110px);
 }
 
 .title {
@@ -292,9 +326,13 @@ export default {
   background: #6784b4;
 }
 
-.card-container,
-.group-container {
+.card-container {
   height: 100%;
+  overflow: scroll;
+}
+
+.group-container {
+  height: calc(100% - 54px);
   overflow: scroll;
 }
 

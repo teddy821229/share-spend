@@ -2,15 +2,17 @@
   <div class="main-content">
     <TopNavBar msg="記帳本" />
     <div class="row">
-      <div class="col-7">
+      <div class="col-6">
         <div class="title">消費總額</div>
         <ConsumeTimeNavPills @change-time="changeTime" />
         <div class="left-content-container">
           <TotalConsumeCard :consumes="filteredConsume" />
-          <CreateConsume />
+          <CreateConsume 
+            @after-create-new-consume="afterCreateNewConsume"
+          />
         </div>
       </div>
-      <div class="col-5">
+      <div class="col-6">
         <div class="title">消費列表</div>
         <ConsumeCategoryNavPills @change-category="changeCategory" />
         <div class="card-container">
@@ -183,10 +185,8 @@ export default {
       this.timeFilter = timeId;
     },
     afterSaveChange(data) {
-      console.log('data',data);
       this.consumes = this.consumes.map(consume => {
         if(consume.id === data.id) {
-          console.log('consume',consume);
           return {
             ...consume,
             ...data
@@ -196,6 +196,9 @@ export default {
         }
 
       })
+    },
+    afterCreateNewConsume(data) {
+      this.consumes.unshift(data)
     }
   },
   computed: {
@@ -244,11 +247,11 @@ export default {
 .row {
   height: calc(100% - 100px);
 }
-.col-5 {
+.col-6 {
   height: calc(100% - 54px - 50px);
 }
 
-.col-7 {
+.col-6 {
   height: calc(100% - 54px - 50px);
 }
 
