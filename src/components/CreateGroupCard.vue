@@ -1,6 +1,6 @@
 <template>
  <div class="group">
-    <router-link to="/">
+    <router-link to="/groups/create">
       <div class="inner-container">
         新增群組
       </div>

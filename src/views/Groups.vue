@@ -3,7 +3,7 @@
     <TopNavBar msg="分帳群組" />
     <div class="groups-title">我的群組 (14)</div>
     <div class="groups-container">
-      <CreateGroup />
+      <CreateGroupCard />
       <GroupCard 
         v-for="group in groups"
         :key="group.id"
@@ -16,7 +16,7 @@
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
 import GroupCard from "./../components/GroupCard.vue";
-import CreateGroup from './../components/CreateGroup.vue'
+import CreateGroupCard from '../components/CreateGroupCard.vue'
 
 const dummyGroups = [
   {
@@ -91,7 +91,7 @@ export default {
   components: {
     TopNavBar,
     GroupCard,
-    CreateGroup
+    CreateGroupCard
   },
   created() {
     this.fetchGroups()

@@ -96,6 +96,7 @@
 
             <div class="content-line share-container">
               <div class="title share-title">幫誰付：</div>
+              <!-- add editing with input  -->
               <ul class="share-list">
                 <li
                   class="share"
