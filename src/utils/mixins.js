@@ -43,7 +43,7 @@ export const moneyFilter = {
 export const imgFilter = {
   filters: {
     defaultImage(image) {
-      return image || require("./../assets/image/avatarExample.jpeg");
+      return image || require("./../assets/image/defaultAvatar.jpeg");
     },
   }
 }

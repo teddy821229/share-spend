@@ -79,9 +79,10 @@ export default {
 }
 
 .name-container {
-  line-height: 30px;
+  line-height: 25px;
 
-  font-size: 16px;
+  font-size: 25px;
+  font-weight: 700;
 }
 
 .owed-container {

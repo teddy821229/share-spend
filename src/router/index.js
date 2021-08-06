@@ -50,7 +50,7 @@ const routes = [
     path: '/groups/edit/:id',
     name: 'group-edit',
     // TODO: group edit views
-    component: () => import('./../views/GroupDetail.vue')
+    component: () => import('./../views/GroupDetailEdit.vue')
   }
 ]
 

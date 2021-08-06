@@ -39,6 +39,7 @@ export default {
 
 .nav-container {
   max-width: 300px;
+  min-height: 100%  ;
 }
 
 .content {

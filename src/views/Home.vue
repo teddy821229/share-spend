@@ -26,7 +26,11 @@
         </div>
       </div>
     </div>
-    <ConsumeModal :modal-content="modalContent" />
+    <ConsumeModal 
+      :modal-content="modalContent"
+      @after-save-change="afterSaveChange"
+      @after-delete="afterDelete"
+    />
   </div>
 </template>
 
@@ -37,12 +41,15 @@ import ConsumeCard from "../components/ConsumeCard.vue";
 import GroupCard from "./../components/GroupCard.vue";
 import ConsumeModal from "./../components/ConsumeModal.vue";
 
+
+
 const dummyConsumes = [
   {
     id: 1,
     Category: {
       id: 1,
       code: "food",
+      icon: 'fast-food-outline',
       name: "食物",
     },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
@@ -54,6 +61,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
+      icon: 'game-controller-outline',
       name: "娛樂",
     },
     name: "盲盒",
@@ -65,6 +73,7 @@ const dummyConsumes = [
     Category: {
       id: 4,
       code: "life",
+      icon: 'cafe-outline',
       name: "生活",
     },
     name: "洗髮水",
@@ -76,6 +85,7 @@ const dummyConsumes = [
     Category: {
       id: 1,
       code: "food",
+      icon: 'fast-food-outline',
       name: "食物",
     },
     name: "午餐",
@@ -87,6 +97,7 @@ const dummyConsumes = [
     Category: {
       id: 4,
       code: "life",
+      icon: 'cafe-outline',
       name: "生活",
     },
     name: "洗面乳",
@@ -98,6 +109,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
+      icon: 'game-controller-outline',
       name: "娛樂",
     },
     name: "電影",
@@ -109,6 +121,7 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "transport",
+      icon: 'train-outline',
       name: "交通",
     },
     name: "高鐵",
@@ -120,6 +133,7 @@ const dummyConsumes = [
     Category: {
       id: 5,
       code: "other",
+      icon: 'cash-outline',
       name: "其他",
     },
     name: "捐款",
@@ -131,6 +145,7 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "transport",
+      icon: 'train-outline',
       name: "交通",
     },
     name: "高鐵",
@@ -142,6 +157,7 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "entertainment",
+      icon: 'game-controller-outline',
       name: "娛樂",
     },
     name: "線上抽盒機",
@@ -203,6 +219,7 @@ export default {
     GroupCard,
     ConsumeModal,
   },
+  
   created() {
     this.fetchConsume();
     this.fetchGroup();
@@ -248,6 +265,9 @@ export default {
       this.consumes.unshift(data);
       this.consumes.pop()
     },
+    afterDelete(data) {
+      this.consumes = this.consumes.filter(consume => consume.id !== data.id)
+    }
   },
 };
 </script>

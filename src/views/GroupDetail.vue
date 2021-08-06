@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <TopNavBar :msg="group.name" :show="true" />
+    <TopNavBar msg="群組詳細資料" :show="true" />
     <div class="row">
       <div class="col-6">
         <GroupCardInDetail :group="group" />

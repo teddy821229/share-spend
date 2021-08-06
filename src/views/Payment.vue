@@ -7,9 +7,7 @@
         <ConsumeTimeNavPills @change-time="changeTime" />
         <div class="left-content-container">
           <TotalConsumeCard :consumes="filteredConsume" />
-          <CreateConsume 
-            @after-create-new-consume="afterCreateNewConsume"
-          />
+          <CreateConsume @after-create-new-consume="afterCreateNewConsume" />
         </div>
       </div>
       <div class="col-6">
@@ -25,9 +23,10 @@
         </div>
       </div>
     </div>
-    <ConsumeModal 
-      :modal-content="modalContent" 
+    <ConsumeModal
+      :modal-content="modalContent"
       @after-save-change="afterSaveChange"
+      @after-delete="afterDelete"
     />
   </div>
 </template>
@@ -47,6 +46,7 @@ const dummyConsumes = [
     Category: {
       id: 1,
       code: "food",
+      icon: "fast-food-outline",
       name: "食物",
     },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
@@ -58,6 +58,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
+      icon: "game-controller-outline",
       name: "娛樂",
     },
     name: "盲盒",
@@ -69,6 +70,7 @@ const dummyConsumes = [
     Category: {
       id: 4,
       code: "life",
+      icon: "cafe-outline",
       name: "生活",
     },
     name: "洗髮水",
@@ -80,6 +82,7 @@ const dummyConsumes = [
     Category: {
       id: 1,
       code: "food",
+      icon: "fast-food-outline",
       name: "食物",
     },
     name: "午餐",
@@ -91,6 +94,7 @@ const dummyConsumes = [
     Category: {
       id: 4,
       code: "life",
+      icon: "cafe-outline",
       name: "生活",
     },
     name: "洗面乳",
@@ -102,6 +106,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
+      icon: "game-controller-outline",
       name: "娛樂",
     },
     name: "電影",
@@ -113,6 +118,7 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "transport",
+      icon: "train-outline",
       name: "交通",
     },
     name: "高鐵",
@@ -124,6 +130,7 @@ const dummyConsumes = [
     Category: {
       id: 5,
       code: "other",
+      icon: "cash-outline",
       name: "其他",
     },
     name: "捐款",
@@ -135,11 +142,24 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "transport",
+      icon: "train-outline",
       name: "交通",
     },
     name: "高鐵",
     amount: 1300,
     date: new Date(2021, 5, 1),
+  },
+  {
+    id: 10,
+    Category: {
+      id: 3,
+      code: "entertainment",
+      icon: "game-controller-outline",
+      name: "娛樂",
+    },
+    name: "線上抽盒機",
+    amount: 1300,
+    date: new Date(2021, 6, 13),
   },
 ];
 
@@ -185,20 +205,22 @@ export default {
       this.timeFilter = timeId;
     },
     afterSaveChange(data) {
-      this.consumes = this.consumes.map(consume => {
-        if(consume.id === data.id) {
+      this.consumes = this.consumes.map((consume) => {
+        if (consume.id === data.id) {
           return {
             ...consume,
-            ...data
-          }
+            ...data,
+          };
         } else {
-          return consume
+          return consume;
         }
-
-      })
+      });
     },
     afterCreateNewConsume(data) {
-      this.consumes.unshift(data)
+      this.consumes.unshift(data);
+    },
+    afterDelete(data) {
+      this.consumes = this.consumes.filter(consume => consume.id !== data.id)
     }
   },
   computed: {
@@ -214,25 +236,23 @@ export default {
       const now = new Date();
       const day = 86400000;
       const week = day * 7;
-      const twoWeek = day * 14
-      const month = day * 30
-      const season = month * 3
+      const twoWeek = day * 14;
+      const month = day * 30;
+      const season = month * 3;
 
       const list = {
         1: day,
         2: week,
         3: twoWeek,
         4: month,
-        5: season
-
-      }
+        5: season,
+      };
 
       // Today filter
-      
-        return this.consumes.filter((consume) => {
-          return now.getTime() - consume.date.getTime() <= list[this.timeFilter];
-        });
 
+      return this.consumes.filter((consume) => {
+        return now.getTime() - consume.date.getTime() <= list[this.timeFilter];
+      });
     },
   },
 };

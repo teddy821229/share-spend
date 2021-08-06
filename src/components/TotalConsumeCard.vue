@@ -35,8 +35,11 @@
 </template>
 
 <script>
+import { moneyFilter } from './../utils/mixins'
+
 export default {
   name: "TotalConsumeCard",
+  mixins: [moneyFilter],
   props: {
     consumes: {
       type: Array,
@@ -127,22 +130,7 @@ export default {
       });
       return total;
     },
-  },
-  filters: {
-    moneyFilter(amount) {
-      let thousand = 0;
-      let rest = 0;
-      if (amount < 1000) {
-        return "$ " + amount;
-      }
-      if (amount >= 1000) {
-        thousand = Math.floor(amount / 1000);
-        rest = amount - thousand * 1000;
-      }
-      let filterAmount = "$ " + thousand + "," + rest;
-      return filterAmount;
-    },
-  },
+  }
 };
 </script>
 

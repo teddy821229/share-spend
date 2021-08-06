@@ -23,10 +23,6 @@
           <input type="text" id="name" name="name" v-model="name" />
         </div>
 
-        <!-- <div class="form-row description-row">
-            <label for="description">其他備註： </label>
-            <textarea type="text" id="description" name="description" v-model="description"> </textarea>
-          </div> -->
         <div class="member-list-title">成員名單：</div>
         <div class="form-row member-list-container">
           <ul class="member-list">
@@ -67,7 +63,7 @@
 
         <div class="button-container d-flex justify-content-end">
           <button type="submit" class="btn btn-primary submit-button">
-            建立群組
+            完成編輯
           </button>
         </div>
       </div>
@@ -219,11 +215,60 @@ const dummyFriendList = [
   },
 ];
 
+const dummyGroup = {
+  id: 1,
+  name: "地獄小組",
+  image: "",
+  Members: [
+    {
+      id: 22,
+      name: "買盲盒買到破產",
+      account: "nomoney",
+      avatar: "",
+      isFriend: false,
+      debtInGroup: 2469,
+    },
+    {
+      id: 24,
+      name: "抽不到六星",
+      account: "poorgame",
+      avatar: "",
+      isFriend: true,
+      debtInGroup: -1181,
+    },
+    {
+      id: 26,
+      name: "找不到房間的蟑螂",
+      account: "whereiscockroach",
+      avatar: "",
+      isFriend: false,
+      debtInGroup: -456,
+    },
+    {
+      id: 28,
+      name: "好想換手機",
+      account: "wantiphone13",
+      avatar: "",
+      isFriend: true,
+      debtInGroup: -536,
+    },
+    {
+      id: 1,
+      name: "找不到工作又單身",
+      account: "lohanka",
+      avatar: "",
+      isFriend: false,
+      debtInGroup: -496,
+    },
+  ],
+};
+
 export default {
   name: "CreateGroupForm",
   mixins: [imgFilter],
   data() {
     return {
+      id: -1,
       name: "",
       image: "",
       members: [],
@@ -233,6 +278,30 @@ export default {
     };
   },
   methods: {
+    fetchUser() {
+      this.user = {
+        ...this.user,
+        ...dummyUser,
+      };
+      this.members.push(this.user);
+    },
+    fetchGroup() {
+      const { id, name, image, Members } = dummyGroup;
+      this.id = id;
+      this.name = name;
+      this.image = image;
+      this.members = Members;
+    },
+    fetchFriendList() {
+      // this.friendList = dummyFriendList;
+      dummyFriendList.map((friend) => {
+        this.friendList.push({
+          ...friend,
+          selected: this.members.find(member => member.id === friend.id),
+        });
+      });
+    },
+
     handleFileChange(e) {
       const { files } = e.target;
       if (files.length === 0) {
@@ -242,22 +311,6 @@ export default {
 
       const imageURL = window.URL.createObjectURL(files[0]);
       this.image = imageURL;
-    },
-    fetchFriendList() {
-      // this.friendList = dummyFriendList;
-      dummyFriendList.map((friend) => {
-        this.friendList.push({
-          ...friend,
-          selected: false,
-        });
-      });
-    },
-    fetchUser() {
-      this.user = {
-        ...this.user,
-        ...dummyUser,
-      };
-      this.members.push(this.user);
     },
     handleSelect(user) {
       if (this.members.find((member) => member.id === user.id)) {
@@ -288,9 +341,14 @@ export default {
       this.$emit("after-submit", [formData, this.members]);
     },
   },
+  computed: {
+    // sameCheck() {
+    // }
+  },
   created() {
-    this.fetchFriendList();
     this.fetchUser();
+    this.fetchGroup();
+    this.fetchFriendList();
   },
 };
 </script>

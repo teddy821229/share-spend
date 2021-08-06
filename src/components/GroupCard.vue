@@ -40,7 +40,7 @@ export default {
   },
   filters: {
     defaultImage(image) {
-      return image || require("./../assets/image/avatarExample.jpeg");
+      return image || require("./../assets/image/defaultTeam.gif");
     },
   },
 };

@@ -3,6 +3,7 @@
   <div
     class="modal fade consume-modal"
     id="consumeModal"
+    ref="consumeModal"
     tabindex="-1"
     aria-labelledby="consumeModal"
     aria-hidden="true"
@@ -89,6 +90,13 @@
               <template v-else>
                 <button
                   type="button"
+                  class="btn btn-danger"
+                  @click.prevent.stop="deleteConsume"
+                >
+                  刪除
+                </button>
+                <button
+                  type="button"
                   class="btn btn-primary"
                   @click.prevent.stop="changeEditState"
                 >
@@ -112,11 +120,13 @@
 
 <script>
 import { imgFilter } from "./../utils/mixins";
-
+import { Modal } from "bootstrap";
+import Swal from 'sweetalert2';
 
 export default {
-  name: "GroupConsumeModal",
+  name: "ConsumeModal",
   mixins: [imgFilter],
+
   props: {
     modalContent: {
       type: Object,
@@ -124,6 +134,9 @@ export default {
         return {};
       },
     },
+  },
+  mounted() {
+    this.modal = new Modal(this.$refs.consumeModal);
   },
   watch: {
     modalContent: {
@@ -189,6 +202,7 @@ export default {
           name: "其他",
         },
       ],
+      modal: null,
     };
   },
   methods: {
@@ -220,7 +234,31 @@ export default {
       this.isEditing = false;
       this.$emit("after-save-change", {
         ...this.content,
-        amount: Number(this.content.amount)
+        amount: Number(this.content.amount),
+      });
+    },
+    deleteConsume() {
+      Swal.fire({
+        icon: "warning",
+        title: "確定要刪除嗎？",
+
+        toast: true,
+
+        showConfirmButton: true,
+        confirmButtonText: "確定",
+        confirmButtonColor: "#dd6b55",
+
+        showDenyButton: true,
+        denyButtonText: "取消刪除",
+        denyButtonColor: "#3085d6",
+
+        timerProgressBar: false,
+        timer: undefined,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$emit("after-delete", this.content);
+          this.modal.hide()
+        }
       });
     },
   },
