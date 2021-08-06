@@ -155,7 +155,7 @@ const dummyConsumes = [
   {
     id: 10,
     Category: {
-      id: 3,
+      id: 2,
       code: "entertainment",
       icon: 'game-controller-outline',
       name: "娛樂",

@@ -53,6 +53,7 @@
               >
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
               </label>
+              <!-- use v-model to do this section!! -->
               <input
                 type="checkbox"
                 :id="'select' + friend.id"

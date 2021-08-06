@@ -30,7 +30,8 @@
       </div>
     </div>
     <GroupConsumeModal 
-      :modal-content="modalContent"
+      :modal-content="modalContent" 
+      @after-save-change="afterSaveChange"
     />
   </div>
 </template>
@@ -40,7 +41,7 @@ import TopNavBar from "./../components/TopNavBar.vue";
 import GroupCardInDetail from "./../components/GroupCardInDetail.vue";
 import GroupMemberCard from "./../components/GroupMemberCard.vue";
 import GroupConsumeCard from "./../components/GroupConsumeCard.vue";
-import GroupConsumeModal from './../components/GroupConsumeModal.vue'
+import GroupConsumeModal from "./../components/GroupConsumeModal.vue";
 
 const dummyGroup = {
   id: 1,
@@ -94,6 +95,7 @@ const dummyGroup = {
       Category: {
         id: 1,
         code: "food",
+        icon: "fast-food-outline",
         name: "食物",
       },
       name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
@@ -135,6 +137,7 @@ const dummyGroup = {
       Category: {
         id: 2,
         code: "entertainment",
+        icon: "game-controller-outline",
         name: "娛樂",
       },
       name: "盲盒",
@@ -167,6 +170,7 @@ const dummyGroup = {
       Category: {
         id: 1,
         code: "food",
+        icon: "fast-food-outline",
         name: "食物",
       },
       name: "海底撈",
@@ -205,7 +209,7 @@ const dummyGroup = {
           name: "抽不到六星",
           account: "poorgame",
           avatar: "",
-         share: 336,
+          share: 336,
           pay: 0,
           debt: -336,
         },
@@ -226,6 +230,7 @@ const dummyGroup = {
       Category: {
         id: 1,
         code: "food",
+        icon: "fast-food-outline",
         name: "食物",
       },
       name: "鹹酥雞",
@@ -258,6 +263,7 @@ const dummyGroup = {
       Category: {
         id: 4,
         code: "life",
+        icon: "cafe-outline",
         name: "生活",
       },
       name: "門票",
@@ -317,6 +323,7 @@ const dummyGroup = {
       Category: {
         id: 2,
         code: "entertainment",
+        icon: "game-controller-outline",
         name: "娛樂",
       },
       name: "電影",
@@ -349,6 +356,7 @@ const dummyGroup = {
       Category: {
         id: 3,
         code: "transport",
+        icon: "train-outline",
         name: "交通",
       },
       name: "高鐵",
@@ -381,6 +389,7 @@ const dummyGroup = {
       Category: {
         id: 5,
         code: "other",
+        icon: "cash-outline",
         name: "其他",
       },
       name: "捐款",
@@ -422,6 +431,7 @@ const dummyGroup = {
       Category: {
         id: 3,
         code: "transport",
+        icon: "train-outline",
         name: "交通",
       },
       name: "高鐵",
@@ -473,7 +483,7 @@ export default {
         Consumes: [],
         userOwed: "",
       },
-      modalContent: {}
+      modalContent: {},
     };
   },
   created() {
@@ -489,8 +499,20 @@ export default {
     afterClickButton(data) {
       this.modalContent = {
         ...this.modalContent,
-        ...data
-      }
+        ...data,
+      };
+    },
+    afterSaveChange(data) {
+      this.group.Consumes = this.group.Consumes.map(consume => {
+        if(consume.id === data.id) {
+          return {
+            ...consume,
+            ...data
+          }
+        } else {
+          return consume
+        }
+      })
     }
   },
 };

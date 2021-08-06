@@ -60,18 +60,14 @@
                 <input
                   type="number"
                   name="amount"
-                  v-model="content.amount"
+                  v-model.number="content.amount"
                   placeholder="請輸入金額"
                 />
               </div>
 
               <div class="content-line form-row d-flex">
                 <div class="row-title">時間：</div>
-                <input
-                  type="date"
-                  name="date"
-                  v-model="content.date"
-                />
+                <input type="date" name="date" v-model="content.date" />
               </div>
 
               <div class="content-line form-row d-flex">
@@ -106,7 +102,7 @@
 import { Toast } from "./../utils/helpers";
 import { v4 as uuidv4 } from "uuid";
 import { Modal } from "bootstrap";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   name: "CreateConsume",
@@ -121,7 +117,7 @@ export default {
         },
         name: "",
         amount: "",
-        date: moment(new Date()).format('YYYY-MM-DD'),
+        date: moment(new Date()).format("YYYY-MM-DD"),
       },
       categoryList: [
         {
@@ -132,26 +128,31 @@ export default {
         {
           id: 1,
           code: "food",
+          icon: "fast-food-outline",
           name: "食物",
         },
         {
           id: 2,
           code: "entertainment",
+          icon: "game-controller-outline",
           name: "娛樂",
         },
         {
           id: 3,
           code: "transport",
+          icon: "train-outline",
           name: "交通",
         },
         {
           id: 4,
           code: "life",
+          icon: "cafe-outline",
           name: "生活",
         },
         {
           id: 5,
           code: "other",
+          icon: "cash-outline",
           name: "其他",
         },
       ],
@@ -173,7 +174,7 @@ export default {
         },
         name: "",
         amount: "",
-        date: moment(new Date()).format('YYYY-MM-DD')
+        date: moment(new Date()).format("YYYY-MM-DD"),
       };
     },
     handeleSubmit() {
@@ -204,7 +205,7 @@ export default {
       }
 
       // 檢查金額
-      if (!this.content.amount.trim()) {
+      if (!this.content.amount) {
         Toast.fire({
           icon: "warning",
           title: "請輸入金額",
@@ -215,7 +216,6 @@ export default {
       this.content = {
         ...this.content,
         id: uuidv4(),
-        amount: Number(this.content.amount),
         date: new Date(this.content.date),
       };
 

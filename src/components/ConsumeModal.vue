@@ -37,6 +37,7 @@
                   :key="category.id"
                   :value="category"
                   :selected="category.id === content.Category.id"
+                  :disabled="category.id === 0"
                 >
                   {{ category.name }}
                 </option>
@@ -157,6 +158,7 @@ export default {
         Category: {
           id: -1,
           code: "",
+          iocn: '',
           name: "",
         },
         name: "",
@@ -169,6 +171,7 @@ export default {
         Category: {
           id: -1,
           code: "",
+          icon: '',
           name: "",
         },
         name: "",
@@ -177,28 +180,38 @@ export default {
       },
       categoryList: [
         {
+          id: 0,
+          code: "none",
+          name: "請選擇類別",
+        },
+        {
           id: 1,
           code: "food",
+          icon: 'fast-food-outline',
           name: "食物",
         },
         {
           id: 2,
           code: "entertainment",
+          icon: 'game-controller-outline',
           name: "娛樂",
         },
         {
           id: 3,
           code: "transport",
+          icon: 'train-outline',
           name: "交通",
         },
         {
           id: 4,
           code: "life",
+          icon: 'cafe-outline',
           name: "生活",
         },
         {
           id: 5,
           code: "other",
+          icon: 'cash-outline',
           name: "其他",
         },
       ],

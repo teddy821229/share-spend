@@ -8,7 +8,7 @@
       @click.prevent.stop="createModalContent"
     >
       <div class="consume-category">
-        <ion-icon name="cash-outline"></ion-icon>
+        <ion-icon :name="consume.Category.icon"></ion-icon>
         <div class="category-name">{{ consume.Category.name }}</div>
         <div class="time">{{ consume.date }}</div>
       </div>

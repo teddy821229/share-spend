@@ -16,10 +16,7 @@
         </div>
         <div class="modal-body">
           <!-- TODO: Modal Content -->
-          <form 
-            class="consume-form"
-            @submit.prevent.stop="saveChange"
-          >
+          <form class="consume-form" @submit.prevent.stop="saveChange">
             <div
               class="content-line form-row d-flex"
               :class="{ edit: isEditing }"
@@ -54,10 +51,10 @@
               <div class="row-title">總金額：</div>
               <label for="amount">{{ content.amount }}</label>
               <input
-                type="text"
+                type="number"
                 name="amount"
                 id="amount"
-                v-model="content.amount"
+                v-model.number="content.amount"
               />
             </div>
 
@@ -75,7 +72,10 @@
               />
             </div>
 
-            <div class="content-line pay-container">
+            <div
+              class="content-line pay-container"
+              :class="{ edit: isEditing }"
+            >
               <div class="title pay-title">誰付的：</div>
               <ul class="pay-list">
                 <li
@@ -86,15 +86,17 @@
                   <div class="img-container">
                     <img :src="participate.avatar | defaultImage" alt="" />
                   </div>
-                  <div class="payment-detail">
-                    {{ participate.name }} :
-                    <span class="ms-auto"> {{ participate.pay }}</span>
-                  </div>
+                  <div class="payment-detail">{{ participate.name }} :</div>
+                  <label>{{ participate.pay }}</label>
+                  <input type="number" v-model.number="participate.pay" />
                 </li>
               </ul>
             </div>
 
-            <div class="content-line share-container">
+            <div
+              class="content-line share-container"
+              :class="{ edit: isEditing }"
+            >
               <div class="title share-title">幫誰付：</div>
               <!-- add editing with input  -->
               <ul class="share-list">
@@ -106,10 +108,10 @@
                   <div class="img-container">
                     <img :src="participate.avatar | defaultImage" alt="" />
                   </div>
-                  <div class="share-detail">
-                    {{ participate.name }} :
-                    <span class="ms-auto"> {{ participate.share }}</span>
-                  </div>
+                  <div class="share-detail">{{ participate.name }} :</div>
+                  <label>{{ participate.share }}</label>
+                  <!-- v-model 修飾符號 -->
+                  <input type="number" v-model.number="participate.share" />
                 </li>
               </ul>
             </div>
@@ -125,7 +127,6 @@
                 <button
                   type="submit"
                   class="btn btn-primary"
-                  :disabled="sameCheck"
                 >
                   完成編輯
                 </button>
@@ -156,6 +157,7 @@
 
 <script>
 import { imgFilter } from "./../utils/mixins";
+import { Toast } from './../utils/helpers'
 
 export default {
   name: "GroupConsumeModal",
@@ -174,10 +176,9 @@ export default {
         this.content = {
           ...this.content,
           ...newValue,
-        };
-        this.isEditing = false;
+        },
+        this.isEditing = false
       },
-      deep: true,
     },
   },
   data() {
@@ -196,6 +197,7 @@ export default {
         date: "",
       },
       isEditing: false,
+
       contentCached: {
         id: -1,
         Category: {
@@ -211,28 +213,38 @@ export default {
       },
       categoryList: [
         {
+          id: 0,
+          code: "none",
+          name: "請選擇類別",
+        },
+        {
           id: 1,
           code: "food",
+          icon: "fast-food-outline",
           name: "食物",
         },
         {
           id: 2,
           code: "entertainment",
+          icon: "game-controller-outline",
           name: "娛樂",
         },
         {
           id: 3,
           code: "transport",
+          icon: "train-outline",
           name: "交通",
         },
         {
           id: 4,
           code: "life",
+          icon: "cafe-outline",
           name: "生活",
         },
         {
           id: 5,
           code: "other",
+          icon: "cash-outline",
           name: "其他",
         },
       ],
@@ -251,10 +263,28 @@ export default {
       }
     },
     createCached() {
+      const { id, Category, name, amount, userOwed, date } = this.content
       this.contentCached = {
-        ...this.contentCached,
-        ...this.content,
-      };
+        id,
+        Category,
+        name,
+        amount,
+        userOwed,
+        participates: [],
+        date,
+      }
+      this.contentCached.participates = this.content.participates.map(participate => {
+        const { id, account, name, avatar, debt, pay, share } = participate
+        return {
+          id,
+          account,
+          name,
+          avatar,
+          debt,
+          pay,
+          share
+        }
+      })
     },
     cancelEdit() {
       this.content = {
@@ -263,8 +293,61 @@ export default {
       };
     },
     saveChange() {
-      // TODO: API change consume file
-      this.isEditing = false;
+      if(!this.content.name.trim()) {
+        Toast.fire({
+          icon: 'warning',
+          title: '請輸入名稱！'
+        })
+        return
+      }
+
+      if(!this.content.amount) {
+        Toast.fire({
+          icon: 'warning',
+          title: '請輸入金額！'
+        })
+        return
+      }
+
+      // same amount checked
+      let totalPay = 0
+      this.content.participates.forEach(participate => {
+        totalPay += participate.pay
+      });
+
+      let totalShare = 0 
+       this.content.participates.forEach(participate => {
+        totalShare += participate.share
+      });
+
+      if(this.content.amount !== totalPay) {
+        Toast.fire({
+          icon: 'warning',
+          title: '總付款與總金額不相符，請再次確認！'
+        })
+        return
+      }
+
+      if(totalPay !== totalShare) {
+        Toast.fire({
+          icon: 'warning',
+          title: '總付款與分帳金額不相符，請再次確認！'
+        })
+        return
+      }
+       // emit Event 
+       const userId = 22
+       const userPay = this.content.participates.find(participate => participate.id === userId).pay
+       const userShare = this.content.participates.find(participate => participate.id === userId).share
+       this.content.userOwed = userPay - userShare
+       this.$emit('after-save-change', {
+         ...this.content,
+       })
+
+       console.log('content', this.content);
+
+       // TODO: API change consume file
+      this.isEditing = false
     },
   },
   computed: {
@@ -278,16 +361,17 @@ export default {
         (participate) => participate.share !== 0
       );
     },
-    sameCheck() {
-      if (
-        this.content.name !== this.contentCached.name ||
-        this.content.Category.id !== this.contentCached.Category.id ||
-        this.content.amount !== this.contentCached.amount
-      ) {
-        return false;
-      }
-      return true;
-    },
+    // TODO: same checked
+    // sameCheck() {
+    //   if (
+    //     this.content.name !== this.contentCached.name ||
+    //     this.content.Category.id !== this.contentCached.Category.id ||
+    //     this.content.amount !== this.contentCached.amount
+    //   ) {
+    //     return false;
+    //   }
+    //   return true;
+    // },
   },
 };
 </script>
@@ -331,6 +415,12 @@ select {
   height: 35px;
   line-height: 35px;
   padding: 0 4px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .content-line input,
@@ -397,12 +487,10 @@ select {
   border-radius: 50%;
 }
 
-.share-detail,
-.payment-detail {
-  flex-grow: 1;
-  display: flex;
-
-  font-weight: 700;
+.payment-detail,
+.share-detail {
+  white-space: nowrap;
+  margin-right: 5px;
 }
 
 .modal-footer {
