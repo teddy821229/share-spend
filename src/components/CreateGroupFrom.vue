@@ -4,10 +4,8 @@
       <div class="col-12 col-md-6 left-content">
         <div class="title">基本資料</div>
 
-        <img :src="image | defaultImage" class="group-image" />
-
         <div class="form-row image-row">
-          <div class="image-title">群組照片：</div>
+          <img :src="image | defaultImage" class="group-image" />
           <label for="image">
             <ion-icon name="image-outline"></ion-icon>選擇照片
           </label>
@@ -79,7 +77,7 @@
 
 <script>
 import { imgFilter } from "./../utils/mixins";
-import { Toast } from './../utils/helpers'
+import { Toast } from "./../utils/helpers";
 
 const dummyUser = {
   id: 22,
@@ -270,26 +268,25 @@ export default {
       this.members.push(user);
     },
     handleSubmit(e) {
-
-      if(!this.name) {
+      if (!this.name) {
         Toast.fire({
-          icon: 'warning',
-          title: '請輸入群組名稱'
-        })
-        return
+          icon: "warning",
+          title: "請輸入群組名稱",
+        });
+        return;
       }
 
-      if(this.members.length < 2) {
+      if (this.members.length < 2) {
         Toast.fire({
-          icon: 'warning',
-          title: '請至少選擇一位成員'
-        })
-        return
+          icon: "warning",
+          title: "請至少選擇一位成員",
+        });
+        return;
       }
 
       const form = e.target;
       const formData = new FormData(form);
-      this.$emit('after-submit', [formData, this.members])
+      this.$emit("after-submit", [formData, this.members]);
     },
   },
   created() {
@@ -339,7 +336,7 @@ form {
   width: 150px;
   height: 150px;
 
-  margin: 20px auto;
+  margin: 10px 10px;
 
   object-fit: cover;
   object-position: center center;
@@ -391,6 +388,12 @@ form {
   align-self: flex-start;
 }
 
+.image-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .image-row label {
   margin: 0 0 0 30px;
   height: 40px;
@@ -413,13 +416,13 @@ form {
   display: none;
 }
 
-.image-row:hover label {
+.image-row label:hover {
   background-color: #f1f6fd;
 }
 
 .member-list-title {
   margin: 20px 20px 0;
-  padding-top: 20px;
+  padding: 10px 0;
   display: flex;
   align-items: center;
 
@@ -430,7 +433,7 @@ form {
   padding-top: 0;
   margin-top: 0;
   display: block;
-  height: calc(100% - 450px);
+  height: calc(100% - 410px);
   overflow: scroll;
 }
 
