@@ -12,11 +12,11 @@
           {{ time.section }}
         </li>
       </button>
-      <button type="button">
+      <!-- <button type="button">
         <li class="time">
           其他區間
         </li>
-      </button>
+      </button> -->
     </ul>
   </div>
 </template>
