@@ -2,7 +2,7 @@
   <div class="main-content">
     <TopNavBar msg="首頁" />
     <div class="row">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="title">最新 10 筆消費</div>
         <div class="left-container">
           <CreateConsume @after-create-new-consume="afterCreateNewConsume" />
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="title">我的群組</div>
         <div class="group-container">
           <GroupCard v-for="group in groups" :key="group.id" :group="group" />
@@ -283,7 +283,7 @@ export default {
   height: calc(100% - 100px);
   overflow: scroll;
 }
-.col-md-6 {
+.col-lg-6 {
   height: 100%;
 }
 

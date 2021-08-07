@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from './../views/Login.vue'
+import store from './../store'
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,14 @@ const router = new VueRouter({
   linkExactActiveClass: 'active',
   linkActiveClass: 'part-active',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+  if(currentUser) {
+    store.commit('setCurrentUser', currentUser)
+  }
+  next()
 })
 
 export default router

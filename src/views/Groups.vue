@@ -143,14 +143,12 @@ export default {
   position: relative;
 
   height: calc(100% - 100px - 30px);
-  overflow-x: scroll;
+  overflow: scroll;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
-  grid-auto-flow: row;
+  display: flex;
+  flex-flow: row wrap;
 
-  padding: 20px 0 40px;
+  padding: 20px 0;
 }
 
 .group {

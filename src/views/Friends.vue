@@ -166,11 +166,5 @@ export default {
   overflow: scroll;
   display: flex;
   flex-flow: row wrap;
-
-  /* display: grid;
-
-  grid-template-columns: 1fr 1fr 1fr 1fr ;
-  grid-auto-flow: row;
-  grid-gap: 20px 0; */
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="nav-container">
     <ul class="nav-list">
-      <template v-if="!isAuthenticated">
+      <template v-if="!isAuthenticate">
         <li class="nav-item">
           <router-link to="/login">
             <div class="corner"></div>
@@ -87,7 +87,10 @@
           <div class="corner"></div>
           <div class="corner"></div>
 
-          <button type="button">
+          <button 
+            type="button"
+            @click.prevent.stop="logout"
+          >
             <span class="icon">
               <ion-icon name="log-out-outline"></ion-icon>
             </span>
@@ -100,13 +103,19 @@
 </template>
 
 <script>
+import { mapState }from 'vuex'
+
 export default {
   name: "SideNavBar",
-  data() {
-    return {
-      isAuthenticated: true,
-    };
+  computed: {
+    ...mapState(['user', 'isAuthenticate'])
   },
+  methods: {
+    logout() {
+      this.$store.commit('revokeAuthentication')
+      this.$router.push('/login')
+    }
+  }
 };
 </script>
 

@@ -20,6 +20,12 @@ export default new Vuex.Store({
         ...userData
       },
       state.isAuthenticate = true
+    },
+    revokeAuthentication(state) {
+      state.user = {}
+      state.isAuthenticate = false
+      localStorage.removeItem('currentUser')
+
     }
   },
   actions: {

@@ -2,7 +2,9 @@
   <div class="main-content">
     <TopNavBar msg="設定" :show="true" />
     <div class="content-container">
-      <SettingForm />
+      <SettingForm 
+        :initial-user="user"
+      />
     </div>
   </div>
 </template>
@@ -10,6 +12,7 @@
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
 import SettingForm from './../components/SettingForm.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: "Setting",
@@ -18,6 +21,9 @@ export default {
     SettingForm
   },
   methods: {},
+  computed: {
+    ...mapState(['user'])
+  }
 };
 </script>
 

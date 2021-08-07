@@ -46,10 +46,13 @@
 import { Toast } from './../utils/helpers'
 
 const dummyUser = {
-  id: 1,
+  id: 99,
   name: 'Teddy',
+  avatar: '',
   account: 'teddy1993',
-  password: '21506qoo'
+  email: 'teddy@gmail.com',
+  password: '12345678',
+  phone: '0987654321'
 }
 
 export default {
@@ -58,6 +61,12 @@ export default {
     return {
       account: "",
       password: "",
+      user: {
+        id: '',
+        name: '',
+        avatar: '',
+        account: '',
+      }
     };
   },
   methods: {
@@ -77,8 +86,19 @@ export default {
         })
         return
       }
-      this.$store.commit('setCurrentUser', dummyUser)
+
+      this.user = {
+        ...this.user,
+        ...dummyUser,
+      }
+
+
       
+      localStorage.setItem('currentUser', JSON.stringify(this.user))
+
+      this.$store.commit('setCurrentUser', this.user)
+      this.$router.push('/home')
+
     }
   }
 };

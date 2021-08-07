@@ -1,8 +1,10 @@
 <template>
   <div class="container">
-    <form>
+    <form
+      @submit.prevent.stop="handleSubmit"
+    >
       <div class="form-row image-row">
-        <img :src="avatar | defaultImage" class="image" />
+        <img :src="user.avatar | defaultImage" class="image" />
         <label for="image">
           <ion-icon name="image-outline"></ion-icon>選擇照片
         </label>
@@ -17,63 +19,78 @@
 
       <div class="form-row normal-row">
         <label for="account">帳號：</label>
-        <input type="text" name="account" id="account" />
+        <input type="text" name="account" id="account" v-model="user.account" />
       </div>
 
       <div class="form-row normal-row">
         <label for="password">密碼：</label>
-        <input type="password" name="password" id="password" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          v-model="user.password"
+        />
       </div>
 
       <div class="form-row normal-row">
         <label for="email">信箱：</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" v-model="user.email" />
       </div>
 
       <div class="form-row normal-row">
         <label for="name">名稱：</label>
-        <input type="text" name="name" id="name" />
+        <input type="text" name="name" id="name" v-model="user.name" />
       </div>
 
       <div class="form-row normal-row">
         <label for="phone">電話：</label>
-        <input type="tetx" name="phone" id="phone" />
+        <input type="tetx" name="phone" id="phone" maxlength="10" v-model="user.phone" />
       </div>
 
       <div class="button-container">
-        <button class="btn btn-light">
-          取消
-        </button>
-        <button class="btn btn-primary">
-          確認修改
-        </button>
+        <button type="button" class="btn btn-light" @click.prevent.stop="cancelEdit">取消</button>
+        <button type="submit" class="btn btn-primary">確認修改</button>
       </div>
-
     </form>
   </div>
 </template>
 
 <script>
-import { imgFilter } from './../utils/mixins'
+import { imgFilter } from "./../utils/mixins";
 
 export default {
   name: "SettingForm",
   mixins: [imgFilter],
+  props: {
+    initialUser: {
+      type: Object,
+      required: true,
+    },
+  },
+  created() {
+    this.fetchUser();
+  },
   data() {
     return {
-      name: '',
-      account: '',
-      password: '',
-      email: '',
-      avatar: '',
-      dataCached: {
+      user: {
+        id: -1,
         name: "",
         account: "",
         password: "",
-        email: '',
-        avatar: '',
-      }
-    }
+        email: "",
+        avatar: "",
+        phone: "",
+      },
+      dataCached: {
+        id: -1,
+        name: "",
+        account: "",
+        password: "",
+        email: "",
+        avatar: "",
+        phone: "",
+      },
+    };
   },
   methods: {
     handleFileChange(e) {
@@ -85,6 +102,35 @@ export default {
 
       const imageURL = window.URL.createObjectURL(files[0]);
       this.avatar = imageURL;
+    },
+    fetchUser() {
+      const { id, name, account, password, email, avatar, phone } = this.initialUser;
+      this.user = {
+        ...this.user,
+        id,
+        name,
+        account,
+        password,
+        email,
+        avatar,
+        phone
+      }
+      this.dataCached = {
+        ...this.dataCached,
+        ...this.user
+      };
+    },
+    handleSubmit() {
+      
+
+      localStorage.setItem('currentUser', JSON.stringify(this.user))
+      this.$store.commit('setCurrentUser', this.user)
+    },
+    cancelEdit() {
+      this.user = {
+        ...this.user,
+        ...this.dataCached
+      }
     },
   },
 };
@@ -123,6 +169,8 @@ input {
   border: 2px solid #a9b6cc;
   border-radius: 15px;
   padding-left: 15px;
+
+  color: #6784b4;
 }
 
 .image-row {
@@ -132,7 +180,7 @@ input {
   padding-bottom: 20px;
 }
 
-.image-row img{
+.image-row img {
   width: 160px;
   height: 160px;
   border-radius: 50%;
@@ -183,5 +231,4 @@ input {
   border: 2px solid #a9b6cc;
   color: #3c6099;
 }
-
 </style>
