@@ -2,21 +2,24 @@
   <div class="register-container">
     <div class="register-stepper">
       <div class="step-container h-100 d-flex">
-        <div 
+        <div
           class="step"
-          :class="{complete: step > 0, now: step === 0, undone: step < 0 }"
+          :class="{ complete: step > 0, now: step === 0, undone: step < 0 }"
         >
           <div class="step-title">建立帳號</div>
         </div>
-        <div class="step"
-        :class="{complete: step > 1, now: step === 1, undone: step < 1 }">
+        <div
+          class="step"
+          :class="{ complete: step > 1, now: step === 1, undone: step < 1 }"
+        >
           <div class="step-title">基本資料</div>
         </div>
-        <div class="step"
-        :class="{complete: step > 2, now: step === 2, undone: step < 2 }">
+        <div
+          class="step"
+          :class="{ complete: step > 2, now: step === 2, undone: step < 2 }"
+        >
           <div class="step-title">完成註冊</div>
         </div>
-
       </div>
     </div>
     <div class="register d-flex align-items-center justify-content-center">
@@ -110,36 +113,32 @@
           <div class="congrate">
             註冊完成！恭喜你！
             <br />
-            現在可以開始使用我們的服務了 {{user.name}}
+            現在可以開始使用我們的服務了 
+            <br />
+            {{ user.name }}
           </div>
         </template>
-          <div class="note" v-show="step !== 2">標示為*的為必填項目！</div>
+        <div class="note" v-show="step !== 2">標示為*的為必填項目！</div>
 
-          <div class="submit-button">
-            <template v-if="step === 0 ">
-              <button class="btn btn-next" @click.prevent.stop="addStep">
-                下一步
-              </button>
-            </template>
+        <div class="submit-button">
+          <template v-if="step === 0">
+            <button class="btn btn-next" @click.prevent.stop="addStep">
+              下一步
+            </button>
+          </template>
 
-            <template v-else-if="step === 1">
-              <button
-                class="btn btn-previos mb-4"
-                @click.prevent.stop="preStep"
-              >
-                上一步
-              </button>
-              <button class="btn" @click.prevent.stop="addStep">註冊</button>
-            </template>
-            <template v-else>
-              <button
-                class="btn"
-                @click.prevent.stop="$router.push('/login')"
-              >
-                返回登入頁面
-              </button>
-            </template>
-          </div>
+          <template v-else-if="step === 1">
+            <button class="btn btn-previos mb-4" @click.prevent.stop="preStep">
+              上一步
+            </button>
+            <button class="btn" @click.prevent.stop="addStep">註冊</button>
+          </template>
+          <template v-else>
+            <button class="btn" @click.prevent.stop="$router.push('/login')">
+              返回登入頁面
+            </button>
+          </template>
+        </div>
       </form>
     </div>
   </div>
@@ -174,13 +173,6 @@ export default {
           });
           return;
         }
-        if (!this.user.email.trim()) {
-          Toast.fire({
-            icon: "warning",
-            title: "請輸入信箱",
-          });
-          return;
-        }
         if (this.user.password !== this.passwordConfirm) {
           Toast.fire({
             icon: "warning",
@@ -189,6 +181,25 @@ export default {
           return;
         }
         this.step += 1;
+        return
+      }
+      if (this.step === 1) {
+         if (!this.user.name.trim()) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入名稱",
+          });
+          return;
+        }
+
+        if (!this.user.email.trim()) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入信箱",
+          });
+          return;
+        }
+        this.step += 1
       }
     },
     preStep() {
@@ -234,30 +245,30 @@ export default {
   width: 30px;
   height: 30px;
 
-  
   border-radius: 50%;
 
   transform: translateY(-3px);
 }
 
-.complete:nth-child(1n) .step-title::before, .undone:nth-child(1n) .step-title::before {
-  border: 2px solid #a9b6cc
+.complete:nth-child(1n) .step-title::before,
+.undone:nth-child(1n) .step-title::before {
+  border: 2px solid #a9b6cc;
 }
 
 .now:nth-child(1n) .step-title::before {
   border: 2px solid #6784b4;
 }
 
-.step:nth-child(1) .step-title::before  {
-  content: '1';
+.step:nth-child(1) .step-title::before {
+  content: "1";
 }
 
-.step:nth-child(2) .step-title::before  {
-  content: '2';
+.step:nth-child(2) .step-title::before {
+  content: "2";
 }
 
 .step:nth-child(3) .step-title::before {
-  content: '3';
+  content: "3";
 }
 
 .complete:nth-child(1n) .step-title::before {
@@ -266,7 +277,7 @@ export default {
 }
 
 .step:nth-child(1n):after {
-  content: '';
+  content: "";
   position: absolute;
   top: calc(50% - 1.5px);
   left: calc(50% + 67px);
@@ -278,15 +289,16 @@ export default {
   height: 0px;
 }
 
-.complete:nth-child(1n):after, .now:nth-child(1n):after {
+.complete:nth-child(1n):after,
+.now:nth-child(1n):after {
   background: #6784b4;
-} 
+}
 
 .undone:nth-child(1n):after {
   background: #a9b6cc;
 }
 
-.now .step-title { 
+.now .step-title {
   color: #6784b4;
   font-weight: 700;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <TopNavBar msg="好友列表" :show="true" />
+    <TopNavBar msg="好友設定" :show="true" />
     <div class="content-container">
       <FriendsCard
         v-for="friend in friends"
