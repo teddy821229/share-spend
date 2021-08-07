@@ -19,6 +19,10 @@
         <div class="title">
           群組消費列表 <span>{{ group.Consumes.length }} 筆</span>
         </div>
+        <CreateGroupConsume 
+          :member-list="group.Members" 
+          @after-create="afterCreate"
+        />
         <div class="consume-container">
           <GroupConsumeCard
             v-for="consume in group.Consumes"
@@ -44,6 +48,7 @@ import GroupCardInDetail from "./../components/GroupCardInDetail.vue";
 import GroupMemberCard from "./../components/GroupMemberCard.vue";
 import GroupConsumeCard from "./../components/GroupConsumeCard.vue";
 import GroupConsumeModal from "./../components/GroupConsumeModal.vue";
+import CreateGroupConsume from "./../components/CreateGroupConsume.vue";
 
 const dummyGroup = {
   id: 1,
@@ -132,7 +137,7 @@ const dummyGroup = {
           debt: 150,
         },
       ],
-      date: "2021/07/07",
+      date: new Date(2021, 6 ,6),
     },
     {
       id: 2,
@@ -165,7 +170,7 @@ const dummyGroup = {
           debt: -300,
         },
       ],
-      date: "2021/07/03",
+      date: new Date(2021, 6 ,3),
     },
     {
       id: 3,
@@ -225,7 +230,7 @@ const dummyGroup = {
           debt: -336,
         },
       ],
-      date: "2021/07/01",
+      date: new Date(2021, 6 ,1),
     },
     {
       id: 4,
@@ -258,7 +263,7 @@ const dummyGroup = {
           debt: 180,
         },
       ],
-      date: "2021/07/02",
+      date: new Date(2021, 6 ,2),
     },
     {
       id: 5,
@@ -318,7 +323,7 @@ const dummyGroup = {
           debt: -200,
         },
       ],
-      date: "2021/06/28",
+      date: new Date(2021, 5 ,28),
     },
     {
       id: 6,
@@ -351,7 +356,7 @@ const dummyGroup = {
           debt: 220,
         },
       ],
-      date: "2021/06/23",
+      date: new Date(2021, 5 ,23),
     },
     {
       id: 7,
@@ -384,7 +389,7 @@ const dummyGroup = {
           debt: -1300,
         },
       ],
-      date: "2021/06/01",
+      date: new Date(2021, 5 ,1),
     },
     {
       id: 8,
@@ -426,7 +431,7 @@ const dummyGroup = {
           debt: 40,
         },
       ],
-      date: "2021/06/23",
+      date: new Date(2021, 5 ,23),
     },
     {
       id: 9,
@@ -459,11 +464,11 @@ const dummyGroup = {
           debt: 675,
         },
       ],
-      date: "2021/06/01",
+      date: new Date(2021, 5 ,1),
     },
   ],
   // userOwed: 2469,
-  updatedDate: "2021/07/02",
+  updatedDate: new Date(2021, 7 ,2),
 };
 
 export default {
@@ -474,6 +479,7 @@ export default {
     GroupMemberCard,
     GroupConsumeCard,
     GroupConsumeModal,
+    CreateGroupConsume,
   },
   data() {
     return {
@@ -548,6 +554,9 @@ export default {
         }
       });
     },
+    afterCreate(data) {
+      this.group.Consumes.unshift(data)
+    }
   },
 };
 </script>
@@ -601,7 +610,7 @@ export default {
 }
 
 .consume-container {
-  height: calc(100% - 54px);
+  height: calc(100% - 54px - 110px);
   overflow: scroll;
 }
 </style>

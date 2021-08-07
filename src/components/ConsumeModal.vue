@@ -58,7 +58,7 @@
               />
             </div>
 
-            <div
+            <!-- <div
               class="content-line form-row d-flex"
               :class="{ edit: isEditing }"
             >
@@ -70,7 +70,7 @@
                 id="description"
                 v-model="content.description"
               />
-            </div>
+            </div> -->
             <div class="modal-footer">
               <template v-if="isEditing === true">
                 <button

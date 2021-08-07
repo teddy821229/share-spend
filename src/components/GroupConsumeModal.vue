@@ -7,8 +7,8 @@
     tabindex="-1"
     aria-labelledby="groupConsumeModal"
     aria-hidden="true"
-    @mouseleave="handleModalClose"
   >
+    
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header d-block">
@@ -17,7 +17,6 @@
           </h5>
         </div>
         <div class="modal-body">
-          <!-- TODO: Modal Content -->
           <form class="consume-form" @submit.prevent.stop="saveChange">
             <div
               class="content-line form-row d-flex"
@@ -40,6 +39,7 @@
                   :key="category.id"
                   :value="category"
                   :selected="category.id === content.Category.id"
+                  :disabled="category.id === 0"
                 >
                   {{ category.name }}
                 </option>
@@ -60,7 +60,7 @@
               />
             </div>
 
-            <div
+            <!-- <div
               class="content-line form-row d-flex"
               :class="{ edit: isEditing }"
             >
@@ -72,13 +72,16 @@
                 id="description"
                 v-model="content.description"
               />
-            </div>
+            </div> -->
 
             <div
               class="content-line pay-container"
               :class="{ edit: isEditing }"
             >
-              <div class="title pay-title">誰付的：</div>
+              <div class="title pay-title">
+                誰付的：<span v-show="isEditing">{{totalPay}}</span>
+              </div>
+
               <ul class="pay-list">
                 <li
                   class="payment"
@@ -109,7 +112,10 @@
               class="content-line share-container"
               :class="{ edit: isEditing }"
             >
-              <div class="title share-title">幫誰付：</div>
+              <div class="title share-title">
+                幫誰付：
+                <span v-show="isEditing">{{totalShare}}</span>
+              </div>
               <!-- add editing with input  -->
               <ul class="share-list">
                 <li
@@ -169,6 +175,7 @@
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
+                @click.prevent.stop="handleModalClose"
               >
                 關閉
               </button>
@@ -203,8 +210,8 @@ export default {
   },
   watch: {
     modalContent() {
-      this.fetchContent()
-    }
+      this.fetchContent();
+    },
   },
   data() {
     return {
@@ -288,7 +295,7 @@ export default {
       this.members = this.memberList;
     },
     fetchContent() {
-      const { id, Category, name, amount, userOwed, date } = this.modalContent
+      const { id, Category, name, amount, userOwed, date } = this.modalContent;
 
       this.content = {
         id,
@@ -360,9 +367,9 @@ export default {
       };
     },
     handleModalClose() {
-      if(this.isEditing) {
-        this.isEditing = !this.isEditing
-        this.cancelEdit()
+      if (this.isEditing) {
+        this.isEditing = !this.isEditing;
+        this.cancelEdit();
       }
     },
     saveChange() {
@@ -408,22 +415,23 @@ export default {
         });
         return;
       }
-      
 
       // calculate debt
 
-      this.content.participates.forEach(participate => {
-        if(participate.pay === null) {
-          participate.pay = 0
+      this.content.participates.forEach((participate) => {
+        if (participate.pay === null) {
+          participate.pay = 0;
         }
-        if(participate.share === null) {
-          participate.share = 0
+        if (participate.share === null) {
+          participate.share = 0;
         }
-      })
+      });
 
       // filtered pay & share = 0 user
 
-      this.content.participates = this.content.participates.filter(participate => !(participate.pay === 0 && participate.share === 0))
+      this.content.participates = this.content.participates.filter(
+        (participate) => !(participate.pay === 0 && participate.share === 0)
+      );
 
       this.content.participates.forEach((participate) => {
         participate.debt = participate.pay - participate.share;
@@ -470,14 +478,20 @@ export default {
     pushPayInParticipate() {
       const obj = document.getElementById("selectPay");
       const selectId = Number(obj.value);
-      if(this.content.participates.some(participate => participate.id === selectId)) {
-        this.content.participates.find(participate => {
-          if(participate.id === selectId) {
-            participate.pay = null
+      if (
+        this.content.participates.some(
+          (participate) => participate.id === selectId
+        )
+      ) {
+        this.content.participates.find((participate) => {
+          if (participate.id === selectId) {
+            participate.pay = null;
           }
-        })
+        });
       } else {
-        const { id, name, account, avatar } = this.members.find(member => member.id === selectId)
+        const { id, name, account, avatar } = this.members.find(
+          (member) => member.id === selectId
+        );
         this.content.participates.push({
           id,
           name,
@@ -486,21 +500,27 @@ export default {
           debt: 0,
           pay: null,
           share: 0,
-        })
+        });
       }
-      obj.value = '0'
+      obj.value = "0";
     },
     pushShareInParticipate() {
       const obj = document.getElementById("selectShare");
       const selectId = Number(obj.value);
-      if(this.content.participates.some(participate => participate.id === selectId)) {
-        this.content.participates.find(participate => {
-          if(participate.id === selectId) {
-            participate.share = null
+      if (
+        this.content.participates.some(
+          (participate) => participate.id === selectId
+        )
+      ) {
+        this.content.participates.find((participate) => {
+          if (participate.id === selectId) {
+            participate.share = null;
           }
-        })
+        });
       } else {
-        const { id, name, account, avatar } = this.members.find(member => member.id === selectId)
+        const { id, name, account, avatar } = this.members.find(
+          (member) => member.id === selectId
+        );
         this.content.participates.push({
           id,
           name,
@@ -509,9 +529,9 @@ export default {
           debt: 0,
           pay: 0,
           share: null,
-        })
+        });
       }
-      obj.value = '0'
+      obj.value = "0";
     },
   },
   computed: {
@@ -544,6 +564,22 @@ export default {
           )
       );
     },
+    totalPay() {
+      let total = 0
+      this.content.participates.forEach(participate => {
+        total += participate.pay
+      })
+
+      return total
+    },
+    totalShare() {
+      let total = 0
+      this.content.participates.forEach(participate => {
+        total += participate.share
+      })
+
+      return total
+    }
     // TODO: same checked
     // sameCheck() {
     //   if (

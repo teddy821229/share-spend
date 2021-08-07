@@ -70,14 +70,14 @@
                 <input type="date" name="date" v-model="content.date" />
               </div>
 
-              <div class="content-line form-row d-flex">
+              <!-- <div class="content-line form-row d-flex">
                 <div class="row-title">備註：</div>
                 <input
                   type="text"
                   name="description"
                   v-model="content.description"
                 />
-              </div>
+              </div> -->
 
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">新增</button>

@@ -7,7 +7,7 @@
     <div class="group-detail">
       <div class="name-container">{{ group.name }}</div>
       <div class="owed-container">{{ group.userOwed | moneyFilter }}</div>
-      <div class="updated-container">最後更新: {{ group.updatedDate }}</div>
+      <div class="updated-container">最後更新: {{ group.updatedDate | exactTime }}</div>
     </div>
 
     <div class="edit-container">
@@ -22,10 +22,11 @@
 
 <script>
 import { moneyFilter } from "./../utils/mixins";
+import { timeFilter } from './../utils/mixins'
 
 export default {
   name: "ConsumeCard",
-  mixins: [moneyFilter],
+  mixins: [moneyFilter, timeFilter],
   props: {
     group: {
       type: Object,

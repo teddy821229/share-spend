@@ -10,7 +10,7 @@
       <div class="consume-category">
         <ion-icon :name="consume.Category.icon"></ion-icon>
         <div class="category-name">{{ consume.Category.name }}</div>
-        <div class="time">{{ consume.date }}</div>
+        <div class="time">{{ consume.date | exactTime }}</div>
       </div>
       <div class="middle-container">
         <div class="consume-title-container">
@@ -34,10 +34,11 @@
 
 <script>
 import { moneyFilter } from "./../utils/mixins";
+import { timeFilter } from './../utils/mixins'
 
 export default {
   name: "GroupConsumeCard",
-  mixins: [moneyFilter],
+  mixins: [moneyFilter, timeFilter],
   props: {
     consume: {
       type: Object,
