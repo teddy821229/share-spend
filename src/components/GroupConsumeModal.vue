@@ -3,9 +3,11 @@
   <div
     class="modal fade consume-modal"
     id="groupConsumeModal"
+    ref="groupConsumeModal"
     tabindex="-1"
     aria-labelledby="groupConsumeModal"
     aria-hidden="true"
+    @mouseleave="handleModalClose"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -91,6 +93,16 @@
                   <input type="number" v-model.number="participate.pay" />
                 </li>
               </ul>
+              <select id="selectPay" @change="pushPayInParticipate">
+                <option value="0" disabled selected>新增成員</option>
+                <option
+                  v-for="member in unselectPayList"
+                  :key="member.id"
+                  :value="member.id"
+                >
+                  {{ member.name }}
+                </option>
+              </select>
             </div>
 
             <div
@@ -114,7 +126,18 @@
                   <input type="number" v-model.number="participate.share" />
                 </li>
               </ul>
+              <select id="selectShare" @change="pushShareInParticipate">
+                <option value="0" disabled selected>新增成員</option>
+                <option
+                  v-for="member in unselectShareList"
+                  :key="member.id"
+                  :value="member.id"
+                >
+                  {{ member.name }}
+                </option>
+              </select>
             </div>
+
             <div class="modal-footer">
               <template v-if="isEditing === true">
                 <button
@@ -124,14 +147,16 @@
                 >
                   取消
                 </button>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                >
-                  完成編輯
-                </button>
+                <button type="submit" class="btn btn-primary">完成編輯</button>
               </template>
               <template v-else>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  @click.prevent.stop="deleteConsume"
+                >
+                  刪除
+                </button>
                 <button
                   type="button"
                   class="btn btn-primary"
@@ -157,7 +182,9 @@
 
 <script>
 import { imgFilter } from "./../utils/mixins";
-import { Toast } from './../utils/helpers'
+import { Toast } from "./../utils/helpers";
+import { Modal } from "bootstrap";
+import Swal from "sweetalert2";
 
 export default {
   name: "GroupConsumeModal",
@@ -169,17 +196,15 @@ export default {
         return {};
       },
     },
+    memberList: {
+      type: Array,
+      required: true,
+    },
   },
   watch: {
-    modalContent: {
-      handler: function (newValue) {
-        this.content = {
-          ...this.content,
-          ...newValue,
-        },
-        this.isEditing = false
-      },
-    },
+    modalContent() {
+      this.fetchContent()
+    }
   },
   data() {
     return {
@@ -248,9 +273,48 @@ export default {
           name: "其他",
         },
       ],
+      members: [],
+      modal: null,
     };
   },
+  mounted() {
+    this.modal = new Modal(this.$refs.groupConsumeModal);
+  },
+  created() {
+    this.fetchMember();
+  },
   methods: {
+    fetchMember() {
+      this.members = this.memberList;
+    },
+    fetchContent() {
+      const { id, Category, name, amount, userOwed, date } = this.modalContent
+
+      this.content = {
+        id,
+        Category,
+        name,
+        amount,
+        userOwed,
+        participates: [],
+        date,
+      };
+
+      this.content.participates = this.modalContent.participates.map(
+        (participate) => {
+          const { id, account, name, avatar, debt, pay, share } = participate;
+          return {
+            id,
+            account,
+            name,
+            avatar,
+            debt,
+            pay,
+            share,
+          };
+        }
+      );
+    },
     changeEditState() {
       this.isEditing = !this.isEditing;
       if (this.isEditing) {
@@ -263,7 +327,7 @@ export default {
       }
     },
     createCached() {
-      const { id, Category, name, amount, userOwed, date } = this.content
+      const { id, Category, name, amount, userOwed, date } = this.content;
       this.contentCached = {
         id,
         Category,
@@ -272,19 +336,22 @@ export default {
         userOwed,
         participates: [],
         date,
-      }
-      this.contentCached.participates = this.content.participates.map(participate => {
-        const { id, account, name, avatar, debt, pay, share } = participate
-        return {
-          id,
-          account,
-          name,
-          avatar,
-          debt,
-          pay,
-          share
+      };
+
+      this.contentCached.participates = this.content.participates.map(
+        (participate) => {
+          const { id, account, name, avatar, debt, pay, share } = participate;
+          return {
+            id,
+            account,
+            name,
+            avatar,
+            debt,
+            pay,
+            share,
+          };
         }
-      })
+      );
     },
     cancelEdit() {
       this.content = {
@@ -292,62 +359,159 @@ export default {
         ...this.contentCached,
       };
     },
+    handleModalClose() {
+      if(this.isEditing) {
+        this.isEditing = !this.isEditing
+        this.cancelEdit()
+      }
+    },
     saveChange() {
-      if(!this.content.name.trim()) {
+      if (!this.content.name.trim()) {
         Toast.fire({
-          icon: 'warning',
-          title: '請輸入名稱！'
-        })
-        return
+          icon: "warning",
+          title: "請輸入名稱！",
+        });
+        return;
       }
 
-      if(!this.content.amount) {
+      if (!this.content.amount) {
         Toast.fire({
-          icon: 'warning',
-          title: '請輸入金額！'
-        })
-        return
+          icon: "warning",
+          title: "請輸入金額！",
+        });
+        return;
       }
 
       // same amount checked
-      let totalPay = 0
+      let totalPay = 0;
+      this.content.participates.forEach((participate) => {
+        totalPay += participate.pay;
+      });
+
+      let totalShare = 0;
+      this.content.participates.forEach((participate) => {
+        totalShare += participate.share;
+      });
+
+      if (this.content.amount !== totalPay) {
+        Toast.fire({
+          icon: "warning",
+          title: "總付款與總金額不相符，請再次確認！",
+        });
+        return;
+      }
+
+      if (totalPay !== totalShare) {
+        Toast.fire({
+          icon: "warning",
+          title: "總付款與分帳金額不相符，請再次確認！",
+        });
+        return;
+      }
+      
+
+      // calculate debt
+
       this.content.participates.forEach(participate => {
-        totalPay += participate.pay
+        if(participate.pay === null) {
+          participate.pay = 0
+        }
+        if(participate.share === null) {
+          participate.share = 0
+        }
+      })
+
+      // filtered pay & share = 0 user
+
+      this.content.participates = this.content.participates.filter(participate => !(participate.pay === 0 && participate.share === 0))
+
+      this.content.participates.forEach((participate) => {
+        participate.debt = participate.pay - participate.share;
       });
 
-      let totalShare = 0 
-       this.content.participates.forEach(participate => {
-        totalShare += participate.share
+      const userId = 22;
+
+      this.content.userOwed = this.content.participates.find(
+        (participate) => participate.id === userId
+      ).debt;
+
+      // emit event
+      this.$emit("after-save-change", {
+        ...this.content,
       });
 
-      if(this.content.amount !== totalPay) {
-        Toast.fire({
-          icon: 'warning',
-          title: '總付款與總金額不相符，請再次確認！'
+      // TODO: API change consume file
+      this.isEditing = false;
+    },
+    deleteConsume() {
+      Swal.fire({
+        icon: "warning",
+        title: "確定要刪除嗎？",
+
+        toast: true,
+
+        showConfirmButton: true,
+        confirmButtonText: "確定",
+        confirmButtonColor: "#dd6b55",
+
+        showDenyButton: true,
+        denyButtonText: "取消刪除",
+        denyButtonColor: "#3085d6",
+
+        timerProgressBar: false,
+        timer: undefined,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$emit("after-delete", this.content);
+          this.modal.hide();
+        }
+      });
+    },
+    pushPayInParticipate() {
+      const obj = document.getElementById("selectPay");
+      const selectId = Number(obj.value);
+      if(this.content.participates.some(participate => participate.id === selectId)) {
+        this.content.participates.find(participate => {
+          if(participate.id === selectId) {
+            participate.pay = null
+          }
         })
-        return
-      }
-
-      if(totalPay !== totalShare) {
-        Toast.fire({
-          icon: 'warning',
-          title: '總付款與分帳金額不相符，請再次確認！'
+      } else {
+        const { id, name, account, avatar } = this.members.find(member => member.id === selectId)
+        this.content.participates.push({
+          id,
+          name,
+          account,
+          avatar,
+          debt: 0,
+          pay: null,
+          share: 0,
         })
-        return
       }
-       // emit Event 
-       const userId = 22
-       const userPay = this.content.participates.find(participate => participate.id === userId).pay
-       const userShare = this.content.participates.find(participate => participate.id === userId).share
-       this.content.userOwed = userPay - userShare
-       this.$emit('after-save-change', {
-         ...this.content,
-       })
-
-       console.log('content', this.content);
-
-       // TODO: API change consume file
-      this.isEditing = false
+      obj.value = '0'
+    },
+    pushShareInParticipate() {
+      const obj = document.getElementById("selectShare");
+      const selectId = Number(obj.value);
+      if(this.content.participates.some(participate => participate.id === selectId)) {
+        this.content.participates.find(participate => {
+          if(participate.id === selectId) {
+            participate.share = null
+          }
+        })
+      } else {
+        const { id, name, account, avatar } = this.members.find(member => member.id === selectId)
+        this.content.participates.push({
+          id,
+          name,
+          account,
+          avatar,
+          debt: 0,
+          pay: 0,
+          share: null,
+        })
+      }
+      obj.value = '0'
     },
   },
   computed: {
@@ -359,6 +523,25 @@ export default {
     sharelist() {
       return this.content.participates.filter(
         (participate) => participate.share !== 0
+      );
+    },
+    unselectPayList() {
+      return this.members.filter(
+        (member) =>
+          !this.content.participates.some(
+            (participate) =>
+              participate.id === member.id && participate.pay !== 0
+          )
+      );
+    },
+
+    unselectShareList() {
+      return this.members.filter(
+        (member) =>
+          !this.content.participates.some(
+            (participate) =>
+              participate.id === member.id && participate.share !== 0
+          )
       );
     },
     // TODO: same checked

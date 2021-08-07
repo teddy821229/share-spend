@@ -29,9 +29,11 @@
         </div>
       </div>
     </div>
-    <GroupConsumeModal 
-      :modal-content="modalContent" 
+    <GroupConsumeModal
+      :modal-content="modalContent"
+      :member-list="group.Members"
       @after-save-change="afterSaveChange"
+      @after-delete="afterDelete"
     />
   </div>
 </template>
@@ -54,7 +56,7 @@ const dummyGroup = {
       account: "nomoney",
       avatar: "",
       isFriend: false,
-      debtInGroup: 2469,
+      debtInGroup: 0,
     },
     {
       id: 24,
@@ -62,7 +64,7 @@ const dummyGroup = {
       account: "poorgame",
       avatar: "",
       isFriend: true,
-      debtInGroup: -1181,
+      debtInGroup: 0,
     },
     {
       id: 26,
@@ -70,7 +72,7 @@ const dummyGroup = {
       account: "whereiscockroach",
       avatar: "",
       isFriend: false,
-      debtInGroup: -456,
+      debtInGroup: 0,
     },
     {
       id: 28,
@@ -78,7 +80,7 @@ const dummyGroup = {
       account: "wantiphone13",
       avatar: "",
       isFriend: true,
-      debtInGroup: -536,
+      debtInGroup: 0,
     },
     {
       id: 1,
@@ -86,7 +88,7 @@ const dummyGroup = {
       account: "lohanka",
       avatar: "",
       isFriend: false,
-      debtInGroup: -496,
+      debtInGroup: 0,
     },
   ],
   Consumes: [
@@ -460,7 +462,7 @@ const dummyGroup = {
       date: "2021/06/01",
     },
   ],
-  userOwed: "2469",
+  // userOwed: 2469,
   updatedDate: "2021/07/02",
 };
 
@@ -481,7 +483,7 @@ export default {
         image: "",
         Members: [],
         Consumes: [],
-        userOwed: "",
+        userOwed: 0,
       },
       modalContent: {},
     };
@@ -495,6 +497,7 @@ export default {
         ...this.group,
         ...dummyGroup,
       };
+      this.getGroupDebt();
     },
     afterClickButton(data) {
       this.modalContent = {
@@ -503,17 +506,48 @@ export default {
       };
     },
     afterSaveChange(data) {
-      this.group.Consumes = this.group.Consumes.map(consume => {
-        if(consume.id === data.id) {
+      this.group.Consumes = this.group.Consumes.map((consume) => {
+        if (consume.id === data.id) {
           return {
             ...consume,
-            ...data
-          }
+            ...data,
+          };
         } else {
-          return consume
+          return consume;
         }
-      })
-    }
+      });
+      this.getGroupDebt();
+    },
+    afterDelete(data) {
+      this.group.Consumes = this.group.Consumes.filter(
+        (consume) => consume.id !== data.id
+      );
+      this.getGroupDebt();
+    },
+    getGroupDebt() {
+      // reset
+      this.group.Members.forEach((member) => (member.debtInGroup = 0));
+      //  count
+      this.group.Consumes.forEach((consume) => {
+        consume.participates.forEach((participate) => {
+          this.group.Members.map((member) => {
+            if (participate.id === member.id) {
+              member.debtInGroup += participate.debt;
+            }
+          });
+        });
+      });
+      this.getUserDebt();
+    },
+    getUserDebt() {
+      this.group.Members.map((member) => {
+        if (
+          member.id === 22 // currentUser.id//
+        ) {
+          this.group.userOwed = member.debtInGroup;
+        }
+      });
+    },
   },
 };
 </script>
