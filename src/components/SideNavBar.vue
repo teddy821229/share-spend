@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-container">
+  <div class="main-container">
     <ul class="nav-list">
       <template v-if="!isAuthenticate">
         <li class="nav-item">
@@ -120,10 +120,11 @@ export default {
 </script>
 
 <style scoped>
-.nav-container {
+.main-container {
   position: relative;
   background: #a9b6cc;
   border-radius: 10px;
+  min-height: 100%;
 
   padding-top: 60px;
   padding-right: 0;
@@ -242,17 +243,17 @@ button {
 }
 
 .nav-item .title {
-  display: none;
-  height: 60px;
-  line-height: 60px;
-  margin-left: 20px;
-}
-@media screen and (min-width: 768px) {
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 20px;
+  }
+/* @media screen and (min-width: 768px) {
   .nav-item .title {
     display: block;
     height: 60px;
     line-height: 60px;
     margin-left: 20px;
   }
-}
+} */
 </style>
