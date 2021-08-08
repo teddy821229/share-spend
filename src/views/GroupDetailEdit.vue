@@ -30,5 +30,6 @@ export default {
 }
 .content-container {
   height: calc(100% - 100px);
+  overflow: scroll;
 }
 </style>

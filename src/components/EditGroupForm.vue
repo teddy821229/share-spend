@@ -297,7 +297,7 @@ export default {
       dummyFriendList.map((friend) => {
         this.friendList.push({
           ...friend,
-          selected: this.members.find(member => member.id === friend.id),
+          selected: this.members.find((member) => member.id === friend.id),
         });
       });
     },
@@ -354,15 +354,6 @@ export default {
 </script>
 
 <style scoped>
-form {
-  height: 100%;
-}
-
-.left-content,
-.right-content {
-  height: 100%;
-}
-
 .title {
   position: relative;
 
@@ -390,8 +381,8 @@ form {
 .group-image {
   position: relative;
 
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 
   margin: 10px 10px;
 
@@ -490,18 +481,7 @@ form {
   padding-top: 0;
   margin-top: 0;
   display: block;
-  height: calc(100% - 410px);
-  overflow: scroll;
-}
 
-.friend-list-container {
-  height: calc(100% - 120px);
-  overflow-y: scroll;
-}
-
-.member-list {
-  height: 100%;
-  overflow: scroll;
 }
 
 .friend-list .friend,
@@ -518,7 +498,7 @@ form {
 }
 
 .member-list .member {
-  width: 100%;
+  width: 90%;
   margin: 30px 10px;
 }
 
@@ -590,5 +570,245 @@ form {
 .submit-button:hover {
   background: #fff;
   color: #6784b4;
+}
+
+@media screen and (min-width: 576px) {
+  form {
+    height: 100%;
+  }
+
+  .left-content,
+  .right-content {
+    height: 100%;
+  }
+
+  .title {
+    position: relative;
+
+    padding: 10px 0 20px 0;
+    font-size: 16px;
+    color: #6784b4;
+    font-weight: 700;
+
+    text-align: center;
+  }
+
+  .title::after {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+
+    content: "";
+    width: 85%;
+    height: 2px;
+
+    background: #a9b6cc;
+  }
+
+  .group-image {
+    position: relative;
+
+    width: 150px;
+    height: 150px;
+
+    margin: 10px 10px;
+
+    object-fit: cover;
+    object-position: center center;
+
+    border-radius: 50%;
+    border: 8px solid #a9b6cc;
+  }
+
+  .form-row {
+    position: relative;
+
+    margin: 20px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #6784b4;
+  }
+
+  .form-row label {
+    margin-right: 30px;
+    white-space: nowrap;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%;
+    height: 40px;
+
+    padding-left: 10px;
+
+    border-radius: 10px;
+    border: 2px solid #6784b4;
+
+    color: #6784b4;
+  }
+
+  .form-row textarea {
+    height: 120px;
+    resize: none;
+  }
+
+  .form-row:hover input,
+  .form-row:hover textarea {
+    border-color: #415e8d;
+  }
+
+  .description-row label {
+    align-self: flex-start;
+  }
+
+  .image-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-row label {
+    margin: 0 0 0 30px;
+    height: 40px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+
+    border-radius: 10px;
+    border: 1px solid #6784b4;
+
+    cursor: pointer;
+  }
+
+  .image-row ion-icon {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+
+  .image-row input {
+    display: none;
+  }
+
+  .image-row label:hover {
+    background-color: #f1f6fd;
+  }
+
+  .member-list-title {
+    margin: 20px 20px 0;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+
+    color: #6784b4;
+  }
+
+  .member-list-container {
+    padding-top: 0;
+    margin-top: 0;
+    display: block;
+    height: calc(100% - 410px);
+    overflow: scroll;
+  }
+
+  .friend-list-container {
+    height: calc(100% - 120px);
+    overflow-y: scroll;
+  }
+
+  .member-list {
+    height: 100%;
+    overflow: scroll;
+  }
+
+  .friend-list .friend,
+  .member-list .member {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 85%;
+    margin: 30px auto;
+
+    color: #6784b4;
+  }
+
+  .member-list .member {
+    width: 100%;
+    margin: 30px 10px;
+  }
+
+  .friend-list .friend::after,
+  .member-list .member::after {
+    position: absolute;
+    bottom: -15px;
+    left: 40px;
+
+    content: "";
+
+    height: 2px;
+    width: 90%;
+
+    background: #e5edf8;
+  }
+
+  .friend-list .friend img,
+  .member-list .member img {
+    margin: 0 20px;
+
+    height: 50px;
+    width: 50px;
+
+    border-radius: 50%;
+  }
+
+  .friend-list label {
+    height: 20px;
+    width: 20px;
+
+    background: #fff;
+
+    border: 2px solid #6784b4;
+    border-radius: 50%;
+  }
+
+  .friend-list ion-icon {
+    display: none;
+  }
+
+  .friend-list .selected {
+    position: relative;
+  }
+
+  .friend-list .selected ion-icon {
+    position: absolute;
+
+    display: block;
+
+    top: -4px;
+    left: -4px;
+
+    color: #6784b4;
+
+    font-size: 24px;
+  }
+
+  .friend-list input {
+    display: none;
+  }
+
+  .submit-button {
+    margin: 10px;
+    background: #6784b4;
+    border-color: #6784b4;
+  }
+
+  .submit-button:hover {
+    background: #fff;
+    color: #6784b4;
+  }
 }
 </style>

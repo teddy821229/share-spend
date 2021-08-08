@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { moneyFilter } from './../utils/mixins'
+import { moneyFilter } from "./../utils/mixins";
 
 export default {
   name: "TotalConsumeCard",
@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     calculateTotal() {
-      this.cleanTotal()
+      this.cleanTotal();
       this.consumes.forEach((consume) => {
         this.categories.map((category) => {
           if (consume.Category.code === category.code) {
@@ -112,15 +112,16 @@ export default {
     },
     calculateRatio() {
       this.categories.forEach((category) => {
-        if(category.total === 0) {
-          return category.ratio = '0%'
+        if (category.total === 0) {
+          return (category.ratio = "0%");
         }
-        return category.ratio = (category.total / this.totalAmount) * 100 + "%";
+        return (category.ratio =
+          (category.total / this.totalAmount) * 100 + "%");
       });
     },
     cleanTotal() {
-      this.categories.forEach(category => category.total = 0)
-    }
+      this.categories.forEach((category) => (category.total = 0));
+    },
   },
   computed: {
     totalAmount() {
@@ -130,7 +131,7 @@ export default {
       });
       return total;
     },
-  }
+  },
 };
 </script>
 
@@ -139,7 +140,7 @@ export default {
   width: 95%;
   max-width: 650px;
   margin: 20px auto 40px;
-  padding: 20px ;
+  padding: 20px;
 
   color: #6784b4;
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
@@ -147,30 +148,30 @@ export default {
 }
 /* TODO:setting height */
 .total-title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .total-amount {
-  height: 200px;
+  height: 80px;
   margin-bottom: 10px;
 
-  font-size: 80px;
+  font-size: 50px;
   font-weight: 700;
 
   text-align: center;
-  line-height: 200px;
+  line-height: 80px;
 }
 
 .progress {
   width: 90%;
-  height: 50px;
+  height: 20px;
 
   margin: 0 auto 20px;
 }
 
 .food {
-  color:#bb2020 ;
+  color: #bb2020;
   background: #bb2020;
 }
 
@@ -180,7 +181,7 @@ export default {
 }
 
 .transport {
-  color: #3eb595 ;
+  color: #3eb595;
   background: #3eb595;
 }
 
@@ -194,8 +195,6 @@ export default {
   background: #6784b4;
 }
 
-
-
 .ratio-table {
   display: flex;
   padding: 10px 0 10px;
@@ -208,6 +207,7 @@ export default {
   text-align: center;
 
   background: transparent;
+  font-size: 14px;
 }
 
 .category-detail .category-name {
@@ -244,4 +244,25 @@ export default {
 .ratio-table .other::before {
   background: #6784b4;
 } */
+
+@media screen and (min-width: 576px) {
+  .total-title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .total-amount {
+    height: 200px;
+    margin-bottom: 10px;
+
+    font-size: 80px;
+    font-weight: 700;
+
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .progress {
+    height: 50px;
+  }
+}
 </style>

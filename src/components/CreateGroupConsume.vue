@@ -8,6 +8,14 @@
     >
       新增消費
     </button>
+
+    <button
+      type="button"
+      class="small-add-consume"
+      data-bs-toggle="modal"
+      data-bs-target="#createGroupConsumeModal"
+    >
+    </button>
     <!-- Modal -->
     <div
       class="modal fade consume-modal"
@@ -463,7 +471,33 @@ export default {
   display: flex;
 }
 
+.small-add-consume {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+
+  width: 40px;
+  height: 40px;
+
+  background: #6784b4;
+  border-radius: 50%;
+  line-height: 38px;
+}
+
+.small-add-consume::after {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  content: "+";
+  font-size: 30px;
+  color: #fff;
+}
+
 .add-consume {
+  display: none;
   height: 80px;
   width: 90%;
   max-width: 400px;
@@ -591,5 +625,15 @@ input::placeholder {
 
 .modal-footer {
   border: none;
+}
+
+@media screen and (min-width: 576px) {
+  .add-consume {
+    display: block;
+  }
+
+  .small-add-consume {
+    display: none;
+  }
 }
 </style>

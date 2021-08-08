@@ -111,7 +111,6 @@ export default {
 
 <style scoped>
 .main-content {
-  position: relative;
 
   height: 100%;
   width: 100%;
@@ -140,7 +139,6 @@ export default {
 } */
 
 .groups-container {
-  position: relative;
 
   height: calc(100% - 100px - 30px);
   overflow: scroll;
@@ -151,7 +149,8 @@ export default {
   padding: 20px 0;
 }
 
-.group {
-  width: 400px;
+.sub-title {
+  font-size: 0.8rem;
 }
+
 </style>

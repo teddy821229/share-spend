@@ -6,7 +6,7 @@
         :key="time.id"
         type="button"
         @click.prevent.stop="filterTime(time.id)"
-        :class="{active: select === time.id}"
+        :class="{ active: select === time.id }"
       >
         <li class="time">
           {{ time.section }}
@@ -42,7 +42,7 @@ const dummyTimes = [
   {
     id: 5,
     section: "本季內",
-  }
+  },
 ];
 
 export default {
@@ -61,7 +61,7 @@ export default {
       this.times = dummyTimes;
     },
     filterTime(timeId) {
-      this.select = timeId
+      this.select = timeId;
       this.$emit("change-time", timeId);
     },
   },
@@ -73,7 +73,6 @@ export default {
   position: relative;
 
   width: 90%;
-  height: auto;
   margin: 10px auto 0;
   white-space: nowrap;
   overflow: scroll;
@@ -81,27 +80,40 @@ export default {
 
 .time {
   display: inline-block;
-  height: 40px;
-  padding: 0 15px;
+  height: 30px;
+  padding: 0 10px;
 
-  margin: 0 5px;
+  margin: 0 ;
 
   border-radius: 15px;
 
-  line-height: 40px;
+  line-height: 30px;
   text-align: center;
+  font-size: .8rem;
 }
 
 button {
   color: #6784b4;
 }
 
-.time:hover, .active .time {
+.time:hover,
+.active .time {
   background: #f2f6ff;
 }
 
-
 .list::-webkit-scrollbar {
   display: none;
+}
+
+@media screen and (min-width: 576px) {
+  .time {
+    height: 40px;
+    padding: 0 15px;
+    margin: 0 5px;
+    border-radius: 15px;
+    line-height: 40px;
+
+    font-size: 1rem;
+  }
 }
 </style>

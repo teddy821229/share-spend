@@ -220,8 +220,8 @@ export default {
       this.consumes.unshift(data);
     },
     afterDelete(data) {
-      this.consumes = this.consumes.filter(consume => consume.id !== data.id)
-    }
+      this.consumes = this.consumes.filter((consume) => consume.id !== data.id);
+    },
   },
   computed: {
     filteredConsume() {
@@ -269,13 +269,9 @@ export default {
   overflow: scroll;
 }
 
-.col-lg-6 {
-  height: 100%
-}
-
-.col-12 {
+/* .col-12 {
   height: 100%;
-}
+} */
 
 .title {
   position: relative;
@@ -301,9 +297,14 @@ export default {
   background: #a9b6cc;
 }
 
-.card-container,
-.left-content-container {
-  height: calc(100% - 54px - 60px);
-  overflow: scroll;
+@media screen and (min-width: 768px) {
+  .col-lg-6 {
+    height: 100%;
+  }
+  .card-container,
+  .left-content-container {
+    height: calc(100% - 54px - 60px);
+    overflow: scroll;
+  }
 }
 </style>

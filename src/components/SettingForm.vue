@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <form
-      @submit.prevent.stop="handleSubmit"
-    >
+    <form @submit.prevent.stop="handleSubmit">
       <div class="form-row image-row">
         <img :src="user.avatar | defaultImage" class="image" />
         <label for="image">
@@ -44,11 +42,23 @@
 
       <div class="form-row normal-row">
         <label for="phone">電話：</label>
-        <input type="tetx" name="phone" id="phone" maxlength="10" v-model="user.phone" />
+        <input
+          type="tetx"
+          name="phone"
+          id="phone"
+          maxlength="10"
+          v-model="user.phone"
+        />
       </div>
 
       <div class="button-container">
-        <button type="button" class="btn btn-light" @click.prevent.stop="cancelEdit">取消</button>
+        <button
+          type="button"
+          class="btn btn-light"
+          @click.prevent.stop="cancelEdit"
+        >
+          取消
+        </button>
         <button type="submit" class="btn btn-primary">確認修改</button>
       </div>
     </form>
@@ -104,7 +114,8 @@ export default {
       this.avatar = imageURL;
     },
     fetchUser() {
-      const { id, name, account, password, email, avatar, phone } = this.initialUser;
+      const { id, name, account, password, email, avatar, phone } =
+        this.initialUser;
       this.user = {
         ...this.user,
         id,
@@ -113,24 +124,22 @@ export default {
         password,
         email,
         avatar,
-        phone
-      }
+        phone,
+      };
       this.dataCached = {
         ...this.dataCached,
-        ...this.user
+        ...this.user,
       };
     },
     handleSubmit() {
-      
-
-      localStorage.setItem('currentUser', JSON.stringify(this.user))
-      this.$store.commit('setCurrentUser', this.user)
+      localStorage.setItem("currentUser", JSON.stringify(this.user));
+      this.$store.commit("setCurrentUser", this.user);
     },
     cancelEdit() {
       this.user = {
         ...this.user,
-        ...this.dataCached
-      }
+        ...this.dataCached,
+      };
     },
   },
 };
@@ -139,7 +148,7 @@ export default {
 <style scoped>
 .container {
   height: 100%;
-  width: 80%;
+  width: 100%;
 
   overflow: scroll;
 }
@@ -163,12 +172,13 @@ label {
 
 input {
   width: 100%;
-  max-width: 500px;
-  height: 40px;
+  max-width: 400px;
+  height: 30px;
 
   border: 2px solid #a9b6cc;
-  border-radius: 15px;
-  padding-left: 15px;
+  border-radius: 10px;
+  padding-left: 10px;
+  font-size: 0.8rem;
 
   color: #6784b4;
 }
@@ -181,8 +191,8 @@ input {
 }
 
 .image-row img {
-  width: 160px;
-  height: 160px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
   border: 2px solid #a9b6cc;
 }
@@ -230,5 +240,34 @@ input {
 .btn-light {
   border: 2px solid #a9b6cc;
   color: #3c6099;
+}
+@media screen and (min-width: 576px) {
+  .container {
+    width: 80%;
+  }
+
+  .image-row img {
+    width: 154px;
+    height: 154px;
+  }
+  .image-row label {
+    margin: 0 0 0 30px;
+    height: 40px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+
+    border-radius: 10px;
+    border: 1px solid #6784b4;
+
+    cursor: pointer;
+  }
+
+  input {
+    height: 40px;
+    border-radius: 15px;
+
+    font-size: 1rem;
+  }
 }
 </style>

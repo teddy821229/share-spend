@@ -72,7 +72,6 @@ export default {
   position: relative;
 
   width: 90%;
-  height: auto;
   margin: 10px auto 0;
   white-space: nowrap;
   overflow: scroll;
@@ -91,15 +90,16 @@ export default {
 
 .category {
   display: inline-block;
-  height: 40px;
+  height: 30px;
   padding: 0 10px;
 
-  margin: 0 5px;
+  margin: 0 ;
 
   border-radius: 15px;
 
-  line-height: 40px;
+  line-height: 30px;
   text-align: center;
+  font-size: 0.8rem;
 }
 
 button {
@@ -113,5 +113,17 @@ button {
 
 .list::-webkit-scrollbar {
   display: none;
+}
+
+@media screen and (min-width: 576px) {
+  .category {
+    height: 40px;
+    padding: 0 15px;
+    margin: 0 5px;
+    border-radius: 15px;
+    line-height: 40px;
+
+    font-size: 1rem;
+  }
 }
 </style>

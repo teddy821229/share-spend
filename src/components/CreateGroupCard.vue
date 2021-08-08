@@ -1,10 +1,14 @@
 <template>
- <div class="group">
-    <router-link to="/groups/create">
-      <div class="inner-container">
-        新增群組
-      </div>
-    </router-link>
+  <div class="outter">
+    <div class="group">
+      <router-link to="/groups/create">
+        <div class="inner-container">新增群組</div>
+      </router-link>
+    </div>
+    <div class="small-group">
+      <router-link to="/groups/create">
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -15,12 +19,12 @@ export default {
 </script>
 
 <style scoped>
-.group {
-  height: 200px;
-  width: 400px;
-  max-width: 500px;
 
-  margin: 10px auto;
+.group {
+  display: none;
+  height: 200px;
+  width: 450px;
+  max-width: 500px;
 
   background: #f2f6ff;
 
@@ -49,6 +53,41 @@ export default {
 
 .group .inner-container:hover {
   color: #fff;
+}
+
+.small-group a {
+  position: absolute;
+  bottom: 20px;
+  right: 0px;
+
+  width: 40px;
+  height: 40px;
+
+  background: #6784b4;
+  border-radius: 50%;
+
+  text-align: center;
+  line-height: 35px;
+}
+
+.small-group a::after {
+  content: "+";
+  font-size: 30px;
+  color: #fff;
+
+}
+
+@media screen and (min-width: 576px) {
+  .outter {
+    margin: 10px auto;
+  }
+
+  .group {
+    display: block;
+  }
+  .small-group {
+    display: none;
+  }
 }
 
 </style>

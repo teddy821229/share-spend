@@ -48,9 +48,9 @@ export default {
 
 <style scoped>
 .group {
-  height: 200px;
+  height: 150px;
   width: 90%;
-  max-width: 500px;
+  max-width: 450px;
 
   margin: 10px auto;
 
@@ -84,8 +84,8 @@ export default {
 .img-container img {
   object-fit: cover;
   object-position: center center;
-  width: 112px;
-  height: 112px;
+  width: 87px;
+  height: 87px;
   border: 6px solid #a9b6cc;
   border-radius: 50%;
 }
@@ -95,7 +95,8 @@ export default {
   grid-row: 1/2;
 
   color: #6784b4;
-  font-size: 30px;
+  font-size: 20px;
+  padding-left: 10px;
 }
 
 .group-detail {
@@ -118,7 +119,7 @@ export default {
 }
 
 ion-icon {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .consume-container {
@@ -131,5 +132,34 @@ ion-icon {
 
 .sub-title {
   padding-left: 10px;
+  font-size: 14px;
+}
+
+@media screen and (min-width: 768px) {
+  .group {
+    height: 200px;
+  }
+
+  ion-icon {
+  font-size: 20px;
+}
+.name-container {
+  grid-column: 2/3;
+  grid-row: 1/2;
+
+  color: #6784b4;
+  font-size: 30px;
+}
+.img-container img {
+
+  width: 112px;
+  height: 112px;
+
+}
+.sub-title {
+  padding-left: 10px;
+  font-size: 18px;
+}
+
 }
 </style>

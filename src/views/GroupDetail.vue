@@ -2,7 +2,7 @@
   <div class="main-content">
     <TopNavBar msg="群組詳細資料" :show="true" />
     <div class="row">
-      <div class="col-6">
+      <div class="col-12 col-lg-6">
         <GroupCardInDetail :group="group" />
         <div class="title">
           群組成員 <span>{{ group.Members.length }} 人</span>
@@ -15,12 +15,12 @@
           />
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-12 col-lg-6">
         <div class="title">
           群組消費列表 <span>{{ group.Consumes.length }} 筆</span>
         </div>
-        <CreateGroupConsume 
-          :member-list="group.Members" 
+        <CreateGroupConsume
+          :member-list="group.Members"
           @after-create="afterCreate"
         />
         <div class="consume-container">
@@ -105,7 +105,7 @@ const dummyGroup = {
         icon: "fast-food-outline",
         name: "食物",
       },
-      name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
+      name: "午餐麥當勞歡樂送送送到你家哈哈",
       amount: 500,
       userOwed: -200,
       participates: [
@@ -137,7 +137,7 @@ const dummyGroup = {
           debt: 150,
         },
       ],
-      date: new Date(2021, 6 ,6),
+      date: new Date(2021, 6, 6),
     },
     {
       id: 2,
@@ -170,7 +170,7 @@ const dummyGroup = {
           debt: -300,
         },
       ],
-      date: new Date(2021, 6 ,3),
+      date: new Date(2021, 6, 3),
     },
     {
       id: 3,
@@ -230,7 +230,7 @@ const dummyGroup = {
           debt: -336,
         },
       ],
-      date: new Date(2021, 6 ,1),
+      date: new Date(2021, 6, 1),
     },
     {
       id: 4,
@@ -263,7 +263,7 @@ const dummyGroup = {
           debt: 180,
         },
       ],
-      date: new Date(2021, 6 ,2),
+      date: new Date(2021, 6, 2),
     },
     {
       id: 5,
@@ -323,7 +323,7 @@ const dummyGroup = {
           debt: -200,
         },
       ],
-      date: new Date(2021, 5 ,28),
+      date: new Date(2021, 5, 28),
     },
     {
       id: 6,
@@ -356,7 +356,7 @@ const dummyGroup = {
           debt: 220,
         },
       ],
-      date: new Date(2021, 5 ,23),
+      date: new Date(2021, 5, 23),
     },
     {
       id: 7,
@@ -389,7 +389,7 @@ const dummyGroup = {
           debt: -1300,
         },
       ],
-      date: new Date(2021, 5 ,1),
+      date: new Date(2021, 5, 1),
     },
     {
       id: 8,
@@ -431,7 +431,7 @@ const dummyGroup = {
           debt: 40,
         },
       ],
-      date: new Date(2021, 5 ,23),
+      date: new Date(2021, 5, 23),
     },
     {
       id: 9,
@@ -464,11 +464,11 @@ const dummyGroup = {
           debt: 675,
         },
       ],
-      date: new Date(2021, 5 ,1),
+      date: new Date(2021, 5, 1),
     },
   ],
   // userOwed: 2469,
-  updatedDate: new Date(2021, 7 ,2),
+  updatedDate: new Date(2021, 7, 2),
 };
 
 export default {
@@ -555,8 +555,8 @@ export default {
       });
     },
     afterCreate(data) {
-      this.group.Consumes.unshift(data)
-    }
+      this.group.Consumes.unshift(data);
+    },
   },
 };
 </script>
@@ -569,10 +569,7 @@ export default {
 
 .row {
   height: calc(100% - 100px);
-}
-
-.col-6 {
-  height: 100%;
+  overflow: scroll;
 }
 
 .title {
@@ -604,13 +601,18 @@ export default {
   font-weight: bolder;
 }
 
-.member-container {
-  height: calc(100% - 232px - 54px);
-  overflow: scroll;
-}
+@media screen and (min-width: 576px) {
+  .col-lg-6 {
+    height: 100%;
+  }
+  .member-container {
+    height: calc(100% - 232px - 54px);
+    overflow: scroll;
+  }
 
-.consume-container {
-  height: calc(100% - 54px - 110px);
-  overflow: scroll;
+  .consume-container {
+    height: calc(100% - 54px - 110px);
+    overflow: scroll;
+  }
 }
 </style>

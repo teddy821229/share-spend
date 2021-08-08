@@ -13,9 +13,9 @@
               :consume="consume"
               @after-click-button="afterClickButton"
             />
-            <router-link to="/payment">
+            <!-- <router-link to="/payment">
               <div class="more-consume">其他消費</div>
-            </router-link>
+            </router-link> -->
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <ConsumeModal 
+    <ConsumeModal
       :modal-content="modalContent"
       @after-save-change="afterSaveChange"
       @after-delete="afterDelete"
@@ -41,15 +41,13 @@ import ConsumeCard from "../components/ConsumeCard.vue";
 import GroupCard from "./../components/GroupCard.vue";
 import ConsumeModal from "./../components/ConsumeModal.vue";
 
-
-
 const dummyConsumes = [
   {
     id: 1,
     Category: {
       id: 1,
       code: "food",
-      icon: 'fast-food-outline',
+      icon: "fast-food-outline",
       name: "食物",
     },
     name: "午餐麥當勞歡樂送送送到你家哈哈哈哈",
@@ -61,7 +59,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
-      icon: 'game-controller-outline',
+      icon: "game-controller-outline",
       name: "娛樂",
     },
     name: "盲盒",
@@ -73,7 +71,7 @@ const dummyConsumes = [
     Category: {
       id: 4,
       code: "life",
-      icon: 'cafe-outline',
+      icon: "cafe-outline",
       name: "生活",
     },
     name: "洗髮水",
@@ -85,7 +83,7 @@ const dummyConsumes = [
     Category: {
       id: 1,
       code: "food",
-      icon: 'fast-food-outline',
+      icon: "fast-food-outline",
       name: "食物",
     },
     name: "午餐",
@@ -97,7 +95,7 @@ const dummyConsumes = [
     Category: {
       id: 4,
       code: "life",
-      icon: 'cafe-outline',
+      icon: "cafe-outline",
       name: "生活",
     },
     name: "洗面乳",
@@ -109,7 +107,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
-      icon: 'game-controller-outline',
+      icon: "game-controller-outline",
       name: "娛樂",
     },
     name: "電影",
@@ -121,7 +119,7 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "transport",
-      icon: 'train-outline',
+      icon: "train-outline",
       name: "交通",
     },
     name: "高鐵",
@@ -133,7 +131,7 @@ const dummyConsumes = [
     Category: {
       id: 5,
       code: "other",
-      icon: 'cash-outline',
+      icon: "cash-outline",
       name: "其他",
     },
     name: "捐款",
@@ -145,7 +143,7 @@ const dummyConsumes = [
     Category: {
       id: 3,
       code: "transport",
-      icon: 'train-outline',
+      icon: "train-outline",
       name: "交通",
     },
     name: "高鐵",
@@ -157,7 +155,7 @@ const dummyConsumes = [
     Category: {
       id: 2,
       code: "entertainment",
-      icon: 'game-controller-outline',
+      icon: "game-controller-outline",
       name: "娛樂",
     },
     name: "線上抽盒機",
@@ -219,7 +217,7 @@ export default {
     GroupCard,
     ConsumeModal,
   },
-  
+
   created() {
     this.fetchConsume();
     this.fetchGroup();
@@ -263,11 +261,11 @@ export default {
     },
     afterCreateNewConsume(data) {
       this.consumes.unshift(data);
-      this.consumes.pop()
+      this.consumes.pop();
     },
     afterDelete(data) {
-      this.consumes = this.consumes.filter(consume => consume.id !== data.id)
-    }
+      this.consumes = this.consumes.filter((consume) => consume.id !== data.id);
+    },
   },
 };
 </script>
@@ -282,17 +280,6 @@ export default {
 .row {
   height: calc(100% - 100px);
   overflow: scroll;
-}
-.col-lg-6 {
-  height: 100%;
-}
-
-.col-12 {
-  height: 100%;
-}
-
-.left-container {
-  height: calc(100% - 54px - 110px);
 }
 
 .title {
@@ -346,17 +333,26 @@ export default {
   background: #6784b4;
 }
 
-.card-container {
-  height: 100%;
-  overflow: scroll;
-}
-
-.group-container {
-  height: calc(100% - 54px);
-  overflow: scroll;
-}
-
 .group {
   margin: 30px auto;
+}
+
+@media screen and (min-width: 768px) {
+  .col-lg-6 {
+    height: 100%;
+  }
+  .left-container {
+    height: calc(100% - 54px - 110px);
+  }
+
+  .card-container {
+    height: 100%;
+    overflow: scroll;
+  }
+
+  .group-container {
+    height: calc(100% - 54px);
+    overflow: scroll;
+  }
 }
 </style>

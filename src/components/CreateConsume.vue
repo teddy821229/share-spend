@@ -10,6 +10,13 @@
       新增消費
     </button>
 
+    <button
+      type="button"
+      class="rwd-button"
+      data-bs-toggle="modal"
+      data-bs-target="#createModal"
+    ></button>
+
     <!-- Modal -->
     <div
       class="modal fade consume-modal"
@@ -235,10 +242,16 @@ export default {
 
 <style scoped>
 .button-container {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+
+
   display: flex;
 }
 
 .add-consume {
+  display: none;
   height: 80px;
   width: 90%;
   max-width: 400px;
@@ -253,6 +266,21 @@ export default {
   border-radius: 15px;
 
   cursor: pointer;
+}
+
+.rwd-button {
+  height: 40px;
+  width: 40px;
+
+  background: #6784b4;
+  border-radius: 50%;
+}
+
+.rwd-button::after {
+  content: "+";
+
+  color: #fff;
+  font-weight: 700;
 }
 
 .add-consume:hover {
@@ -368,5 +396,20 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .modal-footer {
   border: none;
+}
+
+@media screen and (min-width: 576px) {
+  .button-container {
+    position: relative;
+    bottom: 0;
+    right: 0;
+  }
+  .add-consume {
+    display: block;
+  }
+
+  .rwd-button  {
+    display: none;
+  }
 }
 </style>

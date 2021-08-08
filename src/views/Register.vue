@@ -110,7 +110,7 @@
           <div class="congrate">
             註冊完成！恭喜你！
             <br />
-            現在可以開始使用我們的服務了
+            現在可以開始使用我們的服務了 
             <br />
             {{ user.name }}
           </div>
@@ -178,10 +178,10 @@ export default {
           return;
         }
         this.step += 1;
-        return;
+        return
       }
       if (this.step === 1) {
-        if (!this.user.name.trim()) {
+         if (!this.user.name.trim()) {
           Toast.fire({
             icon: "warning",
             title: "請輸入名稱",
@@ -196,7 +196,7 @@ export default {
           });
           return;
         }
-        this.step += 1;
+        this.step += 1
       }
     },
     preStep() {
@@ -326,10 +326,11 @@ export default {
   font-size: 20px;
   font-weight: 700;
   color: #6784b4;
+
 }
 
 .row {
-  width: 400px;
+  width: 350px;
   margin-bottom: 30px;
   display: flex;
 }
@@ -379,6 +380,7 @@ input:hover {
   color: #6784b4;
   line-height: 3rem;
   text-align: center;
+
 }
 
 .submit-button {
@@ -414,9 +416,13 @@ input:hover {
   border: 1px solid #6784b4;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 576px) {
   .step-title span {
     font-size: 16px;
+  }
+
+  .row {
+    width: 400px;
   }
 }
 </style>
