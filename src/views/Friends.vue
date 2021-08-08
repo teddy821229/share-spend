@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <TopNavBar msg="好友設定" :show="true" />
+    <TopNavBar msg="好友設定"/>
     <div class="content-container">
       <FriendsCard
         v-for="friend in friends"
@@ -166,5 +166,6 @@ export default {
   overflow: scroll;
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 }
 </style>

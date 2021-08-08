@@ -2,7 +2,7 @@
   <div class="main-content">
     <TopNavBar msg="記帳本" />
     <div class="row">
-      <div class="col-6">
+      <div class="col-12 col-lg-6">
         <div class="title">消費總額</div>
         <ConsumeTimeNavPills @change-time="changeTime" />
         <div class="left-content-container">
@@ -10,7 +10,7 @@
           <CreateConsume @after-create-new-consume="afterCreateNewConsume" />
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-12 col-lg-6">
         <div class="title">消費列表</div>
         <ConsumeCategoryNavPills @change-category="changeCategory" />
         <div class="card-container">
@@ -266,13 +266,16 @@ export default {
 
 .row {
   height: calc(100% - 100px);
-}
-.col-6 {
-  height: calc(100% - 54px - 50px);
+  overflow: scroll;
 }
 
-.col-6 {
-  height: calc(100% - 54px - 50px);
+.col-lg-6 {
+  height: calc(100% - 54px - 60px);
+}
+
+.col-12 {
+  height: calc(100% - 54px - 60px);
+  margin-bottom: 40px;
 }
 
 .title {

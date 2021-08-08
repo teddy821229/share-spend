@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <TopNavBar msg="設定" :show="true" />
+    <TopNavBar msg="設定" />
     <div class="content-container">
       <SettingForm 
         :initial-user="user"

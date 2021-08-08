@@ -200,7 +200,9 @@ export default {
     modalContent: {
       type: Object,
       default: () => {
-        return {};
+        return {
+          isEditing: false
+        };
       },
     },
     memberList: {
