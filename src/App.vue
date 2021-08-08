@@ -80,8 +80,8 @@ export default {
 
 .toggle-button {
   position: absolute;
-  top: 25px;
-  right: 10px;
+  top: 20px;
+  right: 0px;
   display: block;
 
   padding: 5px 10px;

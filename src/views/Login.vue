@@ -5,11 +5,11 @@
       @submit.prevent.stop="signIn"
     >
       <div class="login-title">登入</div>
-      <div class="row g-3 align-items-center">
+      <div class="form-row g-3">
         <div class="col-auto">
-          <label for="account" class="col-form-label">帳號</label>
+          <label for="account" class="col-form-label">帳號： </label>
         </div>
-        <div class="col-auto">
+        <div class="col-auto input-container">
           <input
             type="text"
             name="account"
@@ -20,11 +20,11 @@
         </div>
       </div>
 
-      <div class="row g-3 align-items-center">
+      <div class="form-row g-3">
         <div class="col-auto">
-          <label for="password" class="col-form-label">密碼</label>
+          <label for="password" class="col-form-label">密碼： </label>
         </div>
-        <div class="col-auto">
+        <div class="col-auto input-container">
           <input
             type="password"
             name="password"
@@ -110,6 +110,7 @@ export default {
   height: 100%;
 }
 .login-form {
+  width: 400px;
   transform: translateY(-20%);
 }
 
@@ -122,7 +123,8 @@ export default {
   color: #6784b4;
 }
 
-.row {
+.form-row {
+  display: flex;
   margin-bottom: 30px;
 }
 
@@ -130,10 +132,13 @@ label {
   color: #a9b6cc;
 }
 
-input {
-  width: 400px;
-  height: 40px;
+.input-container {
+flex-grow: 1;
+}
 
+input {
+  height: 40px;
+  width: 100%;
   padding-left: 10px;
 
   border-radius: 10px;
@@ -161,5 +166,9 @@ input:hover {
 
   color: #fff;
   background: #a9b6cc;
+}
+
+@media screen and (min-width: 576px) {
+  
 }
 </style>

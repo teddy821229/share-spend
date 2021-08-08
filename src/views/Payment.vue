@@ -270,12 +270,11 @@ export default {
 }
 
 .col-lg-6 {
-  height: calc(100% - 54px - 60px);
+  height: 100%
 }
 
 .col-12 {
-  height: calc(100% - 54px - 60px);
-  margin-bottom: 40px;
+  height: 100%;
 }
 
 .title {
@@ -304,7 +303,7 @@ export default {
 
 .card-container,
 .left-content-container {
-  height: 100%;
+  height: calc(100% - 54px - 60px);
   overflow: scroll;
 }
 </style>

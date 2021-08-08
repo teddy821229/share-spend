@@ -6,19 +6,19 @@
           class="step"
           :class="{ complete: step > 0, now: step === 0, undone: step < 0 }"
         >
-          <div class="step-title">建立帳號</div>
+          <div class="step-title"><span>建立帳號</span></div>
         </div>
         <div
           class="step"
           :class="{ complete: step > 1, now: step === 1, undone: step < 1 }"
         >
-          <div class="step-title">基本資料</div>
+          <div class="step-title"><span>基本資料</span></div>
         </div>
         <div
           class="step"
           :class="{ complete: step > 2, now: step === 2, undone: step < 2 }"
         >
-          <div class="step-title">完成註冊</div>
+          <div class="step-title"><span>完成註冊</span></div>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
             <div class="col-auto input-title">
               <label for="account" class="col-form-label">帳號*</label>
             </div>
-            <div class="col-auto">
+            <div class="col-auto input-container">
               <input
                 type="text"
                 name="account"
@@ -45,7 +45,7 @@
             <div class="col-auto input-title">
               <label for="password" class="col-form-label">密碼*</label>
             </div>
-            <div class="col-auto">
+            <div class="col-auto input-container">
               <input
                 type="password"
                 name="password"
@@ -62,7 +62,7 @@
                 >密碼確認*</label
               >
             </div>
-            <div class="col-auto">
+            <div class="col-auto input-container">
               <input
                 type="password"
                 name="password-confirm"
@@ -78,7 +78,7 @@
             <div class="col-auto input-title">
               <label for="name" class="col-form-label">名稱*</label>
             </div>
-            <div class="col-auto">
+            <div class="col-auto input-container">
               <input type="text" name="name" id="name" v-model="user.name" />
             </div>
           </div>
@@ -87,7 +87,7 @@
             <div class="col-auto input-title">
               <label for="email" class="col-form-label">信箱*</label>
             </div>
-            <div class="col-auto">
+            <div class="col-auto input-container">
               <input
                 type="email"
                 name="email"
@@ -101,11 +101,8 @@
             <div class="col-auto input-title">
               <label for="name" class="col-form-label mb-4">電話</label>
             </div>
-            <div class="col-auto">
+            <div class="col-auto input-container">
               <input type="text" name="phone" id="phone" v-model="user.phone" />
-              <div class="note mt-2 ps-1">
-                輸入電話可以讓其他使用者透過電話找到你唷！
-              </div>
             </div>
           </div>
         </template>
@@ -113,7 +110,7 @@
           <div class="congrate">
             註冊完成！恭喜你！
             <br />
-            現在可以開始使用我們的服務了 
+            現在可以開始使用我們的服務了
             <br />
             {{ user.name }}
           </div>
@@ -181,10 +178,10 @@ export default {
           return;
         }
         this.step += 1;
-        return
+        return;
       }
       if (this.step === 1) {
-         if (!this.user.name.trim()) {
+        if (!this.user.name.trim()) {
           Toast.fire({
             icon: "warning",
             title: "請輸入名稱",
@@ -199,7 +196,7 @@ export default {
           });
           return;
         }
-        this.step += 1
+        this.step += 1;
       }
     },
     preStep() {
@@ -212,13 +209,15 @@ export default {
 <style scoped>
 .register-container {
   width: 100%;
-  height: 100%;
+  height: clac(100% - 40px);
+  padding-top: 40px;
 }
 
 .register-stepper {
   height: 15%;
   border-bottom: 2px solid #6784b4;
-  margin-bottom: 40px;
+  padding: 20px 0 40px;
+  margin-bottom: 50px;
 }
 
 .step {
@@ -233,6 +232,8 @@ export default {
 .step-title {
   position: relative;
   padding-left: 30px;
+  font-size: 12px;
+  line-height: 26px;
 }
 
 .step:nth-child(1n) .step-title::before {
@@ -311,17 +312,26 @@ export default {
   color: #a9b6cc;
 }
 
+/* stepper end */
+
+/* bottom content */
+
+.register {
+  height: calc(75% - 80px);
+}
+
 .register-title {
   text-align: center;
   margin-bottom: 30px;
   font-size: 20px;
   font-weight: 700;
   color: #6784b4;
-  transform: translateX(20px);
 }
 
 .row {
+  width: 400px;
   margin-bottom: 30px;
+  display: flex;
 }
 
 .input-title {
@@ -332,10 +342,13 @@ label {
   color: #a9b6cc;
 }
 
-input {
-  width: 400px;
-  height: 40px;
+.input-container {
+  flex-grow: 1;
+}
 
+input {
+  height: 40px;
+  width: 100%;
   padding-left: 10px;
 
   border-radius: 10px;
@@ -366,7 +379,6 @@ input:hover {
   color: #6784b4;
   line-height: 3rem;
   text-align: center;
-  transform: translateX(20px);
 }
 
 .submit-button {
@@ -374,7 +386,6 @@ input:hover {
   width: 60%;
   padding-top: 40px;
   margin: 0 auto;
-  transform: translateX(20px);
 }
 
 .submit-button::before {
@@ -382,8 +393,9 @@ input:hover {
   content: "";
   background-color: #a9b6cc;
   height: 2px;
-  left: -100px;
-  right: -100px;
+  width: 150%;
+  transform: translateX(-50%);
+  left: 50%;
   top: 10px;
 }
 
@@ -400,5 +412,11 @@ input:hover {
   background: #fff;
   color: #6784b4;
   border: 1px solid #6784b4;
+}
+
+@media screen and (min-width: 768px) {
+  .step-title span {
+    font-size: 16px;
+  }
 }
 </style>
