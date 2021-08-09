@@ -106,12 +106,12 @@ export default {
     handleFileChange(e) {
       const { files } = e.target;
       if (files.length === 0) {
-        this.avatar = "";
+        this.user.avatar = "";
         return;
       }
 
       const imageURL = window.URL.createObjectURL(files[0]);
-      this.avatar = imageURL;
+      this.user.avatar = imageURL;
     },
     fetchUser() {
       const { id, name, account, password, email, avatar, phone } =
@@ -191,6 +191,9 @@ input {
 }
 
 .image-row img {
+  object-fit: cover;
+  object-position: center center;
+  
   width: 104px;
   height: 104px;
   border-radius: 50%;

@@ -175,6 +175,7 @@ ion-icon {
 
   .detail-container {
     margin-left: 0;
+    text-align: center;
   }
 
   .name {

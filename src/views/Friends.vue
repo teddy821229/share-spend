@@ -2,6 +2,10 @@
   <div class="main-content">
     <TopNavBar msg="好友設定"/>
     <div class="content-container">
+      <AddNewFriendModal 
+        @after-add-friend="afterAddFriend"
+        @after-delete-friend="afterDeleteFriend"
+      />
       <FriendsCard
         v-for="friend in friends"
         :key="friend.id"
@@ -15,6 +19,7 @@
 <script>
 import TopNavBar from "./../components/TopNavBar.vue";
 import FriendsCard from "./../components/FriendsCard.vue";
+import AddNewFriendModal from "./../components/AddNewFriendModal.vue"
 
 
 const dummyFriend = [
@@ -121,6 +126,7 @@ export default {
   components: {
     TopNavBar,
     FriendsCard,
+    AddNewFriendModal
   },
   data() {
     return {
@@ -146,7 +152,12 @@ export default {
     },
     afterClickDelete(id) {
       this.friends = this.friends.filter(friend => friend.id !== id)
-
+    },
+    afterAddFriend(user) {
+      this.friends.push(user)
+    },
+    afterDeleteFriend(user) {
+      this.friends = this.friends.filter(friend => friend.id !== user.id)
     }
   },
 };
