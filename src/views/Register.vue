@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="register d-flex align-items-center justify-content-center">
-      <form class="login-form">
+      <form class="login-form" @submit.prevent.stop="handleSubmit">
         <div class="register-title">註冊</div>
         <template v-if="step === 0">
           <div class="row g-3 align-items-center">
@@ -110,7 +110,7 @@
           <div class="congrate">
             註冊完成！恭喜你！
             <br />
-            現在可以開始使用我們的服務了 
+            現在可以開始使用我們的服務了
             <br />
             {{ user.name }}
           </div>
@@ -128,7 +128,7 @@
             <button class="btn btn-previos mb-4" @click.prevent.stop="preStep">
               上一步
             </button>
-            <button class="btn" @click.prevent.stop="addStep">註冊</button>
+            <button class="btn" type="submit">註冊</button>
           </template>
           <template v-else>
             <button class="btn" @click.prevent.stop="$router.push('/login')">
@@ -162,42 +162,43 @@ export default {
   },
   methods: {
     addStep() {
-      if (this.step === 0) {
-        if (!this.user.account.trim()) {
-          Toast.fire({
-            icon: "warning",
-            title: "請輸入帳號",
-          });
-          return;
-        }
-        if (this.user.password !== this.passwordConfirm) {
-          Toast.fire({
-            icon: "warning",
-            title: "密碼不相同，請再次確認。",
-          });
-          return;
-        }
-        this.step += 1;
-        return
+      if (!this.user.account.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "請輸入帳號",
+        });
+        return;
       }
-      if (this.step === 1) {
-         if (!this.user.name.trim()) {
-          Toast.fire({
-            icon: "warning",
-            title: "請輸入名稱",
-          });
-          return;
-        }
+      if (this.user.password !== this.passwordConfirm) {
+        Toast.fire({
+          icon: "warning",
+          title: "密碼不相同，請再次確認。",
+        });
+        return;
+      }
+      this.step += 1;
+    },
 
-        if (!this.user.email.trim()) {
-          Toast.fire({
-            icon: "warning",
-            title: "請輸入信箱",
-          });
-          return;
-        }
-        this.step += 1
+    handleSubmit() {
+      if (!this.user.name.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "請輸入名稱",
+        });
+        return;
       }
+
+      if (!this.user.email.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "請輸入信箱",
+        });
+        return;
+      }
+
+      console.log("user", this.user);
+      // TODO: API create user
+      this.step += 1
     },
     preStep() {
       this.step -= 1;
@@ -326,7 +327,6 @@ export default {
   font-size: 20px;
   font-weight: 700;
   color: #6784b4;
-
 }
 
 .row {
@@ -380,7 +380,6 @@ input:hover {
   color: #6784b4;
   line-height: 3rem;
   text-align: center;
-
 }
 
 .submit-button {
