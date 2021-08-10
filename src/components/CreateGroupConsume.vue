@@ -14,8 +14,7 @@
       class="small-add-consume"
       data-bs-toggle="modal"
       data-bs-target="#createGroupConsumeModal"
-    >
-    </button>
+    ></button>
     <!-- Modal -->
     <div
       class="modal fade consume-modal"
@@ -122,6 +121,14 @@
                 <div class="title share-title">
                   幫誰付：
                   <span>{{ totalShare }}</span>
+                  <button
+                    type="button"
+                    class="btn"
+                    @click.prevent.stop="evenShare"
+                    :disabled="!content.amount"
+                  >
+                    均分
+                  </button>
                 </div>
                 <!-- add editing with input  -->
                 <ul class="share-list">
@@ -415,6 +422,18 @@ export default {
       }
       obj.value = "0";
     },
+    evenShare() {
+      this.sharelist.forEach((member) => {
+        member.share = Math.floor(this.content.amount / this.sharelist.length);
+      });
+
+      // 處理餘數
+      let i = 0;
+      while (this.totalShare !== this.content.amount) {
+        this.sharelist[i].share += 1;
+        i += 1
+      }
+    },
   },
   computed: {
     paylist() {
@@ -449,7 +468,7 @@ export default {
     totalPay() {
       let total = 0;
       this.content.participates.forEach((participate) => {
-        total += participate.pay;
+        total += Number(participate.pay);
       });
 
       return total;
@@ -457,7 +476,7 @@ export default {
     totalShare() {
       let total = 0;
       this.content.participates.forEach((participate) => {
-        total += participate.share;
+        total += Number(participate.share);
       });
 
       return total;
@@ -482,6 +501,7 @@ export default {
   background: #6784b4;
   border-radius: 50%;
   line-height: 38px;
+  z-index: 999;
 }
 
 .small-add-consume::after {
@@ -600,6 +620,21 @@ input::placeholder {
   margin-bottom: 10px;
 
   border-bottom: 2px solid #a9b6cc;
+  display: flex;
+  align-items: center;
+}
+
+.share-title button {
+  margin-left: 50px;
+  border: 1px solid #a9b6cc;
+  color: #6784b4;
+
+  box-shadow: none;
+}
+
+.share-title button:hover {
+  color: #fff;
+  background: #a9b6cc;
 }
 
 .payment,

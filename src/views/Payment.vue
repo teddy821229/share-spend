@@ -295,6 +295,8 @@ export default {
   height: 2px;
 
   background: #a9b6cc;
+
+  z-index: 0;
 }
 
 @media screen and (min-width: 768px) {

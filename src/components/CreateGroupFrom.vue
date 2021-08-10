@@ -56,7 +56,9 @@
               <!-- use v-model to do this section!! -->
               <input
                 type="checkbox"
+                name="member"
                 :id="'select' + friend.id"
+                :value="friend.id"
                 v-model="friend.selected"
                 @click="handleSelect(friend)"
               />

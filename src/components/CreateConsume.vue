@@ -274,6 +274,8 @@ export default {
 
   background: #6784b4;
   border-radius: 50%;
+
+  z-index: 1;
 }
 
 .rwd-button::after {
