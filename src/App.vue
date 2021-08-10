@@ -3,7 +3,9 @@
     <div class="content">
       <div class="row">
         <div class="col-3 nav-container" :class="{showNav: showNav}">
-          <SideNavBar />
+          <SideNavBar 
+            @after-click-router-link="afterClickRouterLink"
+          />
         </div>
         <div class="col-12 col-md-9 container content-container">
           <router-view />
@@ -39,6 +41,9 @@ export default {
   methods: {
     toggleShow() {
       this.showNav = !this.showNav
+    },
+    afterClickRouterLink() {
+      this.showNav = false
     }
   }
 };

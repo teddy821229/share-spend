@@ -2,7 +2,11 @@
   <div class="main-container">
     <ul class="nav-list">
       <template v-if="!isAuthenticate">
-        <li class="nav-item">
+
+        <li 
+          class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/login">
             <div class="corner"></div>
             <div class="corner"></div>
@@ -12,8 +16,11 @@
             <span class="title">登入</span>
           </router-link>
         </li>
-        <li class="nav-item">
-          
+
+        <li 
+          class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/register">
           <div class="corner"></div>
           <div class="corner"></div>
@@ -23,11 +30,14 @@
             <span class="title">註冊</span>
           </router-link>
         </li>
+
       </template>
 
       <template v-else>
-        <li class="nav-item">
 
+        <li class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/home">
           <div class="corner"></div>
           <div class="corner"></div>
@@ -37,8 +47,11 @@
             <span class="title">首頁</span>
           </router-link>
         </li>
-        <li class="nav-item">
 
+        <li 
+          class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/payment">
           <div class="corner"></div>
           <div class="corner"></div>
@@ -48,8 +61,11 @@
             <span class="title">記帳本</span>
           </router-link>
         </li>
-        <li class="nav-item">
 
+        <li 
+          class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/groups">
           <div class="corner"></div>
           <div class="corner"></div>
@@ -60,8 +76,10 @@
           </router-link>
         </li>
 
-        <li class="nav-item">
-
+        <li 
+          class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/friendship">
           <div class="corner"></div>
           <div class="corner"></div>
@@ -72,8 +90,10 @@
           </router-link>
         </li>
 
-        <li class="nav-item">
-
+        <li 
+          class="nav-item"
+          @click="clickRouterLink"
+        >
           <router-link to="/setting">
           <div class="corner"></div>
           <div class="corner"></div>
@@ -114,6 +134,9 @@ export default {
     logout() {
       this.$store.commit('revokeAuthentication')
       this.$router.push('/login')
+    },
+    clickRouterLink() {
+      this.$emit('after-click-router-link')
     }
   }
 };

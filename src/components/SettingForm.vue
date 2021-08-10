@@ -30,6 +30,20 @@
         />
       </div>
 
+      <div
+        class="form-row normal-row"
+        v-show="user.password !== dataCached.password"
+      >
+        <label for="password">密碼確認：</label>
+        <input
+          type="password"
+          class="confirm-input"
+          name="passwordConfirm"
+          id="passwordConfirm"
+          v-model="user.passwordConfirm"
+        />
+      </div>
+
       <div class="form-row normal-row">
         <label for="email">信箱：</label>
         <input type="email" name="email" id="email" v-model="user.email" />
@@ -67,6 +81,7 @@
 
 <script>
 import { imgFilter } from "./../utils/mixins";
+import { Toast } from "./../utils/helpers";
 
 export default {
   name: "SettingForm",
@@ -87,6 +102,7 @@ export default {
         name: "",
         account: "",
         password: "",
+        passwordConfirm: "",
         email: "",
         avatar: "",
         phone: "",
@@ -132,6 +148,53 @@ export default {
       };
     },
     handleSubmit() {
+      if (!this.user.account.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "帳號請勿空白！",
+        });
+        return;
+      }
+
+      if (!this.user.password.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "密碼請勿空白！",
+        });
+        return;
+      }
+
+      if (this.user.password.length < 8 || this.user.password.length > 15) {
+        Toast.fire({
+          icon: "warning",
+          title: "密碼長度須介於8~15之間！",
+        });
+        return;
+      }
+
+      if (this.user.password !== this.user.passwordConfirm) {
+        Toast.fire({
+          icon: "warning",
+          title: "密碼不相符，請重新輸入",
+        });
+      }
+
+      if (!this.user.email.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "信箱請勿空白",
+        });
+        return;
+      }
+
+      if (!this.user.name.trim()) {
+        Toast.fire({
+          icon: "warning",
+          title: "名稱請勿空白",
+        });
+        return;
+      }
+
       localStorage.setItem("currentUser", JSON.stringify(this.user));
       this.$store.commit("setCurrentUser", this.user);
     },
@@ -154,6 +217,7 @@ export default {
 }
 
 .form-row {
+  position: relative;
   margin: 30px 10px;
   display: flex;
   align-items: center;
@@ -183,6 +247,10 @@ input {
   color: #6784b4;
 }
 
+.confirm-input {
+  max-width: calc(400px - 32px);
+}
+
 .image-row {
   display: flex;
   align-items: center;
@@ -193,7 +261,7 @@ input {
 .image-row img {
   object-fit: cover;
   object-position: center center;
-  
+
   width: 104px;
   height: 104px;
   border-radius: 50%;

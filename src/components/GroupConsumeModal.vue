@@ -164,6 +164,13 @@
                 <button type="submit" class="btn btn-primary">完成編輯</button>
               </template>
               <template v-else>
+                <button 
+                  type="button" 
+                  class="btn btn-success me-auto"
+                  @click.prevent.stop="addPersonalConsume"
+                >
+                  新增至個人消費
+                </button>
                 <button
                   type="button"
                   class="btn btn-danger"
@@ -301,6 +308,7 @@ export default {
     this.fetchMember();
   },
   methods: {
+    // fetch function
     fetchMember() {
       this.members = this.memberList;
     },
@@ -332,6 +340,7 @@ export default {
         }
       );
     },
+    // state and cached
     changeEditState() {
       this.isEditing = !this.isEditing;
       if (this.isEditing) {
@@ -382,6 +391,7 @@ export default {
         this.cancelEdit();
       }
     },
+    // save function
     saveChange() {
       if (!this.content.name.trim()) {
         Toast.fire({
@@ -485,6 +495,8 @@ export default {
         }
       });
     },
+
+    // add participate function
     pushPayInParticipate() {
       const obj = document.getElementById("selectPay");
       const selectId = Number(obj.value);
@@ -554,6 +566,22 @@ export default {
         i += 1;
       }
     },
+    addPersonalConsume() {
+      const { name, Category, date, participates } = this.content
+      const amount = participates.find(participate => participate.id === 22).share
+      const data = {
+        name,
+        Category,
+        date,
+        amount
+      }
+      // TODO: API create consume
+      console.log('data', data);
+      Toast.fire({
+        icon: 'success',
+        title: '新增至個人消費成功！'
+      })
+    }
   },
   computed: {
     paylist() {

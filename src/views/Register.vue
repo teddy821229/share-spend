@@ -42,7 +42,7 @@
           </div>
 
           <div class="row g-3 align-items-center">
-            <div class="col-auto input-title">
+            <div class="col-auto input-title password-title">
               <label for="password" class="col-form-label">密碼*</label>
             </div>
             <div class="col-auto input-container">
@@ -53,6 +53,7 @@
                 v-model="user.password"
                 required
               />
+              <div class="notice">*密碼長度須介於8~15碼</div>
             </div>
           </div>
 
@@ -98,11 +99,12 @@
           </div>
 
           <div class="row g-3 align-items-center">
-            <div class="col-auto input-title">
+            <div class="col-auto input-title phone-title">
               <label for="name" class="col-form-label mb-4">電話</label>
             </div>
             <div class="col-auto input-container">
               <input type="text" name="phone" id="phone" v-model="user.phone" />
+              <div class="notice">其他使用者可以透過電話搜尋到您！</div>
             </div>
           </div>
         </template>
@@ -169,6 +171,15 @@ export default {
         });
         return;
       }
+
+      if (this.user.password.length < 8 || this.user.password.length > 15) {
+        Toast.fire({
+          icon: "warning",
+          title: "密碼長度須介於8~15碼",
+        });
+        return;
+      }
+
       if (this.user.password !== this.passwordConfirm) {
         Toast.fire({
           icon: "warning",
@@ -198,7 +209,7 @@ export default {
 
       console.log("user", this.user);
       // TODO: API create user
-      this.step += 1
+      this.step += 1;
     },
     preStep() {
       this.step -= 1;
@@ -339,6 +350,10 @@ export default {
   width: 100px;
 }
 
+.password-title {
+  padding-bottom: 30px;
+}
+
 label {
   color: #a9b6cc;
 }
@@ -370,6 +385,12 @@ input:hover {
 .note {
   font-size: 14px;
   padding-left: 20px;
+  color: #a9b6cc;
+}
+
+.notice {
+  padding-top: 9px;
+  font-size: 14px;
   color: #a9b6cc;
 }
 
