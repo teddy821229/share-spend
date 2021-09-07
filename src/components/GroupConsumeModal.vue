@@ -164,8 +164,8 @@
                 <button type="submit" class="btn btn-primary">完成編輯</button>
               </template>
               <template v-else>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   class="btn btn-success me-auto"
                   @click.prevent.stop="addPersonalConsume"
                 >
@@ -392,7 +392,10 @@ export default {
       }
     },
     // save function
-    saveChange() {
+    async saveChange() {
+      const payerList = [];
+      const payeeList = [];
+      const expenses = [];
       if (!this.content.name.trim()) {
         Toast.fire({
           icon: "warning",
@@ -437,6 +440,7 @@ export default {
       }
 
       // calculate debt
+      // 將點選新增後未加入消費的使用者篩除
 
       this.content.participates.forEach((participate) => {
         if (participate.pay === null) {
@@ -462,6 +466,92 @@ export default {
       this.content.userOwed = this.content.participates.find(
         (participate) => participate.id === userId
       ).debt;
+
+      // generate return expenses Arr
+
+      await this.content.participates.forEach((participate) => {
+        if (participate.debt >= 0) {
+          payerList.push({
+            id: participate.id,
+            name: participate.name,
+            debt: participate.debt,
+          });
+          if (participate.share > 0) {
+            expenses.push({
+              name: this.content.name,
+              payerId: participate.id,
+              payeeId: participate.id,
+              amount: participate.share,
+              CategoryId: this.content.Category.id,
+              GroupId: "2",
+            });
+          }
+        } else {
+          payeeList.push({
+            id: participate.id,
+            name: participate.name,
+            debt: participate.debt,
+          });
+          if (participate.pay > 0) {
+            expenses.push({
+              name: this.content.name,
+              payerId: participate.id,
+              payeeId: participate.id,
+              amount: participate.pay,
+              CategoryId: this.content.Category.id,
+              GroupId: "2",
+            });
+          }
+        }
+      });
+
+      payerList.sort((a, b) => b.debt - a.debt);
+      payeeList.sort((a, b) => a.debt - b.debt);
+
+      for (let i = 0; i < payerList.length; i++) {
+        for (let j = 0; j < payeeList.length; j++) {
+          const payerAmount = payerList[i].debt;
+          const payeeAmount = payeeList[j].debt * -1;
+          if (payerAmount >= payeeAmount) {
+            let pay = payeeList[j].debt * -1;
+            expenses.push({
+              name: this.content.name,
+              payerId: payerList[i].id,
+              payeeId: payeeList[j].id,
+              amount: pay,
+              CategoryId: this.content.Category.id,
+              GroupId: "2",
+            });
+            payerList[i].debt -= pay;
+            if (payerList[i].debt === 0) {
+              break;
+            }
+          } else if (payerAmount < payeeAmount) {
+            let pay = payerList[i].debt;
+            expenses.push({
+              name: this.content.name,
+              payerId: payerList[i].id,
+              payeeId: payeeList[j].id,
+              amount: pay,
+              CategoryId: this.content.Category.id,
+              GroupId: "2",
+            });
+            payeeList[j].debt += pay;
+            break;
+          }
+        }
+      }
+
+      console.log("expenses", expenses);
+
+      // return expense Object: {
+      //     name,
+      //     payerId,
+      //     payeeId,
+      //     amount,
+      //     CategoryId,
+      //     GroupId
+      // }
 
       // emit event
       this.$emit("after-save-change", {
@@ -567,21 +657,23 @@ export default {
       }
     },
     addPersonalConsume() {
-      const { name, Category, date, participates } = this.content
-      const amount = participates.find(participate => participate.id === 22).share
+      const { name, Category, date, participates } = this.content;
+      const amount = participates.find(
+        (participate) => participate.id === 22
+      ).share;
       const data = {
         name,
         Category,
         date,
-        amount
-      }
+        amount,
+      };
       // TODO: API create consume
-      console.log('data', data);
+      console.log("data", data);
       Toast.fire({
-        icon: 'success',
-        title: '新增至個人消費成功！'
-      })
-    }
+        icon: "success",
+        title: "新增至個人消費成功！",
+      });
+    },
   },
   computed: {
     paylist() {
