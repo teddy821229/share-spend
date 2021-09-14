@@ -167,47 +167,70 @@ const dummyConsumes = [
 const dummyGroups = [
   {
     id: 1,
-    name: "地獄小組",
-    image: "",
+    name: '台南旅遊團',
+    image: '',
     memberCount: 5,
     consumeCount: 21,
-    userOwed: "+ 3,667",
+    userOwed: "+ 3,667"
     // updatedDate: 作為排序依據
   },
   {
     id: 2,
-    name: "智障小組",
-    image: "",
+    name: '喝酒天尊',
+    image: '',
     memberCount: 3,
     consumeCount: 11,
-    userOwed: "+ 163",
+    userOwed: "+ 163"
   },
   {
     id: 3,
-    name: "翻車小組",
-    image: "",
+    name: '翻車小組',
+    image: '',
     memberCount: 8,
     consumeCount: 44,
-    userOwed: "- 2,597",
+    userOwed: "- 2,597"
   },
-  {
-    id: 4,
-    name: "後援會",
-    image: "",
-    memberCount: 11,
-    consumeCount: 56,
-    userOwed: "- 4,611",
-  },
+  // {
+  //   id: 4,
+  //   name: '後援會',
+  //   image: '',
+  //   memberCount: 11,
+  //   consumeCount: 56,
+  //   userOwed: "- 4,611"
+  // },
   {
     id: 5,
-    name: "全民趴體",
-    image: "",
+    name: '全民趴體',
+    image: '',
     memberCount: 3,
     consumeCount: 9,
-    userOwed: "+ 503",
+    userOwed: "+ 503"
   },
-];
-
+  {
+    id: 6,
+    name: '全台美食鑑賞團',
+    image: '',
+    memberCount: 8,
+    consumeCount: 44,
+    userOwed: "- 2,597"
+  },
+  {
+    id: 7,
+    name: '料理之王後援會',
+    image: '',
+    memberCount: 11,
+    consumeCount: 56,
+    userOwed: "- 4,611"
+  },
+  {
+    id: 8,
+    name: '全職高手',
+    image: '',
+    memberCount: 3,
+    consumeCount: 9,
+    userOwed: "+ 503"
+  },
+]
 export default {
   name: "Home",
   components: {

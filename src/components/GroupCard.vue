@@ -49,7 +49,7 @@ export default {
 <style scoped>
 .group {
   height: 150px;
-  width: 90%;
+  width: 100%;
   max-width: 450px;
 
   margin: 10px auto;

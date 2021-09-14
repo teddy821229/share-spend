@@ -98,7 +98,7 @@
             </div>
           </div>
 
-          <div class="row g-3 align-items-center">
+          <!-- <div class="row g-3 align-items-center">
             <div class="col-auto input-title phone-title">
               <label for="name" class="col-form-label mb-4">電話</label>
             </div>
@@ -106,7 +106,7 @@
               <input type="text" name="phone" id="phone" v-model="user.phone" />
               <div class="notice">其他使用者可以透過電話搜尋到您！</div>
             </div>
-          </div>
+          </div> -->
         </template>
         <template v-else>
           <div class="congrate">
@@ -156,7 +156,6 @@ export default {
         password: "",
         avatar: "",
         name: "",
-        phone: "",
       },
 
       passwordConfirm: "",

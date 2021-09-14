@@ -6,8 +6,7 @@
       </router-link>
     </div>
     <div class="small-group">
-      <router-link to="/groups/create">
-      </router-link>
+      <router-link to="/groups/create"> </router-link>
     </div>
   </div>
 </template>
@@ -19,12 +18,8 @@ export default {
 </script>
 
 <style scoped>
-
 .group {
   display: none;
-  height: 200px;
-  width: 450px;
-  max-width: 500px;
 
   background: #f2f6ff;
 
@@ -74,20 +69,21 @@ export default {
   content: "+";
   font-size: 30px;
   color: #fff;
-
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 768px) {
   .outter {
-    margin: 10px auto;
+    margin: 10px 20px;
   }
 
   .group {
     display: block;
+    height: 200px;
+    max-width: 450px;
+    margin: 0 auto;
   }
   .small-group {
     display: none;
   }
 }
-
 </style>

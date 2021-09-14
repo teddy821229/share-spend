@@ -175,8 +175,9 @@ export default {
 .content-container {
   height: calc(100% - 100px);
   overflow: scroll;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 0 10px;
 }
 </style>

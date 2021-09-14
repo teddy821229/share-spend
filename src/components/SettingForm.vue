@@ -53,7 +53,7 @@
         <label for="name">名稱：</label>
         <input type="text" name="name" id="name" v-model="user.name" />
       </div>
-
+<!-- 
       <div class="form-row normal-row">
         <label for="phone">電話：</label>
         <input
@@ -63,7 +63,7 @@
           maxlength="10"
           v-model="user.phone"
         />
-      </div>
+      </div> -->
 
       <div class="button-container">
         <button

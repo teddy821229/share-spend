@@ -3,7 +3,9 @@
     <TopNavBar msg="分帳群組" />
     <div class="groups-title">我的群組 (14)</div>
     <div class="groups-container">
-      <CreateGroupCard />
+      <CreateGroupCard
+        class="w-100"
+      />
       <GroupCard 
         v-for="group in groups"
         :key="group.id"
@@ -21,7 +23,7 @@ import CreateGroupCard from '../components/CreateGroupCard.vue'
 const dummyGroups = [
   {
     id: 1,
-    name: '地獄小組',
+    name: '台南旅遊團',
     image: '',
     memberCount: 5,
     consumeCount: 21,
@@ -30,7 +32,7 @@ const dummyGroups = [
   },
   {
     id: 2,
-    name: '智障小組',
+    name: '喝酒天尊',
     image: '',
     memberCount: 3,
     consumeCount: 11,
@@ -44,14 +46,14 @@ const dummyGroups = [
     consumeCount: 44,
     userOwed: "- 2,597"
   },
-  {
-    id: 4,
-    name: '後援會',
-    image: '',
-    memberCount: 11,
-    consumeCount: 56,
-    userOwed: "- 4,611"
-  },
+  // {
+  //   id: 4,
+  //   name: '後援會',
+  //   image: '',
+  //   memberCount: 11,
+  //   consumeCount: 56,
+  //   userOwed: "- 4,611"
+  // },
   {
     id: 5,
     name: '全民趴體',
@@ -62,7 +64,7 @@ const dummyGroups = [
   },
   {
     id: 6,
-    name: '翻車小組',
+    name: '全台美食鑑賞團',
     image: '',
     memberCount: 8,
     consumeCount: 44,
@@ -70,7 +72,7 @@ const dummyGroups = [
   },
   {
     id: 7,
-    name: '後援會',
+    name: '料理之王後援會',
     image: '',
     memberCount: 11,
     consumeCount: 56,
@@ -78,7 +80,7 @@ const dummyGroups = [
   },
   {
     id: 8,
-    name: '全民趴體',
+    name: '全職高手',
     image: '',
     memberCount: 3,
     consumeCount: 9,
@@ -143,9 +145,10 @@ export default {
   height: calc(100% - 100px - 30px);
   overflow: scroll;
 
-  display: flex;
-  flex-flow: row wrap;
-
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 20px 50px;
   padding: 20px 0;
 }
 
